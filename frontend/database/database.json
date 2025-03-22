@@ -1,0 +1,153 @@
+{
+  "expences": [
+    {
+      "type": "Expense",
+      "day": "Mon",
+      "money": 50000
+    },
+    {
+      "type": "Expense",
+      "day": "Tue",
+      "money": 30000
+    },
+    {
+      "type": "Expense",
+      "day": "Wed",
+      "money": 95000
+    },
+    {
+      "type": "Expense",
+      "day": "Thu",
+      "money": 40000
+    },
+    {
+      "type": "Expense",
+      "day": "Fri",
+      "money": 60000
+    },
+    {
+      "type": "Expense",
+      "day": "Sat",
+      "money": 45000
+    },
+    {
+      "type": "Expense",
+      "day": "Sun",
+      "money": 35000
+    },
+    {
+      "type": "Income",
+      "day": "Mon",
+      "money": 10000
+    },
+    {
+      "type": "Income",
+      "day": "Tue",
+      "money": 85000
+    },
+    {
+      "type": "Income",
+      "day": "Wed",
+      "money": 50000
+    },
+    {
+      "type": "Income",
+      "day": "Thu",
+      "money": 20000
+    },
+    {
+      "type": "Income",
+      "day": "Fri",
+      "money": 30000
+    },
+    {
+      "type": "Income",
+      "day": "Sat",
+      "money": 20000
+    },
+    {
+      "type": "Income",
+      "day": "Sun",
+      "money": 60000
+    }
+  ],
+  "transactions": [
+    {
+      "id": "1",
+      "category": "Mua sắm online",
+      "date": "17/03/2025",
+      "type": "Chi",
+      "total": 540000,
+      "recurring": null,
+      "note": "Mua quần áo"
+    },
+    {
+      "id": "2",
+      "category": "Ăn Uống",
+      "date": "17/03/2025",
+      "type": "Chi",
+      "total": 540000,
+      "recurring": null,
+      "note": "ăn sáng"
+    },
+    {
+      "id": 3,
+      "category": "Mua sắm online",
+      "date": "12/03/2025",
+      "type": "Chi",
+      "total": 540000,
+      "recurring": null,
+      "note": "Mua quần áo"
+    },
+    {
+      "id": 4,
+      "category": "Ăn uống",
+      "date": "10/03/2025",
+      "type": "Chi",
+      "total": 540000,
+      "recurring": null,
+      "note": "Ăn sáng"
+    },
+    {
+      "id": 5,
+      "category": "Mua sắm online",
+      "date": "09/03/2025",
+      "type": "Chi",
+      "total": 540000,
+      "recurring": null,
+      "note": "Mua quần áo"
+    },
+    {
+      "id": 6,
+      "category": "Hoá đơn điện & nước",
+      "date": "02/03/2025",
+      "type": "Chi",
+      "total": 500000,
+      "recurring": "Tháng",
+      "note": "tiền điện"
+    },
+    {
+      "id": 7,
+      "category": "Hoá đơn điện & nước",
+      "date": "03/03/2025",
+      "type": "Chi",
+      "total": 540000,
+      "recurring": "Tháng",
+      "note": "tiền nước"
+    }
+  ],
+  "small-goals": [
+    {
+      "id": 1,
+      "name": "Du lịch",
+      "target": 5000000,
+      "amountCur": 1000000
+    },
+    {
+      "id": 2,
+      "name": "Mua Xe",
+      "target": 3500000,
+      "amountCur": 1050000
+    }
+  ]
+}
