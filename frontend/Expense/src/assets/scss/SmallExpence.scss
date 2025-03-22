@@ -1,0 +1,24 @@
+.smallExpence {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  width: 100%;
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &--title {
+      font-size: 20px;
+    }
+  }
+  &__button {
+    background: linear-gradient(90deg, #4c1bf0, #aa46f9);
+    color: #fff;
+    border-radius: 7px;
+    &:hover {
+      color: #fff !important;
+      background: linear-gradient(90deg, #7c3bf8, #8998ff, #91e5ff) !important;
+      border: 0;
+    }
+  }
+}

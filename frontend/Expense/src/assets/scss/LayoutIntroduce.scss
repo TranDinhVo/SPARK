@@ -1,0 +1,87 @@
+.layout-introduce {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  .header {
+    position: relative;
+    &__nav {
+      background: linear-gradient(90deg, #723ed3, #3e4eba, #3ca9de);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      &--left {
+        width: 50%;
+        margin: 0;
+        padding: 0;
+        margin-left: 50px;
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+      }
+      &--item {
+        margin-left: 50px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #fff;
+      }
+      &--right {
+        margin-right: 50px;
+        display: flex;
+        align-items: center;
+      }
+      &--language {
+        margin-left: 50px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #fff;
+        margin-right: 20px;
+      }
+    }
+    &__bottom {
+      position: absolute;
+      top: 90px;
+      left: 5%;
+      margin-top: 30px;
+      width: 90%;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-left: auto;
+      margin-right: auto;
+      background: linear-gradient(90deg, #87bbff, #627eb6, #ffffff);
+
+      &--logo {
+        width: 200px;
+        height: 120px;
+        margin-left: 20px;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+  .content {
+    background: url("../../images/LightBackground.png");
+    height: 100%;
+
+    &__slider {
+      margin-top: 330px;
+      margin-bottom: 300px;
+      width: 1200px;
+      height: 470px;
+      margin-left: auto;
+      margin-right: auto;
+      //       background-color: red;
+      //       display: flex;
+      //       align-items: center;
+      //       justify-content: center;
+    }
+  }
+}

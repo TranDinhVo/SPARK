@@ -1,0 +1,91 @@
+.card {
+  &__saving {
+    background-color: #fff;
+    padding: 30px;
+    height: 340px;
+    border-radius: 20px;
+  }
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 20px;
+    &--title {
+      font-size: 28px;
+      padding: 0;
+      margin: 0;
+    }
+    &--button {
+      background: linear-gradient(90deg, #4c1bf0, #aa46f9);
+      color: #fff;
+      border-radius: 7px;
+      &:hover {
+        color: #fff !important;
+        background: linear-gradient(
+          90deg,
+          #7c3bf8,
+          #8998ff,
+          #91e5ff
+        ) !important;
+        border: 0;
+      }
+    }
+  }
+  &__list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &__item {
+    height: 100px;
+    margin-top: 20px;
+    border-radius: 20px;
+    padding: 0 30px;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    &--title {
+      font-size: 20px;
+      padding: 0;
+      margin: 0;
+      margin-bottom: 12px;
+      padding-left: 10px;
+    }
+    &--target {
+      font-size: 18px;
+      font-weight: 500;
+    }
+    &--circle {
+      position: absolute;
+      top: 15px;
+      right: 30px;
+      border-radius: 50%;
+      width: 65px;
+      height: 65px;
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+.circlebg--green {
+  background: linear-gradient(90deg, #bbf394, #089372);
+  color: #0e5624;
+}
+.circle--green {
+  background-color: #e6f8dd;
+  color: red;
+}
+
+.circlebg--pink {
+  background: linear-gradient(90deg, #ffc7f4, #ac1f5a);
+  color: #c31050;
+}
+.circle--pink {
+  background-color: #f3e7ff;
+}
