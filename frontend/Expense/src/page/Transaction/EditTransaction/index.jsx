@@ -14,7 +14,6 @@ const { Option } = Select;
 
 function EditTransaction(props) {
   const { record } = props;
-  console.log(record.id);
 
   return (
     <>
