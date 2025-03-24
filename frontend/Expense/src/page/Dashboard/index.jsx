@@ -21,7 +21,7 @@ function Dashboard() {
                 money={"1,231,500"}
                 image={curba}
                 style={{
-                  height: "100px",
+                  height: "120px",
                   background: "#e3f9bf",
                   color: "#526c1b",
                 }}
@@ -33,7 +33,7 @@ function Dashboard() {
                 money={"1,231,500"}
                 image={incomeMoney}
                 style={{
-                  height: "100px",
+                  height: "120px",
                   background: "#f8ccbf",
                   color: "#983b13",
                 }}
@@ -45,7 +45,7 @@ function Dashboard() {
                 money={"1,231,500"}
                 image={expenseMoney}
                 style={{
-                  height: "100px",
+                  height: "120px",
                   background: "#e4beff",
                   color: "#8510c8",
                 }}

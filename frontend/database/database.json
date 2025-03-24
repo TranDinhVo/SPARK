@@ -125,76 +125,204 @@
   ],
   "transactions": [
     {
-      "id": "4",
+      "id": "1",
+      "category": "Lương",
+      "date": "2025-02-01T08:00:00Z",
+      "type": "Thu",
+      "amount": 10000000,
+      "recurrence_type": "Tháng",
+      "paymentMethod": "Chuyển khoản",
+      "note": "Lương tháng 2"
+    },
+    {
+      "id": "2",
       "category": "Ăn uống",
-      "date": "10/03/2025",
+      "date": "2025-02-05T19:30:00Z",
       "type": "Chi",
-      "total": 300000,
+      "amount": 300000,
       "recurrence_type": null,
-      "note": "Ăn tối"
+      "paymentMethod": "Tiền mặt",
+      "note": "Ăn nhà hàng"
+    },
+    {
+      "id": "3",
+      "category": "Di chuyển",
+      "date": "2025-02-07T07:45:00Z",
+      "type": "Chi",
+      "amount": 100000,
+      "recurrence_type": "Tuần",
+      "paymentMethod": "Thẻ tín dụng",
+      "note": "Mua vé xe bus"
+    },
+    {
+      "id": "4",
+      "category": "Giáo dục",
+      "date": "2025-02-08T10:15:00Z",
+      "type": "Chi",
+      "amount": 500000,
+      "recurrence_type": null,
+      "paymentMethod": "Chuyển khoản",
+      "note": "Học phí khóa lập trình"
     },
     {
       "id": "5",
       "category": "Mua sắm online",
-      "date": "09/03/2025",
+      "date": "2025-03-09T15:20:00Z",
       "type": "Chi",
-      "total": 1200000,
+      "amount": 1200000,
       "recurrence_type": null,
+      "paymentMethod": "Ví điện tử",
       "note": "Mua điện thoại"
+    },
+    {
+      "id": "6",
+      "category": "Du lịch",
+      "date": "2025-03-15T06:00:00Z",
+      "type": "Chi",
+      "amount": 5000000,
+      "recurrence_type": null,
+      "paymentMethod": "Thẻ tín dụng",
+      "note": "Du lịch Đà Nẵng"
     },
     {
       "id": "7",
       "category": "Hoá đơn điện & nước",
-      "date": "03/03/2025",
+      "date": "2025-03-03T13:00:00Z",
       "type": "Chi",
-      "total": 540000,
+      "amount": 540000,
       "recurrence_type": "Tháng",
+      "paymentMethod": "Chuyển khoản",
       "note": "Tiền nước"
     },
     {
       "id": "8",
       "category": "Lương",
-      "date": "01/03/2025",
+      "date": "2025-03-01T08:00:00Z",
       "type": "Thu",
-      "total": 10000000,
+      "amount": 10000000,
       "recurrence_type": "Tháng",
+      "paymentMethod": "Chuyển khoản",
       "note": "Lương tháng 3"
     },
     {
       "id": "9",
       "category": "Tiết kiệm",
-      "date": "05/03/2025",
+      "date": "2025-03-05T11:45:00Z",
       "type": "Chi",
-      "total": 2000000,
+      "amount": 2000000,
       "recurrence_type": "Tháng",
+      "paymentMethod": "Chuyển khoản",
       "note": "Gửi tiết kiệm"
     },
     {
       "id": "10",
       "category": "Bảo hiểm",
-      "date": "06/03/2025",
+      "date": "2025-03-06T14:10:00Z",
       "type": "Chi",
-      "total": 1000000,
+      "amount": 1000000,
       "recurrence_type": "Năm",
+      "paymentMethod": "Chuyển khoản",
       "note": "Bảo hiểm y tế"
+    },
+    {
+      "id": "11",
+      "category": "Mua sắm",
+      "date": "2025-03-07T16:30:00Z",
+      "type": "Chi",
+      "amount": 800000,
+      "recurrence_type": null,
+      "paymentMethod": "Ví điện tử",
+      "note": "Mua giày thể thao"
     },
     {
       "id": "12",
       "category": "Giải trí",
-      "date": "10/03/2025",
+      "date": "2025-03-10T20:00:00Z",
       "type": "Chi",
-      "total": 400000,
+      "amount": 400000,
       "recurrence_type": null,
+      "paymentMethod": "Tiền mặt",
       "note": "Xem phim"
     },
     {
       "id": "13",
       "category": "Sức khỏe",
-      "date": "12/03/2025",
+      "date": "2025-03-12T09:30:00Z",
       "type": "Chi",
-      "total": 700000,
+      "amount": 700000,
       "recurrence_type": null,
+      "paymentMethod": "Thẻ tín dụng",
       "note": "Khám bệnh"
+    },
+    {
+      "id": "14",
+      "category": "Học tập",
+      "date": "2025-03-13T14:20:00Z",
+      "type": "Chi",
+      "amount": 250000,
+      "recurrence_type": null,
+      "paymentMethod": "Chuyển khoản",
+      "note": "Mua sách lập trình"
+    },
+    {
+      "id": "15",
+      "category": "Công việc",
+      "date": "2025-03-14T18:00:00Z",
+      "type": "Thu",
+      "amount": 2000000,
+      "recurrence_type": null,
+      "paymentMethod": "Chuyển khoản",
+      "note": "Tiền thưởng dự án"
+    },
+    {
+      "id": "16",
+      "category": "Từ thiện",
+      "date": "2025-03-15T10:10:00Z",
+      "type": "Chi",
+      "amount": 300000,
+      "recurrence_type": null,
+      "paymentMethod": "Tiền mặt",
+      "note": "Quyên góp từ thiện"
+    },
+    {
+      "id": "17",
+      "category": "Gia đình",
+      "date": "2025-03-16T12:00:00Z",
+      "type": "Chi",
+      "amount": 1000000,
+      "recurrence_type": null,
+      "paymentMethod": "Chuyển khoản",
+      "note": "Mua quà cho bố mẹ"
+    },
+    {
+      "id": "18",
+      "category": "Thể thao",
+      "date": "2025-03-17T07:30:00Z",
+      "type": "Chi",
+      "amount": 150000,
+      "recurrence_type": null,
+      "paymentMethod": "Ví điện tử",
+      "note": "Đăng ký phòng gym"
+    },
+    {
+      "id": "19",
+      "category": "Công nghệ",
+      "date": "2025-03-18T16:50:00Z",
+      "type": "Chi",
+      "amount": 3000000,
+      "recurrence_type": null,
+      "paymentMethod": "Thẻ tín dụng",
+      "note": "Mua laptop mới"
+    },
+    {
+      "id": "20",
+      "category": "Đầu tư",
+      "date": "2025-03-19T09:40:00Z",
+      "type": "Chi",
+      "amount": 5000000,
+      "recurrence_type": null,
+      "paymentMethod": "Chuyển khoản",
+      "note": "Đầu tư chứng khoán"
     }
   ],
 
@@ -208,6 +336,18 @@
     {
       "id": "2",
       "name": "Mua Xe",
+      "target": 3500000,
+      "amountCur": 1050000
+    },
+    {
+      "id": "3",
+      "name": "Mua LapTop",
+      "target": 30000000,
+      "amountCur": 10000000
+    },
+    {
+      "id": "4",
+      "name": "Mua Điện Thoại",
       "target": 3500000,
       "amountCur": 1050000
     }
