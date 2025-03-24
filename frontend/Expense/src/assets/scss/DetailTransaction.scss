@@ -1,0 +1,101 @@
+.custom-modal {
+  .ant-modal-content {
+    border-radius: 12px;
+    background: linear-gradient(90deg, #4c1bf0, #aa46f9);
+    color: white;
+  }
+
+  .ant-card {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: white;
+
+    .ant-card-head {
+      border-bottom: none;
+      text-align: center;
+      font-size: 28px;
+      color: white;
+    }
+  }
+  .ant-card-body {
+    padding: 12px;
+  }
+  .detail__transaction-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    padding: 10px 0;
+    border: 1px;
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+
+      padding: 10px;
+      border-radius: 8px;
+      position: relative;
+      svg {
+        font-size: 24px;
+        color: white;
+      }
+
+      span {
+        font-size: 16px;
+        color: white;
+      }
+
+      &::after {
+        content: "";
+        background-color: #ddd;
+        width: calc(100% - 50px);
+        height: 1px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+    }
+    .detail-item:last-child::after {
+      height: 0;
+    }
+  }
+  .transaction-section {
+    background: rgba(255, 255, 255, 0.1);
+    margin-top: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px 20px;
+  }
+  h4.recurring,
+  h4.payment {
+    font-size: 18px;
+    margin-top: 10px;
+    color: #fff;
+  }
+  .ant-tag {
+    font-size: 20px;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+}
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 8px;
+  cursor: pointer;
+
+  &.status-1 {
+    background-color: #84ee19;
+  }
+  &.status-0 {
+    background-color: #f8ed08;
+  }
+  &.status--1 {
+    background-color: #ff0000;
+  }
+}

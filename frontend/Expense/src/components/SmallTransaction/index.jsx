@@ -60,10 +60,10 @@ function SmallTransaction() {
       key: "type",
     },
     {
-      title: "Total",
+      title: "Amount",
       // width: 90,
-      dataIndex: "total",
-      key: "total",
+      dataIndex: "amount",
+      key: "amount",
       render: (value) => new Intl.NumberFormat("vi-VN").format(value),
     },
   ];

@@ -92,7 +92,17 @@ function MainTransaction(props) {
     <>
       <div className="transaction-recent">
         <div className="recent__table">
-          <Table dataSource={dataTransaction} columns={columns} rowKey="id" />
+          <Table
+            dataSource={dataTransaction}
+            columns={columns}
+            rowKey="id"
+            rowClassName={(_, index) =>
+              index % 2 === 0 ? "even-row" : "odd-row"
+            }
+            pagination={{
+              pageSize: 9,
+            }}
+          />
         </div>
       </div>
     </>

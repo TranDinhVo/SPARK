@@ -4,7 +4,76 @@
       th {
         background-color: #fff;
         font-size: 20px;
-        border-bottom: 1px solid #000;
+        // border-bottom: 1px solid #000;
+        position: relative;
+        padding-bottom: 30px;
+      }
+    }
+    position: relative;
+    &::after {
+      content: " ";
+      height: 1px;
+      background-color: black;
+      width: 96%;
+      position: absolute;
+      bottom: 10px;
+      left: 2%;
+    }
+  }
+}
+
+.even-row td {
+  background-color: rgba(228, 190, 255, 0.59) !important;
+}
+
+.odd-row td {
+  background-color: rgba(255, 192, 165, 0.59) !important;
+}
+
+.even-row td:first-child,
+.odd-row td:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.even-row td:last-child,
+.odd-row td:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.ant-table-tbody {
+  border-spacing: 10px 8px;
+}
+
+/* Dùng padding + box-shadow để tạo khoảng cách */
+.even-row,
+.odd-row {
+  padding: 8px 0; /* Giúp có khoảng cách giữa các hàng */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Tạo hiệu ứng nổi */
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.even-row:hover,
+.odd-row:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Tăng hiệu ứng hover */
+}
+
+/* Giữ màu nền xen kẽ */
+.even-row td {
+  background-color: rgba(228, 190, 255, 0.59) !important;
+}
+
+.odd-row td {
+  background-color: rgba(255, 192, 165, 0.59) !important;
+}
+.transaction-recent {
+  .ant-table-tbody {
+    tr {
+      transition: background-color 0.3s ease-in-out; /* Hiệu ứng hover mượt */
+
+      &:hover {
+        background-color: rgba(241, 137, 255, 0.8) !important; /* Màu hover */
       }
     }
   }
