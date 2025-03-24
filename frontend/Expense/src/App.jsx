@@ -2,16 +2,6 @@ import "./App.css";
 import AllRoute from "./components/AllRoute";
 // import React, { useState } from "react";
 function App() {
-  // const [isOpen, setIsOpen] = useState(false);
-
-  // return (
-  // <div style={{ textAlign: "center", marginTop: "50px" }}>
-  //   <Button type="primary" onClick={() => setIsOpen(true)}>
-  //     Mở Modal
-  //   </Button>
-  //   <AuthModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
-  // </div>
-  // );
   return (
     //   <>
     <AllRoute />
