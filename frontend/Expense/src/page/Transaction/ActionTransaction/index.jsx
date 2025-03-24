@@ -1,5 +1,6 @@
 import { Button, Col, Row } from "antd";
 import { SortAscendingOutlined } from "@ant-design/icons";
+import AddTransaction from "../AddTransaction";
 function ActionTransaction() {
   return (
     <>
@@ -18,7 +19,7 @@ function ActionTransaction() {
         </Col>
         <Col xl={15}></Col>
         <Col xl={2}>
-          <Button>Add</Button>
+          <AddTransaction />
         </Col>
       </Row>
     </>
