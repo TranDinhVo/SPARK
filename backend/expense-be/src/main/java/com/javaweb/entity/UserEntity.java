@@ -21,17 +21,9 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name="user")
-@Getter
-@Setter
-@NoArgsConstructor  
-@AllArgsConstructor
 public class UserEntity {
 	
 	
@@ -101,6 +93,206 @@ public class UserEntity {
         inverseJoinColumns = @JoinColumn(name = "roleId", nullable = false)
     )
     private List<RoleEntity> roles = new ArrayList<>();
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+	public String getFullname() {
+		return fullname;
+	}
+
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public String getPhone() {
+		return phone;
+	}
+
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
+
+
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
+	}
+
+
+	public CurrencyEnum getCurrency() {
+		return currency;
+	}
+
+
+	public void setCurrency(CurrencyEnum currency) {
+		this.currency = currency;
+	}
+
+
+	public String getAuthToken() {
+		return authToken;
+	}
+
+
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
+	}
+
+
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+
+
+	public void setCreatedAt(Instant createdAt) {
+		this.createdAt = createdAt;
+	}
+
+
+	public List<WalletEntity> getWallets() {
+		return wallets;
+	}
+
+
+	public void setWallets(List<WalletEntity> wallets) {
+		this.wallets = wallets;
+	}
+
+
+	public List<GoalEntity> getGoals() {
+		return goals;
+	}
+
+
+	public void setGoals(List<GoalEntity> goals) {
+		this.goals = goals;
+	}
+
+
+	public List<BorrowingEntity> getBorrowings() {
+		return borrowings;
+	}
+
+
+	public void setBorrowings(List<BorrowingEntity> borrowings) {
+		this.borrowings = borrowings;
+	}
+
+
+	public List<TransactionEntity> getTransactions() {
+		return transactions;
+	}
+
+
+	public void setTransactions(List<TransactionEntity> transactions) {
+		this.transactions = transactions;
+	}
+
+
+	public List<BudgetEntity> getBudget() {
+		return budget;
+	}
+
+
+	public void setBudget(List<BudgetEntity> budget) {
+		this.budget = budget;
+	}
+
+
+	public List<RoleEntity> getRoles() {
+		return roles;
+	}
+
+
+	public void setRoles(List<RoleEntity> roles) {
+		this.roles = roles;
+	}
+	
+
+	public UserEntity() {
+		this.status= true;
+		this.createdAt = Instant.now();
+	}
+	public UserEntity(Long id, String username, String fullname, String password, String phone, String email,
+			Boolean status, String avatarUrl, CurrencyEnum currency, String authToken, Instant createdAt,
+			List<WalletEntity> wallets, List<GoalEntity> goals, List<BorrowingEntity> borrowings,
+			List<TransactionEntity> transactions, List<BudgetEntity> budget, List<RoleEntity> roles) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.fullname = fullname;
+		this.password = password;
+		this.phone = phone;
+		this.email = email;
+		this.status = status;
+		this.avatarUrl = avatarUrl;
+		this.currency = currency;
+		this.authToken = authToken;
+		this.createdAt = createdAt;
+		this.wallets = wallets;
+		this.goals = goals;
+		this.borrowings = borrowings;
+		this.transactions = transactions;
+		this.budget = budget;
+		this.roles = roles;
+	}
+	
+
 	
 
 }

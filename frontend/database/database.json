@@ -1,4 +1,42 @@
 {
+  "categories": [
+    {
+      "id": 1,
+      "name": "Ăn uống",
+      "iconUrl": null,
+      "colorCode": null
+    },
+    {
+      "id": 2,
+      "name": "Mua sắm",
+      "iconUrl": null,
+      "colorCode": null
+    },
+    {
+      "id": 3,
+      "name": "Lương",
+      "iconUrl": null,
+      "colorCode": null
+    },
+    {
+      "id": 4,
+      "name": "Hoá đơn điện",
+      "iconUrl": null,
+      "colorCode": null
+    },
+    {
+      "id": 5,
+      "name": "Giải trí",
+      "iconUrl": null,
+      "colorCode": null
+    },
+    {
+      "id": 6,
+      "name": "Tiết kiệm",
+      "iconUrl": null,
+      "colorCode": null
+    }
+  ],
   "expences": [
     {
       "type": "Expense",
@@ -159,6 +197,7 @@
       "note": "Khám bệnh"
     }
   ],
+
   "small-goals": [
     {
       "id": "1",
