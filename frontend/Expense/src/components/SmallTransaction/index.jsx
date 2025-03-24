@@ -51,6 +51,7 @@ function SmallTransaction() {
       dataIndex: "date",
       // width: 120,
       key: "date",
+      render: (value) => new Date(value).toLocaleDateString("vi-VN"),
     },
     {
       title: "Type",
@@ -90,7 +91,7 @@ function SmallTransaction() {
             rowKey="id"
             pagination={false}
             scroll={{
-              y: 120,
+              y: 150,
             }}
           />
         </div>

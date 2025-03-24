@@ -47,6 +47,7 @@ function MainTransaction(props) {
       dataIndex: "date",
       // width: 120,
       key: "date",
+      render: (value) => new Date(value).toLocaleDateString("vi-VN"),
     },
     type === "" && {
       title: "Type",
@@ -55,10 +56,10 @@ function MainTransaction(props) {
       key: "type",
     },
     {
-      title: "Total",
+      title: "Amount",
       // width: 90,
-      dataIndex: "total",
-      key: "total",
+      dataIndex: "amount",
+      key: "amount",
       render: (value) => new Intl.NumberFormat("vi-VN").format(value),
     },
     recurring === true && {
@@ -81,7 +82,7 @@ function MainTransaction(props) {
         <Space>
           <DeleteTransaction record={record} onReload={onReload} />
           <EditTransaction record={record} onReload={onReload} />
-          <DetailTransaction />
+          <DetailTransaction record={record} />
         </Space>
       ),
     },

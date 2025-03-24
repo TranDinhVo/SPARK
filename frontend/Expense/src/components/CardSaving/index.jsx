@@ -25,54 +25,56 @@ function CardSaving() {
         </div>
         {dataGoals && (
           <div className="card__list-item">
-            {dataGoals.map((item, index) => {
-              return (
-                <>
-                  <div
-                    className={
-                      "card__item " +
-                      (index % 2 == 1 ? "circlebg--pink" : "circlebg--green")
-                    }
-                    key={index}
-                  >
-                    <h5 className="card__item--title">{item.name}</h5>
-                    <span className="card__item--target">
-                      {Intl.NumberFormat("vi-VN").format(item.target)} VND
-                    </span>
+            <div className="card__list--scrollable">
+              {dataGoals.map((item, index) => {
+                return (
+                  <>
                     <div
                       className={
-                        "card__item--circle " +
-                        (index % 2 == 1 ? "circle--pink" : "circle--green")
+                        "card__item " +
+                        (index % 2 == 1 ? "circlebg--pink" : "circlebg--green")
                       }
+                      key={index}
                     >
-                      <Progress
-                        type="circle"
-                        percent={(
-                          (100 * parseFloat(item.amountCur)) /
-                          parseFloat(item.target)
-                        ).toFixed(0)}
-                        size={70}
-                        strokeColor={index % 2 == 0 ? "#cbff1c" : "#ffb567"}
-                        trailColor={index % 2 == 0 ? "#1d7f6b" : "#df4643"}
-                        strokeWidth={12}
-                        format={(percent) => (
-                          <span
-                            style={{
-                              color: index % 2 == 0 ? "#1d7f6b" : "#df4643",
-                              fontSize: "18px",
-                              fontFamily: "Arial, sans-serif",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {percent}%
-                          </span>
-                        )}
-                      />
+                      <h5 className="card__item--title">{item.name}</h5>
+                      <span className="card__item--target">
+                        {Intl.NumberFormat("vi-VN").format(item.target)} VND
+                      </span>
+                      <div
+                        className={
+                          "card__item--circle " +
+                          (index % 2 == 1 ? "circle--pink" : "circle--green")
+                        }
+                      >
+                        <Progress
+                          type="circle"
+                          percent={(
+                            (100 * parseFloat(item.amountCur)) /
+                            parseFloat(item.target)
+                          ).toFixed(0)}
+                          size={70}
+                          strokeColor={index % 2 == 0 ? "#cbff1c" : "#ffb567"}
+                          trailColor={index % 2 == 0 ? "#1d7f6b" : "#df4643"}
+                          strokeWidth={12}
+                          format={(percent) => (
+                            <span
+                              style={{
+                                color: index % 2 == 0 ? "#1d7f6b" : "#df4643",
+                                fontSize: "18px",
+                                fontFamily: "Arial, sans-serif",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {percent}%
+                            </span>
+                          )}
+                        />
+                      </div>
                     </div>
-                  </div>
-                </>
-              );
-            })}
+                  </>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>

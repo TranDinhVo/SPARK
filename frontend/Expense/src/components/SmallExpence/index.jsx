@@ -21,7 +21,7 @@ function SmallExpence() {
     xField: "day",
     yField: "money",
     autoFix: true,
-    height: 220,
+    height: 250,
     colorField: "type",
     state: {
       inactive: { opacity: 0.5 },
