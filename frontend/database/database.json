@@ -1,74 +1,126 @@
 {
+  "categories": [
+    {
+      "id": 1,
+      "name": "Ăn uống",
+      "iconUrl": null,
+      "colorCode": null
+    },
+    {
+      "id": 2,
+      "name": "Mua sắm",
+      "iconUrl": null,
+      "colorCode": null
+    },
+    {
+      "id": 3,
+      "name": "Lương",
+      "iconUrl": null,
+      "colorCode": null
+    },
+    {
+      "id": 4,
+      "name": "Hoá đơn điện",
+      "iconUrl": null,
+      "colorCode": null
+    },
+    {
+      "id": 5,
+      "name": "Giải trí",
+      "iconUrl": null,
+      "colorCode": null
+    },
+    {
+      "id": 6,
+      "name": "Tiết kiệm",
+      "iconUrl": null,
+      "colorCode": null
+    }
+  ],
   "expences": [
     {
       "type": "Expense",
       "day": "Mon",
-      "money": 50000
+      "money": 50000,
+      "id": "7249"
     },
     {
       "type": "Expense",
       "day": "Tue",
-      "money": 30000
+      "money": 30000,
+      "id": "109f"
     },
     {
       "type": "Expense",
       "day": "Wed",
-      "money": 95000
+      "money": 95000,
+      "id": "60cd"
     },
     {
       "type": "Expense",
       "day": "Thu",
-      "money": 40000
+      "money": 40000,
+      "id": "2e86"
     },
     {
       "type": "Expense",
       "day": "Fri",
-      "money": 60000
+      "money": 60000,
+      "id": "5f8f"
     },
     {
       "type": "Expense",
       "day": "Sat",
-      "money": 45000
+      "money": 45000,
+      "id": "b247"
     },
     {
       "type": "Expense",
       "day": "Sun",
-      "money": 35000
+      "money": 35000,
+      "id": "4f8a"
     },
     {
       "type": "Income",
       "day": "Mon",
-      "money": 10000
+      "money": 10000,
+      "id": "49d4"
     },
     {
       "type": "Income",
       "day": "Tue",
-      "money": 85000
+      "money": 85000,
+      "id": "59fa"
     },
     {
       "type": "Income",
       "day": "Wed",
-      "money": 50000
+      "money": 50000,
+      "id": "4bab"
     },
     {
       "type": "Income",
       "day": "Thu",
-      "money": 20000
+      "money": 20000,
+      "id": "5afd"
     },
     {
       "type": "Income",
       "day": "Fri",
-      "money": 30000
+      "money": 30000,
+      "id": "e0c1"
     },
     {
       "type": "Income",
       "day": "Sat",
-      "money": 20000
+      "money": 20000,
+      "id": "63bc"
     },
     {
       "type": "Income",
       "day": "Sun",
-      "money": 60000
+      "money": 60000,
+      "id": "b568"
     }
   ],
   "transactions": [
@@ -271,16 +323,29 @@
       "note": "Tiền lãi ngân hàng"
     }
   ],
+
   "small-goals": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Du lịch",
       "target": 5000000,
       "amountCur": 1000000
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Mua Xe",
+      "target": 3500000,
+      "amountCur": 1050000
+    },
+    {
+      "id": "3",
+      "name": "Mua LapTop",
+      "target": 30000000,
+      "amountCur": 10000000
+    },
+    {
+      "id": "4",
+      "name": "Mua Điện Thoại",
       "target": 3500000,
       "amountCur": 1050000
     }

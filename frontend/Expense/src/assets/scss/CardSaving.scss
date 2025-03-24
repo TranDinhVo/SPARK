@@ -2,20 +2,24 @@
   &__saving {
     background-color: #fff;
     padding: 30px;
-    height: 340px;
+    height: 420px;
     border-radius: 20px;
+    overflow: hidden; /* Không thay đổi */
   }
+
   &__list {
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 2px solid #ddd;
-    padding-bottom: 20px;
+    padding-bottom: 25px;
+
     &--title {
       font-size: 28px;
       padding: 0;
       margin: 0;
     }
+
     &--button {
       background: linear-gradient(90deg, #4c1bf0, #aa46f9);
       color: #fff;
@@ -31,14 +35,26 @@
         border: 0;
       }
     }
+
+    &-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      /* Không cần thiết phải đặt chiều cao ở đây */
+      /* height: 420px; */
+      overflow: hidden;
+    }
+
+    &--scrollable {
+      overflow-y: auto;
+      max-height: 350px; /* Điều chỉnh chiều cao tối đa để phần cuộn hoạt động */
+      padding-right: 10px;
+      padding-top: 0;
+    }
   }
-  &__list-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+
   &__item {
-    height: 100px;
+    height: 120px;
     margin-top: 20px;
     border-radius: 20px;
     padding: 0 30px;
@@ -47,6 +63,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     &--title {
       font-size: 20px;
       padding: 0;
@@ -54,10 +71,12 @@
       margin-bottom: 12px;
       padding-left: 10px;
     }
+
     &--target {
       font-size: 18px;
       font-weight: 500;
     }
+
     &--circle {
       position: absolute;
       top: 15px;
@@ -73,6 +92,7 @@
     }
   }
 }
+
 .circlebg--green {
   background: linear-gradient(90deg, #bbf394, #089372);
   color: #0e5624;

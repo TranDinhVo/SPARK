@@ -27,6 +27,7 @@
     "redux": "^5.0.1",
     "sass": "^1.86.0",
     "slick-carousel": "^1.8.1",
+    "sweetalert2": "^11.17.2",
     "swiper": "^11.2.6"
   },
   "devDependencies": {

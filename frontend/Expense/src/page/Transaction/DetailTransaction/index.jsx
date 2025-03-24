@@ -1,7 +1,7 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { Button, Modal, Card, Typography } from "antd";
-import { CalendarOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Modal, Card, Typography, Tag } from "antd";
+import { CalendarOutlined } from "@ant-design/icons";
 const { Text, Title } = Typography;
 
 import "./te.scss";
@@ -58,7 +58,32 @@ function DetailTransaction(props) {
               </Text>
             </div>
           </div>
-          <Text strong>Giao dịch định kì: </Text>
+          {/* Hiển thị Giao dịch định kỳ nếu có */}
+          {record.recurrence && record.recurrence.length > 0 ? (
+            <>
+              <Text strong>Giao dịch định kỳ: </Text>
+              <div className="detail-item">
+                <Text strong>Ngày tiếp theo:</Text>
+                <Text>
+                  {new Date(record.recurrence.next_date).toLocaleDateString(
+                    "vi-VN"
+                  )}
+                </Text>
+              </div>
+              <div className="detail-item">
+                <Text strong>Trạng thái:</Text>
+                <Tag
+                  color={
+                    record.recurrence.status === "ACTIVE" ? "green" : "red"
+                  }
+                >
+                  {record.recurrence.status}
+                </Tag>
+              </div>
+            </>
+          ) : (
+            <Text strong>Không có giao dịch định kỳ</Text>
+          )}
 
           <div className="detail-item">
             <Text strong>Phương thức thanh toán:</Text>

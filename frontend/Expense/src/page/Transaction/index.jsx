@@ -5,7 +5,6 @@ function Transaction() {
   return (
     <>
       <MenuTransaction />
-
       <div>
         <Outlet />
       </div>
