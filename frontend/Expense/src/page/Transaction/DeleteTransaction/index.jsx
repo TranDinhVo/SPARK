@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { deleteTransaction } from "../../../services/TransactionService";
 
 function DeleteTransaction(props) {
-  const { record, onReload } = props;
+  const { record, onReLoad } = props;
   const handleDelete = async () => {
     const result = await Swal.fire({
       title: "Bạn có chắc chắn muốn xoá?",
@@ -21,7 +21,7 @@ function DeleteTransaction(props) {
       const response = await deleteTransaction(record.id);
       response
         ? Swal.fire("Xóa thành công!", "Bản ghi đã được xoá.", "success").then(
-            onReload
+            onReLoad()
           )
         : Swal.fire("Lỗi!", "Xoá bản ghi không thành công.", "error");
     }

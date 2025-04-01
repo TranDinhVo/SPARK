@@ -28,7 +28,9 @@ function DetailTransaction({ record }) {
         size="small"
         icon={<InfoCircleOutlined />}
         onClick={showModal}
+        style={{ backgroundColor: "#1890ff", borderColor: "#1890ff" }}
       />
+
       <Modal
         open={isModalOpen}
         onCancel={handleCancel}

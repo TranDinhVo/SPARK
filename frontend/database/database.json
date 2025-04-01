@@ -1,42 +1,4 @@
 {
-  "categories": [
-    {
-      "id": 1,
-      "name": "Ăn uống",
-      "iconUrl": null,
-      "colorCode": null
-    },
-    {
-      "id": 2,
-      "name": "Mua sắm",
-      "iconUrl": null,
-      "colorCode": null
-    },
-    {
-      "id": 3,
-      "name": "Lương",
-      "iconUrl": null,
-      "colorCode": null
-    },
-    {
-      "id": 4,
-      "name": "Hoá đơn điện",
-      "iconUrl": null,
-      "colorCode": null
-    },
-    {
-      "id": 5,
-      "name": "Giải trí",
-      "iconUrl": null,
-      "colorCode": null
-    },
-    {
-      "id": 6,
-      "name": "Tiết kiệm",
-      "iconUrl": null,
-      "colorCode": null
-    }
-  ],
   "expences": [
     {
       "type": "Expense",
@@ -123,56 +85,362 @@
       "id": "b568"
     }
   ],
+  "categoryTypes": [
+    {
+      "id": "1",
+      "name": "Khoản chi"
+    },
+    {
+      "id": "2",
+      "name": "Khoản thu"
+    },
+    {
+      "id": "3",
+      "name": "Vay/Nợ"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "typeId": 1,
+      "name": "Ăn uống",
+      "icon": "🍔"
+    },
+    {
+      "id": "2",
+      "typeId": 1,
+      "name": "Nhà hàng",
+      "icon": "🍽️"
+    },
+    {
+      "id": "3",
+      "typeId": 1,
+      "name": "Quán café",
+      "icon": "☕"
+    },
+    {
+      "id": "4",
+      "typeId": 1,
+      "name": "Đồ ăn online",
+      "icon": "🛵"
+    },
+    {
+      "id": "5",
+      "typeId": 1,
+      "name": "Tạp hóa",
+      "icon": "🛒"
+    },
+    {
+      "id": "6",
+      "typeId": 1,
+      "name": "Đồ uống",
+      "icon": "🥤"
+    },
+    {
+      "id": "7",
+      "typeId": 1,
+      "name": "Quần áo",
+      "icon": "👚"
+    },
+    {
+      "id": "8",
+      "typeId": 1,
+      "name": "Điện tử",
+      "icon": "📱"
+    },
+    {
+      "id": "9",
+      "typeId": 1,
+      "name": "Mỹ phẩm",
+      "icon": "💄"
+    },
+    {
+      "id": "10",
+      "typeId": 1,
+      "name": "Đồ gia dụng",
+      "icon": "🏠"
+    },
+    {
+      "id": "11",
+      "typeId": 1,
+      "name": "Sách & Văn phòng phẩm",
+      "icon": "📚"
+    },
+    {
+      "id": "12",
+      "typeId": 1,
+      "name": "Nội thất",
+      "icon": "🛋️"
+    },
+    {
+      "id": "13",
+      "typeId": 0,
+      "name": "Thể thao & Dã ngoại",
+      "icon": "⛺"
+    },
+    {
+      "id": "14",
+      "typeId": 1,
+      "name": "Phụ kiện",
+      "icon": "👜"
+    },
+    {
+      "id": "15",
+      "typeId": 1,
+      "name": "Tiền nhà",
+      "icon": "🏘️"
+    },
+    {
+      "id": "16",
+      "typeId": 1,
+      "name": "Điện nước",
+      "icon": "💡"
+    },
+    {
+      "id": "17",
+      "typeId": 1,
+      "name": "Internet & Điện thoại",
+      "icon": "📶"
+    },
+    {
+      "id": "18",
+      "typeId": 1,
+      "name": "Dịch vụ",
+      "icon": "🛠️"
+    },
+    {
+      "id": "19",
+      "typeId": 1,
+      "name": "Bảo hiểm",
+      "icon": "🛡️"
+    },
+    {
+      "id": "20",
+      "typeId": 1,
+      "name": "Học phí",
+      "icon": "🎓"
+    },
+    {
+      "id": "21",
+      "typeId": 1,
+      "name": "Học tập",
+      "icon": "📖"
+    },
+    {
+      "id": "22",
+      "typeId": 1,
+      "name": "Xăng xe",
+      "icon": "⛽"
+    },
+    {
+      "id": "23",
+      "typeId": 1,
+      "name": "Vé xe/Giao thông",
+      "icon": "🚇"
+    },
+    {
+      "id": "24",
+      "typeId": 1,
+      "name": "Taxi/Grab",
+      "icon": "🚕"
+    },
+    {
+      "id": "25",
+      "typeId": 1,
+      "name": "Bảo dưỡng xe",
+      "icon": "🔧"
+    },
+    {
+      "id": "26",
+      "typeId": 1,
+      "name": "Đỗ xe",
+      "icon": "🅿️"
+    },
+    {
+      "id": "27",
+      "typeId": 1,
+      "name": "Y tế",
+      "icon": "🏥"
+    },
+    {
+      "id": "28",
+      "typeId": 1,
+      "name": "Thể thao",
+      "icon": "🏋️"
+    },
+    {
+      "id": "29",
+      "typeId": 1,
+      "name": "Làm đẹp",
+      "icon": "💇"
+    },
+    {
+      "id": "30",
+      "typeId": 1,
+      "name": "Thuốc men",
+      "icon": "💊"
+    },
+    {
+      "id": "31",
+      "typeId": 1,
+      "name": "Khám sức khỏe",
+      "icon": "🩺"
+    },
+    {
+      "id": "32",
+      "typeId": 1,
+      "name": "Giải trí",
+      "icon": "🍿"
+    },
+    {
+      "id": "33",
+      "typeId": 1,
+      "name": "Du lịch",
+      "icon": "✈️"
+    },
+    {
+      "id": "34",
+      "typeId": 1,
+      "name": "Quà tặng",
+      "icon": "🎁"
+    },
+    {
+      "id": "35",
+      "typeId": 1,
+      "name": "Quà cưới",
+      "icon": "💍"
+    },
+    {
+      "id": "36",
+      "typeId": 1,
+      "name": "Tiệc tùng",
+      "icon": "🎉"
+    },
+    {
+      "id": "37",
+      "typeId": 1,
+      "name": "Từ thiện",
+      "icon": "❤️"
+    },
+    {
+      "id": "38",
+      "typeId": 1,
+      "name": "Thuế",
+      "icon": "📝"
+    },
+    {
+      "id": "39",
+      "typeId": 1,
+      "name": "Phí ngân hàng",
+      "icon": "🏦"
+    },
+    {
+      "id": "40",
+      "typeId": 1,
+      "name": "Đầu tư",
+      "icon": "📈"
+    },
+    {
+      "id": "41",
+      "typeId": 1,
+      "name": "Học đầu tư",
+      "icon": "💹"
+    },
+    {
+      "id": "42",
+      "typeId": 2,
+      "name": "Lương",
+      "icon": "💰"
+    },
+    {
+      "id": "43",
+      "typeId": 2,
+      "name": "Tiền thưởng",
+      "icon": "🏆"
+    },
+    {
+      "id": "44",
+      "typeId": 2,
+      "name": "Thù lao freelance",
+      "icon": "💻"
+    },
+    {
+      "id": "45",
+      "typeId": 2,
+      "name": "Đầu tư",
+      "icon": "📈"
+    },
+    {
+      "id": "46",
+      "typeId": 2,
+      "name": "Tiền lãi",
+      "icon": "💸"
+    },
+    {
+      "id": "47",
+      "typeId": 2,
+      "name": "Bán đồ",
+      "icon": "🛍️"
+    },
+    {
+      "id": "48",
+      "typeId": 2,
+      "name": "Tiền nhà cho thuê",
+      "icon": "🏡"
+    },
+    {
+      "id": "49",
+      "typeId": 2,
+      "name": "Hoa hồng",
+      "icon": "🤝"
+    },
+    {
+      "id": "50",
+      "typeId": 1,
+      "name": "Bản quyền",
+      "icon": "📜"
+    },
+    {
+      "id": "51",
+      "typeId": 3,
+      "name": "Trả nợ",
+      "icon": "💳"
+    },
+    {
+      "id": "52",
+      "typeId": 3,
+      "name": "Cho vay",
+      "icon": "👨‍👩‍👧"
+    },
+    {
+      "id": "53",
+      "typeId": 3,
+      "name": "Vay",
+      "icon": "🏦"
+    },
+    {
+      "id": "54",
+      "typeId": 3,
+      "name": "Thu nợ",
+      "icon": "🏛️"
+    }
+  ],
   "transactions": [
     {
       "id": "1",
       "category": "Ăn uống",
       "date": "2025-03-01T08:30:00Z",
-      "type": "Chi",
+      "type": "Khoản chi",
       "amount": 150000,
       "paymentMethod": "Tiền mặt",
       "recurrence": null,
       "note": "Ăn sáng"
     },
     {
-      "id": "2",
-      "category": "Tiền lương",
-      "date": "2025-03-01T12:00:00Z",
-      "type": "Thu",
-      "amount": 10000000,
-      "paymentMethod": "Chuyển khoản",
-      "recurrence": {
-        "type": "Tháng",
-        "next_date": "2025-04-01",
-        "status": {
-          "code": 1,
-          "label": "Đang hoạt động"
-        }
-      },
-      "note": "Lương tháng 3"
-    },
-    {
-      "id": "3",
-      "category": "Hóa đơn điện",
-      "date": "2025-03-05T14:00:00Z",
-      "type": "Chi",
-      "amount": 800000,
-      "paymentMethod": "Thẻ tín dụng",
-      "recurrence": {
-        "type": "Tháng",
-        "next_date": "2025-04-05",
-        "status": {
-          "code": 1,
-          "label": "Đang hoạt động"
-        }
-      },
-      "note": "Thanh toán hóa đơn"
-    },
-    {
       "id": "4",
       "category": "Internet",
       "date": "2025-03-06T15:00:00Z",
-      "type": "Chi",
+      "type": "Khoản chi",
       "amount": 300000,
       "paymentMethod": "Ví điện tử",
       "recurrence": {
@@ -189,7 +457,7 @@
       "id": "5",
       "category": "Mua sắm online",
       "date": "2025-03-09T10:00:00Z",
-      "type": "Chi",
+      "type": "Khoản chi",
       "amount": 1200000,
       "paymentMethod": "Thẻ ghi nợ",
       "recurrence": null,
@@ -199,7 +467,7 @@
       "id": "6",
       "category": "Bảo hiểm",
       "date": "2025-03-10T08:30:00Z",
-      "type": "Chi",
+      "type": "Khoản chi",
       "amount": 1000000,
       "paymentMethod": "Chuyển khoản",
       "recurrence": {
@@ -216,7 +484,7 @@
       "id": "7",
       "category": "Giải trí",
       "date": "2025-03-12T19:30:00Z",
-      "type": "Chi",
+      "type": "Khoản chi",
       "amount": 400000,
       "paymentMethod": "Tiền mặt",
       "recurrence": null,
@@ -226,7 +494,7 @@
       "id": "8",
       "category": "Sức khỏe",
       "date": "2025-03-14T09:00:00Z",
-      "type": "Chi",
+      "type": "Khoản chi",
       "amount": 700000,
       "paymentMethod": "Thẻ tín dụng",
       "recurrence": null,
@@ -236,7 +504,7 @@
       "id": "9",
       "category": "Tiết kiệm",
       "date": "2025-03-15T10:00:00Z",
-      "type": "Chi",
+      "type": "Khoản chi",
       "amount": 2000000,
       "paymentMethod": "Chuyển khoản",
       "recurrence": {
@@ -253,7 +521,7 @@
       "id": "10",
       "category": "Đầu tư",
       "date": "2025-03-16T13:30:00Z",
-      "type": "Chi",
+      "type": "Khoản chi",
       "amount": 5000000,
       "paymentMethod": "Chuyển khoản",
       "recurrence": null,
@@ -263,7 +531,7 @@
       "id": "11",
       "category": "Xăng xe",
       "date": "2025-03-18T08:00:00Z",
-      "type": "Chi",
+      "type": "Khoản chi",
       "amount": 100000,
       "paymentMethod": "Tiền mặt",
       "recurrence": null,
@@ -273,7 +541,7 @@
       "id": "12",
       "category": "Lương thưởng",
       "date": "2025-03-20T12:00:00Z",
-      "type": "Thu",
+      "type": "Khoản thu",
       "amount": 5000000,
       "paymentMethod": "Chuyển khoản",
       "recurrence": null,
@@ -283,7 +551,7 @@
       "id": "13",
       "category": "Du lịch",
       "date": "2025-03-22T09:30:00Z",
-      "type": "Chi",
+      "type": "Khoản chi",
       "amount": 7000000,
       "paymentMethod": "Thẻ ghi nợ",
       "recurrence": null,
@@ -293,7 +561,7 @@
       "id": "14",
       "category": "Mua sách",
       "date": "2025-03-24T15:45:00Z",
-      "type": "Chi",
+      "type": "Khoản chi",
       "amount": 300000,
       "paymentMethod": "Tiền mặt",
       "recurrence": null,
@@ -303,7 +571,7 @@
       "id": "15",
       "category": "Lương",
       "date": "2025-03-25T12:00:00Z",
-      "type": "Thu",
+      "type": "Khoản thu",
       "amount": 12000000,
       "paymentMethod": "Chuyển khoản",
       "recurrence": {
@@ -315,9 +583,146 @@
         }
       },
       "note": "Lương tháng 3"
+    },
+    {
+      "id": "6a6b",
+      "type": "Khoản chi",
+      "category": "Ăn uống",
+      "amount": "20000",
+      "note": "Ăn Trưa",
+      "date": "2025-03-28T03:42:50.231Z",
+      "paymentMethod": "Ví tiền mặt",
+      "recurrence": null
+    },
+    {
+      "id": "c814",
+      "type": "Khoản chi",
+      "category": "Ăn uống",
+      "amount": "123231",
+      "note": "test",
+      "date": "2025-03-28T17:39:20.622Z",
+      "paymentMethod": "Ví tiền mặt",
+      "recurrence": null
+    },
+    {
+      "id": "bade",
+      "type": "Khoản chi",
+      "category": "Ăn uống",
+      "amount": "312312",
+      "date": "2025-03-29T20:31:14.660Z",
+      "paymentMethod": "Ví ngân hàng",
+      "recurrence": null
+    },
+    {
+      "id": "eb9c",
+      "type": "Khoản chi",
+      "category": "Ăn uống",
+      "amount": "123123",
+      "date": "2025-03-29T20:35:45.516Z",
+      "paymentMethod": "Ví ngân hàng",
+      "recurrence": null
+    },
+    {
+      "id": "95d9",
+      "type": "Khoản chi",
+      "category": "Nhà hàng",
+      "amount": "3123",
+      "note": "23",
+      "date": "2025-03-29T20:45:35.227Z",
+      "paymentMethod": "Ví Momo",
+      "recurrence": null
+    },
+    {
+      "id": "e5f9",
+      "type": "Khoản chi",
+      "category": "Nhà hàng",
+      "amount": "123",
+      "note": "23123",
+      "date": "2025-03-29T20:46:00.096Z",
+      "paymentMethod": "Ví ngân hàng",
+      "recurrence": null
+    },
+    {
+      "id": "f73f",
+      "type": "Khoản chi",
+      "category": "Nhà hàng",
+      "amount": "123",
+      "note": "123",
+      "date": "2025-03-30T11:21:32.235Z",
+      "paymentMethod": "Ví ngân hàng",
+      "recurrence": null
+    },
+    {
+      "id": "d7e6",
+      "type": "Khoản thu",
+      "category": "Đầu tư",
+      "amount": "1000000",
+      "note": "Tiền lời",
+      "date": "2025-03-30T16:45:54.458Z",
+      "paymentMethod": "Ví ngân hàng",
+      "recurrence": {
+        "type": "Hằng tuần",
+        "next_date": null,
+        "status": {
+          "code": 1,
+          "label": "Đang hoạt động"
+        }
+      }
     }
   ],
-
+  "recurring-transactions": [
+    [
+      {
+        "id": 1,
+        "transactionId": "4",
+        "recurringType": "Tháng",
+        "nextDueDate": "2025-04-06",
+        "status": "Tạm dừng"
+      },
+      {
+        "id": 2,
+        "transactionId": "6",
+        "recurringType": "Năm",
+        "nextDueDate": "2026-03-10",
+        "status": "Đã hủy"
+      },
+      {
+        "id": 3,
+        "transactionId": "9",
+        "recurringType": "Tháng",
+        "nextDueDate": "2025-04-15",
+        "status": "Đang hoạt động"
+      },
+      {
+        "id": 5,
+        "transactionId": "15",
+        "recurringType": "Tháng",
+        "nextDueDate": "2025-04-25",
+        "status": "Đang hoạt động"
+      }
+    ],
+    {
+      "id": "9377",
+      "transactionId": null,
+      "recurringType": "thang",
+      "nextDueDate": null,
+      "status": "DANG_HOAT_DONG"
+    },
+    {
+      "id": "0421",
+      "transactionId": null,
+      "recurringType": "tuan",
+      "nextDueDate": null,
+      "status": "DANG_HOAT_DONG"
+    },
+    {
+      "id": "b712",
+      "transactionId": "d7e6",
+      "recurringType": "Hằng năm",
+      "nextDueDate": null,
+      "status": "DANG_HOAT_DONG"
+    }
+  ],
   "small-goals": [
     {
       "id": "1",
@@ -345,8 +750,70 @@
     }
   ],
   "wallets": [
-    { "id": 1, "name": "Ví tiền mặt", "balance": 5000000 },
-    { "id": 2, "name": "Ví ngân hàng", "balance": 10000000 },
-    { "id": 3, "name": "Ví Momo", "balance": 2000000 }
+    {
+      "id": "1",
+      "name": "Ví tiền mặt",
+      "balance": 5000000
+    },
+    {
+      "id": "2",
+      "name": "Ví ngân hàng",
+      "balance": 10000000
+    },
+    {
+      "id": "3",
+      "name": "Ví Momo",
+      "balance": 2000000
+    }
+  ],
+  "budgets": [
+    {
+      "amountLimit": 5000000,
+      "startDate": "2025-03-01",
+      "endDate": "2025-04-30T00:00:00Z",
+      "createdAt": "2025-03-01T00:00:00Z",
+      "amountCurrent": 1500000,
+      "category": "Ăn uống"
+    },
+    {
+      "amountLimit": 3000000,
+      "startDate": "2025-02-01",
+      "endDate": "2025-04-30T00:00:00Z",
+      "createdAt": "2025-02-01T00:00:00Z",
+      "amountCurrent": 1000000,
+      "category": "Giải trí"
+    },
+    {
+      "amountLimit": 7000000,
+      "startDate": "2025-01-01",
+      "endDate": "2025-04-30T00:00:00Z",
+      "createdAt": "2025-01-01T00:00:00Z",
+      "amountCurrent": 2500000,
+      "category": "Mua sắm"
+    },
+    {
+      "amountLimit": 10000000,
+      "startDate": "2024-12-01",
+      "endDate": "2025-04-30T00:00:00Z",
+      "createdAt": "2024-12-01T00:00:00Z",
+      "amountCurrent": 4000000,
+      "category": "Nhà hàng"
+    },
+    {
+      "amountLimit": 10000000,
+      "startDate": "2024-12-01",
+      "endDate": "2025-04-30T00:00:00Z",
+      "createdAt": "2024-12-01T00:00:00Z",
+      "amountCurrent": 4000000,
+      "category": "Chill"
+    },
+    {
+      "amountLimit": 10000000,
+      "startDate": "2024-12-01",
+      "endDate": "2025-04-30T00:00:00Z",
+      "createdAt": "2024-12-01T00:00:00Z",
+      "amountCurrent": 4000000,
+      "category": "Hehe"
+    }
   ]
 }

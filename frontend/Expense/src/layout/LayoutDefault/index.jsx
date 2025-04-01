@@ -28,6 +28,8 @@ function LayoutDefault() {
     "/transaction/income": "Transaction",
     "/transaction/expense": "Transaction",
     "/transaction/recurring": "Transaction",
+    "/saving": "Goals / Saving",
+    "/statistics": "Statistics",
   };
 
   const title = pageTitles[location.pathname] || "Dashboard";

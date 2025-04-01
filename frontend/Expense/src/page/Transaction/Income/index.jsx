@@ -1,14 +1,19 @@
-import ActionTransaction from "../ActionTransaction";
+import { useSearchParams } from "react-router-dom";
 import MainTransaction from "../MainTransaction";
 function Income() {
+  const [searchParams] = useSearchParams();
+  const sortOrder = searchParams.get("sort") || "";
   return (
     <>
-      <ActionTransaction />
       <div
         className="inner-wrap"
         style={{ width: "97%", borderRadius: "20px" }}
       >
-        <MainTransaction recurring={false} type={"Thu"} />
+        <MainTransaction
+          recurring={false}
+          type={"Khoản thu"}
+          sortOrder={sortOrder}
+        />
       </div>
     </>
   );

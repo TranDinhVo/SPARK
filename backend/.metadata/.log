@@ -43,3 +43,55 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.
 
 !ENTRY ch.qos.logback.classic 1 0 2025-03-25 01:57:04.276
 !MESSAGE Logback config file: /Users/trandinhvo/Documents/SPARK/backend/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.0.20241001-1350.xml
+!SESSION 2025-03-26 13:40:33.134 -----------------------------------------------
+eclipse.buildId=4.34.0.20241128-0756
+java.version=21.0.5
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=vi_VN
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/trandinhvo/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.jee.product -keyring /Users/trandinhvo/.eclipse_keyring
+
+!ENTRY ch.qos.logback.classic 1 0 2025-03-26 13:40:39.211
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2025-03-26 13:40:56.694
+!MESSAGE Logback config file: /Users/trandinhvo/Documents/SPARK/backend/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.0.20241001-1350.xml
+!SESSION 2025-03-28 08:56:39.086 -----------------------------------------------
+eclipse.buildId=4.34.0.20241128-0756
+java.version=21.0.5
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=vi_VN
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/trandinhvo/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.jee.product -keyring /Users/trandinhvo/.eclipse_keyring
+
+!ENTRY ch.qos.logback.classic 1 0 2025-03-28 08:56:48.164
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2025-03-28 08:57:12.462
+!MESSAGE Logback config file: /Users/trandinhvo/Documents/SPARK/backend/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.0.20241001-1350.xml
+!SESSION 2025-03-28 09:07:06.141 -----------------------------------------------
+eclipse.buildId=4.34.0.20241128-0756
+java.version=21.0.5
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=vi_VN
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/trandinhvo/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.jee.product -keyring /Users/trandinhvo/.eclipse_keyring
+
+!ENTRY ch.qos.logback.classic 1 0 2025-03-28 09:07:12.421
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2025-03-28 09:07:17.569
+!MESSAGE Logback config file: /Users/trandinhvo/Documents/SPARK/backend/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.0.20241001-1350.xml
+!SESSION 2025-03-29 23:39:54.026 -----------------------------------------------
+eclipse.buildId=4.34.0.20241128-0756
+java.version=21.0.5
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=vi_VN
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/trandinhvo/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.jee.product -keyring /Users/trandinhvo/.eclipse_keyring
+
+!ENTRY ch.qos.logback.classic 1 0 2025-03-29 23:40:02.064
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2025-03-29 23:40:12.203
+!MESSAGE Logback config file: /Users/trandinhvo/Documents/SPARK/backend/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.0.20241001-1350.xml

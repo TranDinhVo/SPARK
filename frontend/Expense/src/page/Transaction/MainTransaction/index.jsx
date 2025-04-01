@@ -5,27 +5,35 @@ import "../../../assets/scss/MainTransaction.scss";
 import DeleteTransaction from "../DeleteTransaction";
 import EditTransaction from "../EditTransaction";
 import DetailTransaction from "../DetailTransaction/index";
+import { useOutletContext } from "react-router-dom";
 
 function MainTransaction(props) {
-  const { recurring, type } = props;
+  const { recurring, type, sortOrder } = props;
+  const { reload } = useOutletContext();
   const [dataTransaction, setDataTransaction] = useState([]);
 
   const fetchApi = async () => {
     const result = await get("transactions");
+    let filteredData = [];
     if (recurring === true) {
-      setDataTransaction(
-        result.filter((item) => item.recurrence_type !== null)
-      );
-    } else
-      setDataTransaction(
-        result.filter((item) => item.type === type || type === "")
-      );
+      filteredData = result.filter((item) => item.recurrence !== null);
+    } else {
+      filteredData = result.filter((item) => item.type === type || type === "");
+    }
+
+    if (sortOrder === "asc") {
+      filteredData.sort((a, b) => b.amount - a.amount);
+    } else if (sortOrder === "desc") {
+      filteredData.sort((a, b) => a.amount - b.amount);
+    }
+
+    setDataTransaction(filteredData.reverse());
   };
+
   useEffect(() => {
     fetchApi();
-  }, []);
-
-  const onReload = () => {
+  }, [sortOrder, reload]);
+  const onReLoad = () => {
     fetchApi();
   };
   const columns = [
@@ -64,7 +72,7 @@ function MainTransaction(props) {
     },
     recurring === true && {
       title: "Recurring",
-      dataIndex: "recurrence_type",
+      dataIndex: ["recurrence", "type"],
       key: "recurrence_type",
     },
     {
@@ -80,8 +88,8 @@ function MainTransaction(props) {
       key: "action",
       render: (_, record) => (
         <Space>
-          <DeleteTransaction record={record} onReload={onReload} />
-          <EditTransaction record={record} onReload={onReload} />
+          <EditTransaction record={record} onReLoad={onReLoad} />
+          <DeleteTransaction record={record} onReLoad={onReLoad} />
           <DetailTransaction record={record} />
         </Space>
       ),
