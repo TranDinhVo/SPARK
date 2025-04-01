@@ -7,6 +7,8 @@ import Expense from "../page/Transaction/Expense/index";
 import Income from "../page/Transaction/Income/index";
 import Recurring from "../page/Transaction/Recurring/index";
 import { Navigate } from "react-router-dom";
+import GoalsSaving from "../page/GoalsSaving";
+import Statistics from "../page/Statistics";
 
 export const routes = [
   {
@@ -46,6 +48,14 @@ export const routes = [
             element: <Recurring />,
           },
         ],
+      },
+      {
+        path: "saving",
+        element: <GoalsSaving />,
+      },
+      {
+        path: "statistics",
+        element: <Statistics />,
       },
     ],
   },

@@ -1,0 +1,38 @@
+.budget {
+  &-dashboard {
+    display: flex;
+    flex-direction: column;
+    //     justify-content: center;
+    //     align-items: center;
+    padding: 30px 50px;
+    background-color: #fff;
+    border-radius: 20px;
+  }
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    &--select {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 !important;
+    }
+    &--title {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 600;
+    }
+  }
+  canvas {
+    display: block !important;
+    margin-left: auto !important;
+  }
+  &__chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+}

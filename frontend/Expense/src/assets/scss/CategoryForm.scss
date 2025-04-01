@@ -1,0 +1,147 @@
+.ant-popover .ant-popover-inner {
+  padding: 0;
+  height: 450px;
+  padding-bottom: 30px;
+  margin-left: 60px;
+  margin-top: -5px;
+}
+.ant-popover .ant-popover-arrow {
+  top: 3px;
+  left: 60px;
+}
+.category {
+  &-show {
+    width: 420px;
+    display: flex;
+    flex-direction: column;
+    //     gap: 10px;
+    padding: 0;
+  }
+  &__title {
+    font-size: 32px;
+    margin: 0;
+    padding: 15px 20px 5px;
+  }
+  &__menu {
+    background-color: #f6e5ff;
+    padding: 10px 0px;
+    &--list {
+      display: flex;
+      //     gap: 10px;
+      //     padding: 5px 20px;
+      justify-content: space-between;
+      width: 380px;
+      margin: 0 auto;
+      padding: 3px;
+      border-radius: 14px;
+      background: #e4beff;
+    }
+    &--item {
+      width: 120px;
+      border-radius: 14px;
+      color: #fff;
+      font-weight: 600;
+      border: 0;
+    }
+    &--active0 {
+      background-color: #007ee5;
+      &:hover {
+        background-color: #007ee5 !important;
+        color: #fff !important;
+      }
+    }
+    &--active1 {
+      background-color: #f87535;
+      &:hover {
+        background-color: #f87535 !important;
+        color: #fff !important;
+      }
+    }
+    &--active2 {
+      background-color: #ff3c6a;
+      &:hover {
+        background-color: #ff3c6a !important;
+        color: #fff !important;
+      }
+    }
+    &--default {
+      &0 {
+        background-color: #bae0ff;
+        &:hover {
+          background-color: #007ee5 !important;
+        }
+      }
+      &1 {
+        background-color: #ffceb6;
+        &:hover {
+          background-color: #f87535 !important;
+        }
+      }
+      &2 {
+        background-color: #ffb4c6;
+        &:hover {
+          background-color: #ff3c6a !important;
+        }
+      }
+    }
+  }
+  &__list {
+    &--main {
+      display: flex;
+      flex-direction: column;
+      width: 380px;
+      height: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      max-height: 300px;
+      overflow-y: auto;
+      // padding-right: 10px;
+    }
+
+    &--item {
+      display: flex;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      border-radius: 12px;
+      padding: 8px 20px !important;
+      justify-content: start !important;
+      cursor: pointer;
+    }
+    &--logo {
+      font-size: 24px;
+    }
+    &--content {
+      font-size: 16px;
+      margin-left: 30px;
+    }
+    &--color {
+      &00 {
+        background-color: #b1dcff;
+      }
+      &01 {
+        background-color: #51a9f1;
+      }
+      &10 {
+        background-color: #fecdb5;
+      }
+      &11 {
+        background-color: #fe8c73;
+      }
+      &20 {
+        background-color: #fed2dd;
+      }
+      &21 {
+        background-color: #fa7398;
+      }
+    }
+  }
+}
+.category__list--main {
+  max-height: 300px;
+  overflow-y: auto;
+  direction: rtl; /* Dịch cuộn sang bên phải */
+}
+
+.category__list--main * {
+  direction: ltr; /* Giữ nội dung bình thường */
+}

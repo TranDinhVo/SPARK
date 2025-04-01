@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_fhHlYQiFEfC6n8wxqVjiKw" elementId="org.eclipse.e4.legacy.ide.application" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_fhHlYgiFEfC6n8wxqVjiKw" bindingContexts="_fhIMdgiFEfC6n8wxqVjiKw">
-  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;workbench>&#xA;&lt;mruList>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;WalletEntity.java&quot; tooltip=&quot;expense-be/src/main/java/com/javaweb/entity/WalletEntity.java&quot;>&#xA;&lt;persistable path=&quot;/expense-be/src/main/java/com/javaweb/entity/WalletEntity.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;RecurringTypeEnum.java&quot; tooltip=&quot;expense-be/src/main/java/com/javaweb/enums/RecurringTypeEnum.java&quot;>&#xA;&lt;persistable path=&quot;/expense-be/src/main/java/com/javaweb/enums/RecurringTypeEnum.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;RecurringStatusEnum.java&quot; tooltip=&quot;expense-be/src/main/java/com/javaweb/enums/RecurringStatusEnum.java&quot;>&#xA;&lt;persistable path=&quot;/expense-be/src/main/java/com/javaweb/enums/RecurringStatusEnum.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;UserController.java&quot; tooltip=&quot;expense-be/src/main/java/com/javaweb/controller/UserController.java&quot;>&#xA;&lt;persistable path=&quot;/expense-be/src/main/java/com/javaweb/controller/UserController.java&quot;/>&#xA;&lt;/file>&#xA;&lt;/mruList>&#xA;&lt;/workbench>"/>
+  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;workbench>&#xA;&lt;mruList>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;CategoryEntity.java&quot; tooltip=&quot;expense-be/src/main/java/com/javaweb/entity/CategoryEntity.java&quot;>&#xA;&lt;persistable path=&quot;/expense-be/src/main/java/com/javaweb/entity/CategoryEntity.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;RecurringTransactionEntity.java&quot; tooltip=&quot;expense-be/src/main/java/com/javaweb/entity/RecurringTransactionEntity.java&quot;>&#xA;&lt;persistable path=&quot;/expense-be/src/main/java/com/javaweb/entity/RecurringTransactionEntity.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;WalletEntity.java&quot; tooltip=&quot;expense-be/src/main/java/com/javaweb/entity/WalletEntity.java&quot;>&#xA;&lt;persistable path=&quot;/expense-be/src/main/java/com/javaweb/entity/WalletEntity.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;RecurringTypeEnum.java&quot; tooltip=&quot;expense-be/src/main/java/com/javaweb/enums/RecurringTypeEnum.java&quot;>&#xA;&lt;persistable path=&quot;/expense-be/src/main/java/com/javaweb/enums/RecurringTypeEnum.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;RecurringStatusEnum.java&quot; tooltip=&quot;expense-be/src/main/java/com/javaweb/enums/RecurringStatusEnum.java&quot;>&#xA;&lt;persistable path=&quot;/expense-be/src/main/java/com/javaweb/enums/RecurringStatusEnum.java&quot;/>&#xA;&lt;/file>&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;UserController.java&quot; tooltip=&quot;expense-be/src/main/java/com/javaweb/controller/UserController.java&quot;>&#xA;&lt;persistable path=&quot;/expense-be/src/main/java/com/javaweb/controller/UserController.java&quot;/>&#xA;&lt;/file>&#xA;&lt;/mruList>&#xA;&lt;/workbench>"/>
   <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
   <children xsi:type="basic:TrimmedWindow" xmi:id="_fhHlYgiFEfC6n8wxqVjiKw" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_f-gsAgiFEfC6n8wxqVjiKw" label="%trimmedwindow.label.eclipseSDK" x="0" y="25" width="1454" height="1025">
     <persistedState key="coolBarVisible" value="true"/>
@@ -81,8 +81,9 @@
           <tags>persp.editorOnboardingCommand:Find Actions$$$&#x2318;3</tags>
           <tags>persp.editorOnboardingCommand:Show Key Assist$$$&#x21e7;&#x2318;L</tags>
           <tags>persp.editorOnboardingCommand:New$$$&#x2318;N</tags>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_gItw4QiFEfC6n8wxqVjiKw" selectedElement="_gItw7giFEfC6n8wxqVjiKw" horizontal="true">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_gItw4QiFEfC6n8wxqVjiKw" selectedElement="_gItw4giFEfC6n8wxqVjiKw" horizontal="true">
             <children xsi:type="basic:PartStack" xmi:id="_gItw4giFEfC6n8wxqVjiKw" elementId="topLeft" containerData="2000" selectedElement="_gItw4wiFEfC6n8wxqVjiKw">
+              <tags>active</tags>
               <children xsi:type="advanced:Placeholder" xmi:id="_gItw4wiFEfC6n8wxqVjiKw" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_gIcrIAiFEfC6n8wxqVjiKw" closeable="true">
                 <tags>View</tags>
                 <tags>categoryTag:General</tags>
@@ -249,10 +250,9 @@
       <tags>categoryTag:Help</tags>
     </sharedElements>
     <sharedElements xsi:type="advanced:Area" xmi:id="_gIP20AiFEfC6n8wxqVjiKw" elementId="org.eclipse.ui.editorss" selectedElement="_gIP20QiFEfC6n8wxqVjiKw">
-      <children xsi:type="basic:PartStack" xmi:id="_gIP20QiFEfC6n8wxqVjiKw" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_gw5nEAjZEfCgd61PN-9g-A">
+      <children xsi:type="basic:PartStack" xmi:id="_gIP20QiFEfC6n8wxqVjiKw" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_taQUcAtvEfCaMJmKuhFKjA">
         <tags>EditorStack</tags>
         <tags>org.eclipse.e4.primaryDataStack</tags>
-        <tags>active</tags>
         <children xsi:type="basic:Part" xmi:id="_UEDk0AiIEfCyTtKfvAJ_4A" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="UserController.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.png" closeable="true">
           <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;UserController.java&quot; partName=&quot;UserController.java&quot; title=&quot;UserController.java&quot; tooltip=&quot;expense-be/src/main/java/com/javaweb/controller/UserController.java&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/expense-be/src/main/java/com/javaweb/controller/UserController.java&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;0&quot; selectionTopPixel=&quot;90&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
@@ -276,8 +276,18 @@
           <tags>Editor</tags>
           <tags>removeOnHide</tags>
           <tags>org.eclipse.jdt.ui.CompilationUnitEditor</tags>
-          <tags>active</tags>
-          <tags>activeOnClose</tags>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_9rIb4AoEEfCMcdwJGGiIuw" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="CategoryEntity.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.png" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;CategoryEntity.java&quot; partName=&quot;CategoryEntity.java&quot; title=&quot;CategoryEntity.java&quot; tooltip=&quot;expense-be/src/main/java/com/javaweb/entity/CategoryEntity.java&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/expense-be/src/main/java/com/javaweb/entity/CategoryEntity.java&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;675&quot; selectionTopPixel=&quot;0&quot;/>&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>removeOnHide</tags>
+          <tags>org.eclipse.jdt.ui.CompilationUnitEditor</tags>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_taQUcAtvEfCaMJmKuhFKjA" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="RecurringTransactionEntity.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.png" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;RecurringTransactionEntity.java&quot; partName=&quot;RecurringTransactionEntity.java&quot; title=&quot;RecurringTransactionEntity.java&quot; tooltip=&quot;expense-be/src/main/java/com/javaweb/entity/RecurringTransactionEntity.java&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/expense-be/src/main/java/com/javaweb/entity/RecurringTransactionEntity.java&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1376&quot; selectionTopPixel=&quot;0&quot;/>&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>removeOnHide</tags>
+          <tags>org.eclipse.jdt.ui.CompilationUnitEditor</tags>
         </children>
       </children>
     </sharedElements>
@@ -287,6 +297,8 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;view CommonNavigator.LINKING_ENABLED=&quot;0&quot; currentWorkingSetName=&quot;Aggregate for window 1742806595900&quot; org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets=&quot;0&quot;>&#xA;&lt;lastRecentlyUsedFilters/>&#xA;&lt;/view>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
+      <tags>active</tags>
+      <tags>activeOnClose</tags>
       <menus xmi:id="_gOsdEAiFEfC6n8wxqVjiKw" elementId="org.eclipse.ui.navigator.ProjectExplorer">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -462,7 +474,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_gDkyMAiFEfC6n8wxqVjiKw" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_Zx4mgAjZEfCgd61PN-9g-A" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_fijwCgiFEfC6n8wxqVjiKw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_HIrLMAy0EfCwn6i48pxRKg" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_fijwCgiFEfC6n8wxqVjiKw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_gDkyMQiFEfC6n8wxqVjiKw" elementId="group.edit" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -470,8 +482,8 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_gDlZQAiFEfC6n8wxqVjiKw" elementId="org.eclipse.ui.workbench.edit">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_Zx6bsAjZEfCgd61PN-9g-A" elementId="undo" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.png" tooltip="Undo" enabled="false" command="_ficbHgiFEfC6n8wxqVjiKw"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_Zx7p0AjZEfCgd61PN-9g-A" elementId="redo" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.png" tooltip="Redo" enabled="false" command="_fifecAiFEfC6n8wxqVjiKw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_HItAYAy0EfCwn6i48pxRKg" elementId="undo" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.png" tooltip="Undo" enabled="false" command="_ficbHgiFEfC6n8wxqVjiKw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_HItncAy0EfCwn6i48pxRKg" elementId="redo" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.png" tooltip="Redo" enabled="false" command="_fifecAiFEfC6n8wxqVjiKw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_gDlZQQiFEfC6n8wxqVjiKw" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -501,7 +513,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_gDlZRQiFEfC6n8wxqVjiKw" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_Zx838AjZEfCgd61PN-9g-A" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_fijJAQiFEfC6n8wxqVjiKw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_HIu1kAy0EfCwn6i48pxRKg" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" enabled="false" type="Check" command="_fijJAQiFEfC6n8wxqVjiKw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_gDlZRgiFEfC6n8wxqVjiKw" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -1313,7 +1325,7 @@
     <bindings xmi:id="_fjrKJwiFEfC6n8wxqVjiKw" keySequence="ALT+CR" command="_figFiAiFEfC6n8wxqVjiKw"/>
   </bindingTables>
   <bindingTables xmi:id="_fkgQkQiFEfC6n8wxqVjiKw" contributorURI="platform:/fragment/org.eclipse.e4.ui.workbench.renderers.swt.cocoa" bindingContext="_fhIMeQiFEfC6n8wxqVjiKw">
-    <bindings xmi:id="_ZZKkgQjZEfCgd61PN-9g-A" keySequence="M1+W" command="_fkfpggiFEfC6n8wxqVjiKw"/>
+    <bindings xmi:id="_Gsm6QQy0EfCwn6i48pxRKg" keySequence="M1+W" command="_fkfpggiFEfC6n8wxqVjiKw"/>
   </bindingTables>
   <bindingTables xmi:id="_gIRE8QiFEfC6n8wxqVjiKw" bindingContext="_gIRE8AiFEfC6n8wxqVjiKw"/>
   <bindingTables xmi:id="_gIRsAQiFEfC6n8wxqVjiKw" bindingContext="_gIRsAAiFEfC6n8wxqVjiKw"/>

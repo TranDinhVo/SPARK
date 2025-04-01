@@ -1,5 +1,11 @@
 import { Menu } from "antd";
-import { AppstoreOutlined, EuroCircleOutlined } from "@ant-design/icons";
+import {
+  AppstoreOutlined,
+  PieChartOutlined,
+  TransactionOutlined,
+  DollarOutlined,
+  BarChartOutlined,
+} from "@ant-design/icons";
 import { Link, useLocation } from "react-router-dom";
 import "../../assets/scss/MenuSider.scss";
 function MenuSider(props) {
@@ -20,14 +26,24 @@ function MenuSider(props) {
       label: <Link to="/">Dashboard</Link>,
     },
     {
-      key: `/budget`,
-      icon: <EuroCircleOutlined />,
+      key: "/budget",
+      icon: <PieChartOutlined />,
       label: <Link to="/budget">Budget</Link>,
     },
     {
-      key: `/transaction`,
-      icon: <EuroCircleOutlined />,
+      key: "/transaction",
+      icon: <TransactionOutlined />,
       label: <Link to="/transaction">Transaction</Link>,
+    },
+    {
+      key: "/saving",
+      icon: <DollarOutlined />,
+      label: <Link to="/saving">Goals/Saving</Link>,
+    },
+    {
+      key: "/statistics",
+      icon: <BarChartOutlined />,
+      label: <Link to="/statistics">Statistics</Link>,
     },
   ];
   return (

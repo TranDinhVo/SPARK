@@ -1,0 +1,60 @@
+.table-budget {
+  //   padding: 30px;
+  //   border-radius: 30px;
+  margin-top: 10px;
+  .ant-table {
+    padding: 30px;
+    border-radius: 30px;
+  }
+  .ant-table-thead {
+    tr {
+      th {
+        background-color: #fff;
+        font-size: 20px;
+        position: relative;
+        padding-bottom: 30px;
+      }
+    }
+  }
+  .ant-table-body {
+    tr {
+      display: block;
+      margin-top: 20px !important;
+    }
+  }
+
+  .even-budget,
+  .odd-budget {
+    padding: 8px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  .even-budget td {
+    background-color: #d6f4ff !important;
+  }
+
+  .odd-budget td {
+    background-color: #d6c3ff !important;
+    margin-top: 10px !important;
+  }
+  .even-budget td:first-child,
+  .odd-budget td:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .even-budget td:last-child,
+  .odd-budget td:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+
+  .ant-table-tbody {
+    border-spacing: 10px 8px;
+  }
+
+  .even-budget:hover,
+  .odd-budget:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+}
