@@ -51,4 +51,69 @@ public class BudgetEntity {
 
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public UserEntity getUserBudget() {
+		return userBudget;
+	}
+
+	public void setUserBudget(UserEntity userBudget) {
+		this.userBudget = userBudget;
+	}
+
+	public CategoryEntity getCategoryBudget() {
+		return categoryBudget;
+	}
+
+	public void setCategoryBudget(CategoryEntity categoryBudget) {
+		this.categoryBudget = categoryBudget;
+	}
+
+	public BigDecimal getAmountLimit() {
+		return amountLimit;
+	}
+
+	public void setAmountLimit(BigDecimal amountLimit) {
+		this.amountLimit = amountLimit;
+	}
+
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
+	}
+
+	public Float getAlertThreshold() {
+		return alertThreshold;
+	}
+
+	public void setAlertThreshold(Float alertThreshold) {
+		this.alertThreshold = alertThreshold;
+	}
+
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Instant createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	
 }
