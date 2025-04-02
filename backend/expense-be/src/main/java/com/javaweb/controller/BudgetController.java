@@ -19,13 +19,13 @@ public class BudgetController {
     @Autowired
     private BudgetService budgetService;
     
-    @GetMapping("/user/{userId}")
+    @GetMapping
     public ResponseEntity<List<BudgetResponseDTO>> getUserBudgets(@PathVariable Long userId) {
         List<BudgetResponseDTO> budgets = budgetService.getBudgetsByUserId(userId);
         return ResponseEntity.ok(budgets);
     }
     
-    @GetMapping("/{budgetId}")
+    @GetMapping("/{id}")
     public ResponseEntity<BudgetResponseDTO> getBudgetById(@PathVariable Long budgetId) {
         BudgetResponseDTO budget = budgetService.getBudgetById(budgetId);
         return ResponseEntity.ok(budget);

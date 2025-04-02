@@ -1,9 +1,5 @@
 package com.javaweb.service;
 
-//import com.javaweb.model.RecurringTransactionDTO;
-import com.javaweb.entity.RecurringTransactionEntity;
-import com.javaweb.repository.impl.RecurringTransactionRepositoryImpl;
-
 public class RecurringTransactionService {
 //    private final RecurringTransactionRepositoryImpl recurringTransactionRepositoryImpl;
 //
