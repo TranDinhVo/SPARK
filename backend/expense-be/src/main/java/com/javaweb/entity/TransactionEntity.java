@@ -55,10 +55,6 @@ public class TransactionEntity {
     @Column(name = "amount", precision = 15, scale = 2, nullable = false)
     private BigDecimal amount;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false, length = 10)
-    private TransactionTypeEnum type;
-
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 

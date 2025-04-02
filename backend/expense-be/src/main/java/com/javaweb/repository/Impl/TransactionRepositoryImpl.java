@@ -1,5 +1,5 @@
 package com.javaweb.repository.Impl;
 
-public class TransactionRepository {
+public class TransactionRepositoryImpl {
 
 }
