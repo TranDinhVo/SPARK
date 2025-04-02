@@ -27,20 +27,20 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // Đăng ký user mới
-    @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody UserEntity user) {
-        Optional<UserEntity> checkEmail = userService.findByEmail(user.getEmail());
-        if (checkEmail.isPresent()) {
-            return ResponseEntity.badRequest().body("Email đã được sử dụng!");
-        }
-        Optional<UserEntity> checkUsername = userService.findByUsername(user.getUsername());
-        if (checkUsername.isPresent()) {
-            return ResponseEntity.badRequest().body("Tên đăng nhập đã được sử dụng!");
-        }
-        UserEntity newUser = userService.registerUser(user);
-        return ResponseEntity.ok(newUser);
-    }
+//    // Đăng ký user mới
+//    @PostMapping("/register")
+//    public ResponseEntity<?> registerUser(@RequestBody UserEntity user) {
+//        Optional<UserEntity> checkEmail = userService.findByEmail(user.getEmail());
+//        if (checkEmail.isPresent()) {
+//            return ResponseEntity.badRequest().body("Email đã được sử dụng!");
+//        }
+//        Optional<UserEntity> checkUsername = userService.findByUsername(user.getUsername());
+//        if (checkUsername.isPresent()) {
+//            return ResponseEntity.badRequest().body("Tên đăng nhập đã được sử dụng!");
+//        }
+//        UserEntity newUser = userService.registerUser(user);
+//        return ResponseEntity.ok(newUser);
+//    }
 
     // Lấy danh sách tất cả user
     @GetMapping

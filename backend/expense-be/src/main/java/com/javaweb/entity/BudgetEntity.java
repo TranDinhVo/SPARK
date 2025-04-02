@@ -44,7 +44,7 @@ public class BudgetEntity {
     private LocalDate startDate;
 
     @Column(name = "end_date", nullable = false)
-    private Instant endDate;
+    private LocalDate endDate;
 
     @Column(name = "alert_threshold", columnDefinition = "FLOAT DEFAULT 0.8")
     private Float alertThreshold = 0.8f;
