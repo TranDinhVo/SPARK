@@ -1,5 +1,6 @@
 package com.javaweb.repository.Impl;
 
+
 import com.javaweb.entity.TransactionEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
