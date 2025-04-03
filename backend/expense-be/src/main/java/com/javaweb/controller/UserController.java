@@ -27,7 +27,7 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // Đăng ký user mới
+//    // Đăng ký user mới
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserEntity user) {
         Optional<UserEntity> checkEmail = userService.findByEmail(user.getEmail());
