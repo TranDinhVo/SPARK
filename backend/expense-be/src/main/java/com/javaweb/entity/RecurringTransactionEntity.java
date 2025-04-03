@@ -12,8 +12,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,10 +30,6 @@ public class RecurringTransactionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "transaction_id", nullable = false)
-    private TransactionEntity transaction;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "recurrence_type", nullable = false, length = 10)
     private RecurringTypeEnum recurrenceType;
@@ -45,5 +39,47 @@ public class RecurringTransactionEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 20)
-    private RecurringStatusEnum status = RecurringStatusEnum.DANG_HOAT_DONG;
+    private RecurringStatusEnum status = RecurringStatusEnum.ACTIVE;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public RecurringTypeEnum getRecurrenceType() {
+		return recurrenceType;
+	}
+
+	public void setRecurrenceType(RecurringTypeEnum recurrenceType) {
+		this.recurrenceType = recurrenceType;
+	}
+
+	public LocalDate getNextDueDate() {
+		return nextDueDate;
+	}
+
+	public void setNextDueDate(LocalDate nextDueDate) {
+		this.nextDueDate = nextDueDate;
+	}
+
+	public RecurringStatusEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(RecurringStatusEnum status) {
+		this.status = status;
+	}
+
+	public RecurringTransactionEntity(Long id, RecurringTypeEnum recurrenceType,
+			LocalDate nextDueDate, RecurringStatusEnum status) {
+		super();
+		this.id = id;
+		this.recurrenceType = recurrenceType;
+		this.nextDueDate = nextDueDate;
+		this.status = status;
+	}
+    
 }

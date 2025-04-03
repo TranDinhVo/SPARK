@@ -11,6 +11,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -36,6 +38,9 @@ public class CategoryEntity {
     @OneToMany(mappedBy = "categoryBudget", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BudgetEntity> budget  = new ArrayList<>();
     
+    @ManyToOne
+    @JoinColumn(name="type_id")
+    private CategoryTypeEntity categoryType;
     
     @Column(name="name",nullable = false, length = 100)
     private String name;
@@ -43,10 +48,57 @@ public class CategoryEntity {
     @Column(name="icon_url", columnDefinition = "TEXT")
     private String iconUrl;
 
-    @Column(name="color_Code", length = 10)
-    private String colorCode;
-
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<TransactionEntity> getTransaction() {
+		return transaction;
+	}
+
+	public void setTransaction(List<TransactionEntity> transaction) {
+		this.transaction = transaction;
+	}
+
+	public List<BudgetEntity> getBudget() {
+		return budget;
+	}
+
+	public void setBudget(List<BudgetEntity> budget) {
+		this.budget = budget;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getIconUrl() {
+		return iconUrl;
+	}
+
+	public void setIconUrl(String iconUrl) {
+		this.iconUrl = iconUrl;
+	}
+
+
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Instant createdAt) {
+		this.createdAt = createdAt;
+	}
+    
     
 }
