@@ -3,6 +3,8 @@ package com.javaweb.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.javaweb.enums.CategoryTypeEnum;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,7 +31,7 @@ public class CategoryTypeEntity {
 	private Long id;
 	
 	@Column(name="name",nullable = false, length = 100)
-	private String name;
+	private CategoryTypeEnum name;
 	
 	@OneToMany(mappedBy = "categoryType", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CategoryEntity> categories = new ArrayList<>();
@@ -40,14 +42,6 @@ public class CategoryTypeEntity {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public List<CategoryEntity> getCategories() {
