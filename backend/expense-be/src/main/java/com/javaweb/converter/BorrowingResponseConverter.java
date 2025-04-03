@@ -24,12 +24,14 @@ public class BorrowingResponseConverter {
 	    Instant createdAt = (row.length > 2 && row[2] != null) ? ((Timestamp) row[2]).toInstant() : null;
 	    Instant deadline = (row.length > 3 && row[3] != null) ? ((Timestamp) row[3]).toInstant() : null;
 	    Long id = (row.length > 4 && row[4] != null) ? ((Number) row[4]).longValue() : null;
-	    Long userId = (row.length > 5 && row[5] != null) ? ((Number) row[5]).longValue() : null;
-	    Long walletId = (row.length > 6 && row[6] != null) ? ((Number) row[6]).longValue() : null;
+//	    Long userId = (row.length > 5 && row[5] != null) ? ((Number) row[5]).longValue() : null;
+//	    Long walletId = (row.length > 6 && row[6] != null) ? ((Number) row[6]).longValue() : null;
 	    String counterpartyName = (row.length > 7 && row[7] != null) ? (String) row[7] : "";
 	    String loanType = (row.length > 8 && row[8] != null) ? (String) row[8] : "";
 	    String status = (row.length > 9 && row[9] != null) ? (String) row[9] : "";
 	    BigDecimal paidAmount = (row.length > 10 && row[10] != null) ? (BigDecimal) row[10] : BigDecimal.ZERO;
+	    String walletName = (row.length > 11 && row[11] != null) ? (String) row[11] : "";
+
 	    
 	    if (paidAmount.compareTo(amount) < 0) {
 	        if (deadline != null && deadline.isBefore(Instant.now())) {
@@ -46,7 +48,7 @@ public class BorrowingResponseConverter {
 	    } else if (status.equals(BorrowingStatusEnum.HOAN_THANH.name())) {
 	    	completedIds.add(id);
 	    }
-	    return new BorrowingResponseDTO(amount, interestRate, createdAt, deadline, id, userId, walletId, counterpartyName, loanType, status, paidAmount);	  
+	    return new BorrowingResponseDTO(id, walletName, counterpartyName, amount, interestRate, deadline, loanType, status, createdAt, paidAmount);	  
 	}
 	
 	public BorrowingResponseDTO toUpdateBorrowingEntity(BorrowingEntity entity, BorrowingResponseDTO response) {

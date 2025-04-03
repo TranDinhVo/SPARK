@@ -3,41 +3,66 @@ package com.javaweb.model.response;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.javaweb.enums.BorrowingStatusEnum;
 import com.javaweb.enums.LoanTypeEnum;
 public class BorrowingResponseDTO {
-	private Long id;
-	private String counterpartyName;
-    private BigDecimal amount;
-    private BigDecimal interestRate;
+	//Trả borrow
+	private Long id;//khóa chính
+	private String walletName;//tên ví
+	private String counterpartyName;//tên đối tác
+    private BigDecimal amount;//số tiền mượn
+    private BigDecimal interestRate;//lãi
     private Instant deadline;
-    private LoanTypeEnum loanType;
-    private BorrowingStatusEnum status;
+    private LoanTypeEnum loanType;//kiểu mượn
+    private BorrowingStatusEnum status;//tình trạng
     private Instant createdAt;
-    private Long userId;
-    private BigDecimal paidAmount;
+    private BigDecimal paidAmount;//tiền đã trả
     
-    public BorrowingResponseDTO(BigDecimal amount, BigDecimal interestRate, Instant createdAt, Instant deadline, 
-            Long id, Long userId, Long walletId, String counterpartyName, 
-            String loanType, String status, BigDecimal paidAmount) {
-        this.amount = amount;
-        this.interestRate = interestRate;
-        this.createdAt = createdAt;
-        this.deadline = deadline;
-        this.id = id;
-        this.userId = userId;
-        this.counterpartyName = counterpartyName;
-        this.loanType = LoanTypeEnum.valueOf(loanType);
-        this.status = BorrowingStatusEnum.valueOf(status);
-        this.paidAmount = paidAmount;
+//    public BorrowingResponseDTO(BigDecimal amount, BigDecimal interestRate, Instant createdAt, Instant deadline, 
+//            Long id, Long userId, Long walletId, String counterpartyName, 
+//            String loanType, String status, BigDecimal paidAmount) {
+//        this.amount = amount;
+//        this.interestRate = interestRate;
+//        this.createdAt = createdAt;
+//        this.deadline = deadline;
+//        this.id = id;
+//        this.userId = userId;
+//        this.counterpartyName = counterpartyName;
+//        this.loanType = LoanTypeEnum.valueOf(loanType);
+//        this.status = BorrowingStatusEnum.valueOf(status);
+//        this.paidAmount = paidAmount;
+//    }
+    public BorrowingResponseDTO(Long id, String walletName, String counterpartyName, BigDecimal amount,
+    		BigDecimal interestRate, Instant deadline, String loanType, String status, Instant createdAt,
+    		BigDecimal paidAmount) {
+    	super();
+    	this.id = id;
+    	this.walletName = walletName;
+    	this.counterpartyName = counterpartyName;
+    	this.amount = amount;
+    	this.interestRate = interestRate;
+    	this.deadline = deadline;
+    	this.loanType = LoanTypeEnum.valueOf(loanType);
+    	this.status = BorrowingStatusEnum.valueOf(status);
+    	this.createdAt = createdAt;
+    	this.paidAmount = paidAmount;
     }
+    
     
 	public BorrowingResponseDTO() {
 		super();
 	}
 
 
+	public String getWalletName() {
+		return walletName;
+	}
+	public void setWalletName(String walletName) {
+		this.walletName = walletName;
+	}
+	public BigDecimal getInterestRate() {
+		return interestRate;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -85,12 +110,6 @@ public class BorrowingResponseDTO {
 	}
 	public void setCreatedAt(Instant created_at) {
 		this.createdAt = created_at;
-	}
-	public Long getUserId() {
-		return userId;
-	}
-	public void setUserId(Long user_id) {
-		this.userId = user_id;
 	}
 	public BigDecimal getPaidAmount() {
 		return paidAmount;
