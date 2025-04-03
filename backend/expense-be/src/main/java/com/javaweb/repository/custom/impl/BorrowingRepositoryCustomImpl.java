@@ -51,7 +51,8 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 	}
 	
 	 public void querySqlJoin(BorrowingSearchBuilder builder, StringBuilder sql) {
-	            sql.append(" INNER JOIN transaction t ON b.id = t.borrowing_id ");
+	            sql.append(" LEFT JOIN transaction t ON b.id = t.borrowing_id AND ((b.loan_type = 'CHO_MUON' AND t.category_id = 8) OR (b.loan_type = 'DI_VAY' AND t.category_id = 6)) ");
+	            sql.append("INNER JOIN wallet AS w ON w.id = b.wallet_id ");
 	    }
 	
 	
@@ -66,6 +67,8 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
                 if (!fieldName.equals("amount_from") && !fieldName.equals("amount_to") && value != null) {
                     if (item.getType().equals(String.class)) {
                     	where.append(" AND b.").append(fieldName).append(" LIKE '%").append(value).append("%' ");
+                    } else if (item.getType().equals(Long.class)) {
+                    	where.append(" AND b.").append(fieldName).append(" = ").append(value);
                     } else if (item.getType().equals(BigDecimal.class)) {
                     	where.append(" AND b.").append(fieldName).append(" = ").append(value);
                     } else if (item.getType().equals(Instant.class)) {
@@ -93,17 +96,15 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 	
 	@Override
 	public List<BorrowingResponseDTO> searchBorrowings(BorrowingSearchBuilder builder){
-		 StringBuilder sql = new StringBuilder("SELECT b.*, SUM(t.amount) AS 'paidAmount' FROM borrowing AS b ");
-		 StringBuilder where = new StringBuilder("WHERE 1=1 ");
+		 StringBuilder sql = new StringBuilder("SELECT b.*,COALESCE(SUM(t.amount), 0) AS paidAmount, w.`name` AS walletName FROM borrowing b ");
+		 StringBuilder where = new StringBuilder(" WHERE 1=1 ");
 		 querySqlJoin(builder,sql);
 	     normalQuery(builder,where);
 	     specialQuery(builder,where);
-	     sql.append(where).append(" GROUP BY b.id");
+	     sql.append(where).append(" GROUP BY b.id; ");
 	     
 	     Query query = entityManager.createNativeQuery(sql.toString());
 	     List<Object[]> results = query.getResultList();
-	     
-	    
 	     
 	     List<BorrowingResponseDTO> responseList =  results.stream().map(row -> {
 	    	    try {

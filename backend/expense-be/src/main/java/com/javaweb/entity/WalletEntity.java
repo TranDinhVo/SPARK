@@ -22,19 +22,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "wallet")
 public class WalletEntity {
-
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -48,17 +43,15 @@ public class WalletEntity {
     @Column(name = "balance", precision = 15, scale = 2)
     private BigDecimal balance = BigDecimal.ZERO;
 
-    
     @Enumerated(EnumType.STRING)
     @Column(name = "currency", length = 10)
     private CurrencyEnum currency = CurrencyEnum.VND;
-
+    
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
-
+    
     @Column(name = "updated_at")
     private Instant updatedAt = Instant.now();
-
     
     @OneToMany(mappedBy = "walletBorrowing", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BorrowingEntity> borrowing  = new ArrayList<>();
@@ -68,6 +61,78 @@ public class WalletEntity {
     
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = Instant.now();
+    	updatedAt = Instant.now();
+    }
+    
+    public Long getId() {
+    	return id;
+    }
+    
+    public void setId(Long id) {
+    	this.id = id;
+    }
+    
+    public UserEntity getUserWallet() {
+    	return userWallet;
+    }
+    
+    public void setUserWallet(UserEntity userWallet) {
+    	this.userWallet = userWallet;
+    }
+    
+    public String getName() {
+    	return name;
+    }
+    
+    public void setName(String name) {
+    	this.name = name;
+    }
+    
+    public BigDecimal getBalance() {
+    	return balance;
+    }
+    
+    public void setBalance(BigDecimal balance) {
+    	this.balance = balance;
+    }
+    
+    public CurrencyEnum getCurrency() {
+    	return currency;
+    }
+    
+    public void setCurrency(CurrencyEnum currency) {
+    	this.currency = currency;
+    }
+    
+    public Instant getCreatedAt() {
+    	return createdAt;
+    }
+    
+    public void setCreatedAt(Instant createdAt) {
+    	this.createdAt = createdAt;
+    }
+    
+    public Instant getUpdatedAt() {
+    	return updatedAt;
+    }
+    
+    public void setUpdatedAt(Instant updatedAt) {
+    	this.updatedAt = updatedAt;
+    }
+    
+    public List<BorrowingEntity> getBorrowing() {
+    	return borrowing;
+    }
+    
+    public void setBorrowing(List<BorrowingEntity> borrowing) {
+    	this.borrowing = borrowing;
+    }
+    
+    public List<TransactionEntity> getTransaction() {
+    	return transaction;
+    }
+    
+    public void setTransaction(List<TransactionEntity> transaction) {
+    	this.transaction = transaction;
     }
 }
