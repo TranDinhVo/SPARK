@@ -11,6 +11,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -36,13 +38,16 @@ public class CategoryEntity {
     @OneToMany(mappedBy = "categoryBudget", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BudgetEntity> budget  = new ArrayList<>();
     
+    @ManyToOne
+    @JoinColumn(name="type_id")
+    private CategoryTypeEntity categoryType;
     
     @Column(name="name",nullable = false, length = 100)
     private String name;
 
     @Column(name="icon_url", columnDefinition = "TEXT")
     private String iconUrl;
-    
+
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
 
