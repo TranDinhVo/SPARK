@@ -13,21 +13,8 @@ public class BorrowingEntityConverter {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	
 	public BorrowingEntity toUpdateBorrowingDTO (BorrowingRequestDTO item, BorrowingEntity exist) {
-		
-		System.out.println(item);
-		System.out.println(exist);
-		String name = item.getCounterpartyName();
-//		modelMapper.getConfiguration().setSkipNullEnabled(true);
-//		modelMapper.getConfiguration()
-//	    .setSkipNullEnabled(true)
-//	    .setPropertyCondition(context -> context.getSource() != null);
 		modelMapper.map(item, exist);
-		
-		System.out.println(item);
-		System.out.println(exist);
-		
 		return exist;
 	}
 	

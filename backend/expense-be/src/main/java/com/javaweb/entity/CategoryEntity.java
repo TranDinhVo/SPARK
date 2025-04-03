@@ -22,13 +22,67 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "category")
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryEntity {
 
-    @Id
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<TransactionEntity> getTransaction() {
+		return transaction;
+	}
+
+	public void setTransaction(List<TransactionEntity> transaction) {
+		this.transaction = transaction;
+	}
+
+	public List<BudgetEntity> getBudget() {
+		return budget;
+	}
+
+	public void setBudget(List<BudgetEntity> budget) {
+		this.budget = budget;
+	}
+
+	public CategoryTypeEntity getCategoryType() {
+		return categoryType;
+	}
+
+	public void setCategoryType(CategoryTypeEntity categoryType) {
+		this.categoryType = categoryType;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getIconUrl() {
+		return iconUrl;
+	}
+
+	public void setIconUrl(String iconUrl) {
+		this.iconUrl = iconUrl;
+	}
+
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Instant createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

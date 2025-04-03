@@ -46,9 +46,7 @@ public class BorrowingResponseConverter {
 	    } else if (status.equals(BorrowingStatusEnum.HOAN_THANH.name())) {
 	    	completedIds.add(id);
 	    }
-//	    BorrowingResponseDTO result = 
-	    return new BorrowingResponseDTO(amount, interestRate, createdAt, deadline, id, userId, walletId, counterpartyName, loanType, status, paidAmount);
-	    //	    return UpdateBorrowingUtil.update(result,overdueIds,completedIds);
+	    return new BorrowingResponseDTO(amount, interestRate, createdAt, deadline, id, userId, walletId, counterpartyName, loanType, status, paidAmount);	  
 	}
 	
 	public BorrowingResponseDTO toUpdateBorrowingEntity(BorrowingEntity entity, BorrowingResponseDTO response) {
