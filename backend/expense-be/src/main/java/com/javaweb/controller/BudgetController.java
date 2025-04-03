@@ -13,21 +13,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/budgets")
+@RequestMapping("/api/budget")
 public class BudgetController {
-    
-    @Autowired
-    private BudgetService budgetService;
-    
-    @GetMapping
-    public ResponseEntity<List<BudgetResponseDTO>> getUserBudgets(@PathVariable Long userId) {
-        List<BudgetResponseDTO> budgets = budgetService.getBudgetsByUserId(userId);
-        return ResponseEntity.ok(budgets);
-    }
-    
-    @GetMapping("/{id}")
-    public ResponseEntity<BudgetResponseDTO> getBudgetById(@PathVariable Long budgetId) {
-        BudgetResponseDTO budget = budgetService.getBudgetById(budgetId);
-        return ResponseEntity.ok(budget);
-    }
+//    
+//    @Autowired
+//    private BudgetService budgetService;
+//    
+//    @GetMapping
+//    public ResponseEntity<List<BudgetResponseDTO>> getUserBudgets(@PathVariable Long userId) {
+//        List<BudgetResponseDTO> budgets = budgetService.getBudgetsByUserId(userId);
+//        return ResponseEntity.ok(budgets);
+//    }
+//    
+//    @GetMapping("/{id}")
+//    public ResponseEntity<BudgetResponseDTO> getBudgetById(@PathVariable Long budgetId) {
+//        BudgetResponseDTO budget = budgetService.getBudgetById(budgetId);
+//        return ResponseEntity.ok(budget);
+//    }
 }
