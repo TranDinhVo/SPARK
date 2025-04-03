@@ -576,6 +576,7 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.
 
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2025-04-03 01:44:09.682
 !MESSAGE The artifact mysql:mysql-connector-java:jar:8.0.33 has been relocated to com.mysql:mysql-connector-j:jar:8.0.33: MySQL Connector/J artifacts moved to reverse-DNS compliant Maven 2+ coordinates.
+<<<<<<< HEAD
 >>>>>>> borrow-Ha
 !SESSION 2025-04-03 23:11:18.049 -----------------------------------------------
 >>>>>>> api-vo
@@ -617,4 +618,11 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.
 >>>>>>> api-vo
 
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2025-04-03 23:38:29.744
+=======
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2025-04-03 23:47:59.111
+>>>>>>> borrow-Ha
+!MESSAGE The artifact mysql:mysql-connector-java:jar:8.0.33 has been relocated to com.mysql:mysql-connector-j:jar:8.0.33: MySQL Connector/J artifacts moved to reverse-DNS compliant Maven 2+ coordinates.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2025-04-03 23:49:37.060
 !MESSAGE The artifact mysql:mysql-connector-java:jar:8.0.33 has been relocated to com.mysql:mysql-connector-j:jar:8.0.33: MySQL Connector/J artifacts moved to reverse-DNS compliant Maven 2+ coordinates.

@@ -3,42 +3,53 @@ package com.javaweb.Builder;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-import com.javaweb.entity.UserEntity;
 import com.javaweb.enums.BorrowingStatusEnum;
 import com.javaweb.enums.LoanTypeEnum;
 
 public class BorrowingSearchBuilder {
+	//Nhận thông tin (tìm/lấy) mượn
 	private Long id;
+	private Long user_id;
+	private Long wallet_id;
+	private String wallet_name;
 	private String counterparty_name;
     private BigDecimal amount_from;
     private BigDecimal amount_to;
     private BigDecimal interest_rate;
-    private Instant deadline;
     private LoanTypeEnum loan_type;
-    private BorrowingStatusEnum status;
     private Instant created_at;
-    private Long user_id;
+    private Instant deadline;
+    private BorrowingStatusEnum status;
     
     public BorrowingSearchBuilder(Builder builder) {
+    	this.id = builder.id;
+    	this.user_id = builder.user_id;
+    	this.wallet_id = builder.wallet_id;
 		this.counterparty_name = builder.counterparty_name;
 		this.amount_from = builder.amount_from;
 		this.amount_to = builder.amount_to;
 		this.interest_rate = builder.interest_rate;
-		this.deadline = builder.deadline;
 		this.loan_type = builder.loan_type;
-		this.status = builder.status;
 		this.created_at = builder.created_at;
-		this.user_id = builder.user_id;
+		this.deadline = builder.deadline;
+		this.status = builder.status;
 	}
+    public Long getId() {
+    	return id;
+    }
     
     public Long getUserId() {
 		return user_id;
 	}
 
-	public Long getId() {
-		return id;
+    public Long getWalletId() {
+		return wallet_id;
 	}
 
+    public String getWalletName() {
+    	return wallet_name;
+    }
+    
 	public Instant getCreatedAt() {
 		return created_at;
 	}
@@ -50,6 +61,7 @@ public class BorrowingSearchBuilder {
     public BigDecimal getAmountFrom() {
     	return amount_from;
     }
+    
     public BigDecimal getAmountTo() {
     	return amount_to;
     }
@@ -75,15 +87,17 @@ public class BorrowingSearchBuilder {
     }
     public static class Builder{
     	private Long id;
-		private String counterparty_name;
-		private BigDecimal amount_from;
-	    private BigDecimal amount_to;
+    	private Long user_id;
+    	private Long wallet_id;
+    	private String wallet_name;
+    	private String counterparty_name;
+        private BigDecimal amount_from;
+        private BigDecimal amount_to;
         private BigDecimal interest_rate;
-        private Instant deadline;
         private LoanTypeEnum loan_type;
-        private BorrowingStatusEnum status;
         private Instant created_at;
-        private Long user_id;
+        private Instant deadline;
+        private BorrowingStatusEnum status;
         
         public Builder setId(Long id) {
 			this.id = id;
@@ -93,8 +107,16 @@ public class BorrowingSearchBuilder {
 			this.user_id = userId;
 			return this;
 		}
+		public Builder setWalletId(Long walletId) {
+				this.wallet_id = walletId;
+				return this;
+		}
 		public Builder setCounterpartyName(String counterpartyName) {
         	this.counterparty_name = counterpartyName;
+        	return this;
+        }
+		public Builder setWalletName(String walletName) {
+        	this.wallet_name = walletName;
         	return this;
         }
         public Builder setAmountFrom(BigDecimal amountFrom) {
@@ -109,20 +131,20 @@ public class BorrowingSearchBuilder {
         	this.interest_rate = interestRate;
         	return this;
         }
-        public Builder setDeadline(Instant deadline) {
-        	this.deadline = deadline;
-        	return this;
-        }
         public Builder setLoanType(LoanTypeEnum loanType) {
         	this.loan_type = loanType;
         	return this;
         }
-        public Builder setStatus(BorrowingStatusEnum status) {
-        	this.status = status;
-        	return this;
-        }
         public Builder setCreatedAt(Instant createdAt) {
         	this.created_at = createdAt;
+        	return this;
+        }
+        public Builder setDeadline(Instant deadline) {
+        	this.deadline = deadline;
+        	return this;
+        }
+        public Builder setStatus(BorrowingStatusEnum status) {
+        	this.status = status;
         	return this;
         }
         
