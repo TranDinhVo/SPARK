@@ -22,13 +22,12 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "category")
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryEntity {
 
-    @Id
+   
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

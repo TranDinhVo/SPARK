@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.javaweb.model.response.CategoryResponseDTO;
-import com.javaweb.service.CategoryService;
+import com.javaweb.model.response.CategoryTypeResponseDTO;
+import com.javaweb.service.CategoryTypeService;
 
 @RestController
-@RequestMapping("/api/categories")
-public class CategoryAPI {
-	
+@RequestMapping("/api/categorytypes")
+public class CategoryTypeAPI {
 	@Autowired
-	CategoryService categoryService;
+	CategoryTypeService categoryTypeService;
 	
 	@GetMapping
-	public List<CategoryResponseDTO> getAllCategories(){
-		return categoryService.getAllCategories();
+	public List<CategoryTypeResponseDTO> getAllCategoryTypes() {
+		return categoryTypeService.getAllCategoryTypes();
 	}
+	
 }
