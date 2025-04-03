@@ -10,4 +10,6 @@ public class RecurringTransactionResponseDTO {
     private LocalDate nextDate;
     private StatusRecurrenceDTO status;
     
+
+
 }
