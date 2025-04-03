@@ -556,3 +556,16 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2025-04-03 01:44:09.682
 !MESSAGE The artifact mysql:mysql-connector-java:jar:8.0.33 has been relocated to com.mysql:mysql-connector-j:jar:8.0.33: MySQL Connector/J artifacts moved to reverse-DNS compliant Maven 2+ coordinates.
 >>>>>>> borrow-Ha
+!SESSION 2025-04-03 23:11:18.049 -----------------------------------------------
+eclipse.buildId=4.34.0.20241128-0756
+java.version=21.0.5
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=vi_VN
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/trandinhvo/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.jee.product -keyring /Users/trandinhvo/.eclipse_keyring
+
+!ENTRY ch.qos.logback.classic 1 0 2025-04-03 23:11:22.546
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2025-04-03 23:11:33.683
+!MESSAGE Logback config file: /Users/trandinhvo/Documents/SPARK/backend/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.0.20241001-1350.xml

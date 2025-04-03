@@ -12,8 +12,12 @@ import java.util.Optional;
 
 @Repository
 public interface BudgetRepository extends JpaRepository<BudgetEntity, Long> {
-    List<BudgetEntity> findByUserBudget_Id(Long userId);
-    
-    @Query("SELECT SUM(t.amount) FROM TransactionEntity t WHERE t.categoryTransaction.id = :categoryId AND t.type = 'EXPENSE'")
-    Optional<BigDecimal> calculateTotalExpensesForCategory(@Param("categoryId") Long categoryId);
+//    List<BudgetEntity> findByUserBudget_Id(Long userId);
+//    
+//    @Query("SELECT SUM(t.amount) FROM TransactionEntity t " +
+//    	       "WHERE t.categoryTransaction.id = :categoryId " +
+//    	       "AND t.categoryTransaction.categoryType.name = 'EXPENSE'")
+//    	Optional<BigDecimal> calculateTotalExpensesForCategory(@Param("categoryId") Long categoryId);
+//
+
 }

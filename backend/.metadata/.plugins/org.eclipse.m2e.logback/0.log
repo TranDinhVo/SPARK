@@ -163,3 +163,4 @@
 2025-04-03 01:15:30,375 [Worker-74: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /Users/trandinhvo/Documents/SPARK/backend/expense-be/src/test/resources
 =======
 >>>>>>> 2ee097a (check)
+2025-04-03 23:11:43,740 [Worker-7: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.

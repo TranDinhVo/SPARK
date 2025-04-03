@@ -14,8 +14,6 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity, 
     
     List<TransactionEntity> findByUserTransactionId(Long userId);
     
-    @Query("SELECT SUM(t.amount) FROM TransactionEntity t WHERE t.categoryTransaction.id = :categoryId AND t.type = 'EXPENSE'")
-    BigDecimal getTotalSpentByCategory(@Param("categoryId") Long categoryId);
 }
 
 
