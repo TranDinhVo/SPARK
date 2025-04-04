@@ -22,6 +22,7 @@ public class CategoryConverter {
 		//mapper từ entity -> response
 		modelMapper.getConfiguration().setSkipNullEnabled(true);
 		CategoryResponseDTO response = modelMapper.map(entity, CategoryResponseDTO.class);
+		response.setIdType(entity.getId());
 		return response;
 	}
 	

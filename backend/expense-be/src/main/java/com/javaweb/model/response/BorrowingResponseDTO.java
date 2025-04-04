@@ -18,20 +18,6 @@ public class BorrowingResponseDTO {
     private Instant createdAt;
     private BigDecimal paidAmount;//tiền đã trả
     
-//    public BorrowingResponseDTO(BigDecimal amount, BigDecimal interestRate, Instant createdAt, Instant deadline, 
-//            Long id, Long userId, Long walletId, String counterpartyName, 
-//            String loanType, String status, BigDecimal paidAmount) {
-//        this.amount = amount;
-//        this.interestRate = interestRate;
-//        this.createdAt = createdAt;
-//        this.deadline = deadline;
-//        this.id = id;
-//        this.userId = userId;
-//        this.counterpartyName = counterpartyName;
-//        this.loanType = LoanTypeEnum.valueOf(loanType);
-//        this.status = BorrowingStatusEnum.valueOf(status);
-//        this.paidAmount = paidAmount;
-//    }
     public BorrowingResponseDTO(Long id, String walletName, String counterpartyName, BigDecimal amount,
     		BigDecimal interestRate, Instant deadline, String loanType, String status, Instant createdAt,
     		BigDecimal paidAmount) {
@@ -48,12 +34,9 @@ public class BorrowingResponseDTO {
     	this.paidAmount = paidAmount;
     }
     
-    
 	public BorrowingResponseDTO() {
 		super();
 	}
-
-
 	public String getWalletName() {
 		return walletName;
 	}
@@ -80,9 +63,6 @@ public class BorrowingResponseDTO {
 	}
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
-	}
-	public BigDecimal getInterest_rate() {
-		return interestRate;
 	}
 	public void setInterestRate(BigDecimal interest_rate) {
 		this.interestRate = interest_rate;
