@@ -74,6 +74,10 @@ public class BorrowingEntity {
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
     
+    public BorrowingEntity() {
+    	super();
+    }
+    
     public Long getId() {
 		return id;
 	}

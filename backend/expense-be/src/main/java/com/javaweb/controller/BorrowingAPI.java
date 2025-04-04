@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,15 +18,20 @@ import com.javaweb.model.request.BorrowingRequestDTO;
 import com.javaweb.model.response.BorrowingResponseDTO;
 import com.javaweb.service.BorrowingService;
 
-import jakarta.transaction.Transactional;
-
 @RestController
 @RequestMapping("/api/borrowings")
 public class BorrowingAPI {
 	
 	@Autowired
     private BorrowingService borrowingService;
-
+//	Thêm
+	@PostMapping
+	public BorrowingResponseDTO createNewBorrowing(@RequestBody BorrowingRequestDTO borrowingRequestDTO) {
+		BorrowingResponseDTO response = borrowingService.createNewBorrowing(borrowingRequestDTO);
+		return response;
+	}
+	
+	
 //	Xóa theo id
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable Long id) {
@@ -40,12 +46,12 @@ public class BorrowingAPI {
 	    }
 	
 	//Chỉnh sửa 1 thông tin
-//	@Transactional
 	@PatchMapping("/{id}")
 	public BorrowingResponseDTO updateBorrowing(
 			@PathVariable Long id,
 			@RequestBody BorrowingRequestDTO borrowingRequestDTO) {
 		borrowingRequestDTO.setId(id);
+		borrowingRequestDTO.setLoanType(null);
 		BorrowingResponseDTO borrowing = borrowingService.updateBorrowing(borrowingRequestDTO);
 		return borrowing;
 	    }
