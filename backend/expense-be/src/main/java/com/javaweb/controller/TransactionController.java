@@ -1,20 +1,14 @@
 package com.javaweb.controller;
 
-//import model.TransactionDTO;
-import com.javaweb.service.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/transactions")
+@RequestMapping("/api/transactions")
 public class TransactionController {
-//    @Autowired
-//    private TransactionService transactionService;
-//
-//    @GetMapping("/user/{userId}")
-//    public List<TransactionDTO> getTransactionsByUserId(@PathVariable Long userId) {
-//        return transactionService.getTransactionsByUserId(userId);
-//    }
+
+//	@GetMapping
+//	public  List<TransactionReponseDTO> searchTransactions
+	
+	
 }
