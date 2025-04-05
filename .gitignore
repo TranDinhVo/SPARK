@@ -1,1 +1,7 @@
 .metadata/
+<<<<<<< HEAD
+=======
+*.log
+workspaceState.ser
+>>>>>>> recurring-temp
+.metadata/

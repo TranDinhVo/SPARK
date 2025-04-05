@@ -1,27 +1,20 @@
 package com.javaweb.service;
 
-public class RecurringTransactionService {
-//    private final RecurringTransactionRepositoryImpl recurringTransactionRepositoryImpl;
-//
-//    public RecurringTransactionService(RecurringTransactionRepositoryImpl recurringTransactionRepositoryImpl) {
-//        this.recurringTransactionRepositoryImpl = recurringTransactionRepositoryImpl;
-//    }
-//
-//    public RecurringTransactionDTO saveRecurringTransaction(RecurringTransactionDTO dto) {
-//        RecurringTransactionEntity entity = new RecurringTransactionEntity(
-//                dto.getId(),
-//                null, // Transaction will be set separately
-//                dto.getRecurrenceType(),
-//                dto.getNextDueDate(),
-//                dto.getStatus()
-//        );
-//        entity = recurringTransactionRepositoryImpl.saveRecurringTransaction(entity);
-//        return new RecurringTransactionDTO(
-//                entity.getId(),
-//                entity.getTransaction().getId(),
-//                entity.getRecurrenceType(),
-//                entity.getNextDueDate(),
-//                entity.getStatus()
-//        );
-//    }
+import java.util.List;
+
+import com.javaweb.enums.RecurringStatusEnum;
+import com.javaweb.model.request.RecurringTransactionRequestDTO;
+import com.javaweb.model.response.RecurringTransactionResponseDTO;
+
+
+
+public interface RecurringTransactionService {
+	List<RecurringTransactionResponseDTO> getAllRecurringTransaction();
+	RecurringTransactionResponseDTO getRecurringTransactionById (Long id);
+	RecurringTransactionResponseDTO createRecurringTransaction(RecurringTransactionRequestDTO recurringTransactionRequestDTO);
+	RecurringTransactionResponseDTO updateRecurringTransaction(Long id, RecurringTransactionRequestDTO recurringTransactiontRequestDTO);
+	RecurringTransactionResponseDTO updateRecurringTransactionStatus(Long id, RecurringStatusEnum recurringStatus);
+	
+	
+	void deleteRecurringTransaction(Long id);
 }
