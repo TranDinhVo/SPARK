@@ -1,6 +1,9 @@
-.metadata/
-<<<<<<< HEAD
+build/
+target/
+out/
 *.log
-workspaceState.ser
-=======
->>>>>>> api-vo
+.project
+.classpath
+.DS_Store
+
+

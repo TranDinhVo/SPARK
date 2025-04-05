@@ -50,8 +50,8 @@ public class TransactionEntity {
     private CategoryEntity categoryTransaction;
 
     @OneToOne
-    @JoinColumn(name = "recurring_id", nullable = false)
-    private RecurringTransactionEntity recurrence;
+    @JoinColumn(name = "recurring_id")
+    private RecurringTransactionEntity recurringTransaction;
     
     @Column(name = "amount", precision = 15, scale = 2, nullable = false)
     private BigDecimal amount;
