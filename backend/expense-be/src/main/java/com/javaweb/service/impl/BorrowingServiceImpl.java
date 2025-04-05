@@ -1,16 +1,14 @@
 package com.javaweb.service.impl;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaweb.Builder.BorrowingSearchBuilder;
-import com.javaweb.converter.BorrowingEntityConverter;
-import com.javaweb.converter.BorrowingResponseConverter;
+import com.javaweb.CustomException.ExistIdException;
+import com.javaweb.converter.BorrowingConverter;
 import com.javaweb.converter.BorrowingSearchBuilderConverter;
 import com.javaweb.entity.BorrowingEntity;
 import com.javaweb.model.request.BorrowingRequestDTO;
@@ -30,10 +28,7 @@ public class BorrowingServiceImpl implements BorrowingService{
 	private BorrowingSearchBuilderConverter borrowingSearchBuilderConverter;
 	
 	@Autowired
-	private BorrowingEntityConverter borrowingEntityConverter;
-	
-	@Autowired
-	BorrowingResponseConverter borrowingResponseConverter;
+	BorrowingConverter borrowingConverter;
 	
 	@Override
 	public List<BorrowingResponseDTO> searchBorrowings(Map<String, Object> params) {
@@ -52,14 +47,26 @@ public class BorrowingServiceImpl implements BorrowingService{
 
 	@Override
 	public BorrowingResponseDTO updateBorrowing(BorrowingRequestDTO borrowingRequestDTO) {
+		//tìm và lấy khoản mượn
 		BorrowingEntity existingBorrowing = borrowingRepository.findById(borrowingRequestDTO.getId()).get();
 		
-		//Map vào 
-		existingBorrowing = borrowingEntityConverter.toUpdateBorrowingDTO(borrowingRequestDTO, existingBorrowing);
-
 		BorrowingResponseDTO result = new BorrowingResponseDTO();
-		result = borrowingRepository.updateBorrowing(existingBorrowing);
+		//xử lí cập nhật status
+		result = borrowingRepository.updateBorrowing(borrowingRequestDTO, existingBorrowing);
 		return result;
+	}
+
+	@Override
+	public BorrowingResponseDTO createNewBorrowing(BorrowingRequestDTO borrowingRequestDTO) {
+//		if(borrowingRepository.existsById(borrowingRequestDTO.getId()))
+//			throw new ExistIdException("Vui lòng tạo lại id khác!");
+//		
+		BorrowingEntity newBorrowing = borrowingConverter.toUpdateBorrowingDTO(borrowingRequestDTO, new BorrowingEntity());
+		BorrowingResponseDTO response = borrowingConverter.toUpdateBorrowingEntity(newBorrowing, new BorrowingResponseDTO());
+		
+		borrowingRepository.save(newBorrowing);
+		response = borrowingRepository.updateBorrowing(borrowingRequestDTO, newBorrowing);
+		return response;
 	}
 	 
 	
