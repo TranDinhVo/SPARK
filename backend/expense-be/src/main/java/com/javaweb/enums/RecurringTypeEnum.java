@@ -1,5 +1,8 @@
 package com.javaweb.enums;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 public enum RecurringTypeEnum {
 
 	MONTHLY("Tháng"),
@@ -7,22 +10,27 @@ public enum RecurringTypeEnum {
     QUARTY("Quý"),
     YEARLY("Năm");
 
-    private final String label;
+    private final String recurringTypeName;
 
-    RecurringTypeEnum(String label) {
-        this.label = label;
-    }
 
-    public String getLabel() {
-        return label;
-    }
+    private RecurringTypeEnum(String recurringTypeName) {
+		this.recurringTypeName = recurringTypeName;
+	}
 
-    public static RecurringTypeEnum fromLabel(String label) {
-        for (RecurringTypeEnum type : values()) {
-            if (type.getLabel().equalsIgnoreCase(label)) {
-                return type;
-            }
-        }
-        throw new IllegalArgumentException("Không tìm thấy type với label: " + label);
+
+
+	public String getRecurringTypeName() {
+		return recurringTypeName;
+	}
+
+
+
+	public static Map<String, String> type() {
+        
+		Map<String, String> recurringTypes = new TreeMap();
+		for(RecurringTypeEnum it: RecurringTypeEnum.values()) {
+			recurringTypes.put(it.toString(), it.recurringTypeName);
+		}
+		return recurringTypes;
     }
 }
