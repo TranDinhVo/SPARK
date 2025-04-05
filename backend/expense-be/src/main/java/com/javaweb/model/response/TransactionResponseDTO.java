@@ -1,8 +1,10 @@
-package com.javaweb.model;
+package com.javaweb.model.response;
 
 
 import java.math.BigDecimal;
 import java.time.Instant;
+
+import com.javaweb.model.TransactionCategoryDTO;
 
 import lombok.Getter;
 import lombok.Setter;
