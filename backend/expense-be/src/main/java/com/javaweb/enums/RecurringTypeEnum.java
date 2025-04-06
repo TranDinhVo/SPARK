@@ -7,7 +7,7 @@ public enum RecurringTypeEnum {
 
 	MONTHLY("Tháng"),
     WEEKLY("Tuần"),
-    QUARTY("Quý"),
+    QUARTERLY("Quý"),
     YEARLY("Năm");
 
     private final String recurringTypeName;
