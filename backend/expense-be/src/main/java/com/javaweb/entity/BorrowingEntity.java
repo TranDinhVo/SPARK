@@ -31,8 +31,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "borrowing")
 public class BorrowingEntity {
 
@@ -78,7 +76,24 @@ public class BorrowingEntity {
     	super();
     }
     
-    public Long getId() {
+    public BorrowingEntity(Long id, UserEntity userBorrowing, WalletEntity walletBorrowing,
+			List<TransactionEntity> transaction, String counterpartyName, BigDecimal amount, BigDecimal interestRate,
+			Instant deadline, LoanTypeEnum loanType, BorrowingStatusEnum status, Instant createdAt) {
+		super();
+		this.id = id;
+		this.userBorrowing = userBorrowing;
+		this.walletBorrowing = walletBorrowing;
+		this.transaction = transaction;
+		this.counterpartyName = counterpartyName;
+		this.amount = amount;
+		this.interestRate = interestRate;
+		this.deadline = deadline;
+		this.loanType = loanType;
+		this.status = status;
+		this.createdAt = createdAt;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
