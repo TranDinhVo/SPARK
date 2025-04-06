@@ -6,18 +6,21 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface BudgetRepository extends JpaRepository<BudgetEntity, Long> {
-//    List<BudgetEntity> findByUserBudget_Id(Long userId);
-//    
-//    @Query("SELECT SUM(t.amount) FROM TransactionEntity t " +
-//    	       "WHERE t.categoryTransaction.id = :categoryId " +
-//    	       "AND t.categoryTransaction.categoryType.name = 'EXPENSE'")
-//    	Optional<BigDecimal> calculateTotalExpensesForCategory(@Param("categoryId") Long categoryId);
-//
 
+    // Tìm danh sách Budget theo userId
+    List<BudgetEntity> findByUserBudgetId(Long userId);
+
+    // Tìm Budget theo id và userId
+    Optional<BudgetEntity> findByIdAndUserBudgetId(Long id, Long userId);
+
+    // Tìm danh sách Budget theo categoryId
+    List<BudgetEntity> findByCategoryBudgetId(Long categoryId);
+
+    // Tìm Budget theo userId và categoryId
+    Optional<BudgetEntity> findByUserBudgetIdAndCategoryBudgetId(Long userId, Long categoryId);
 }
