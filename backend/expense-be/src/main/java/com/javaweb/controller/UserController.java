@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,21 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.entity.UserEntity;
+import com.javaweb.model.request.UserRegisterRequestDTO;
+import com.javaweb.model.response.UserResponseDTO;
 import com.javaweb.service.UserService;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired
+	@Autowired
     private UserService userService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-//    // Đăng ký user mới
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody UserEntity user) {
+    public ResponseEntity<?> registerUser(@RequestBody UserRegisterRequestDTO user) {
         Optional<UserEntity> checkEmail = userService.findByEmail(user.getEmail());
         if (checkEmail.isPresent()) {
             return ResponseEntity.badRequest().body("Email đã được sử dụng!");
@@ -38,17 +35,15 @@ public class UserController {
         if (checkUsername.isPresent()) {
             return ResponseEntity.badRequest().body("Tên đăng nhập đã được sử dụng!");
         }
-        UserEntity newUser = userService.registerUser(user);
+        UserResponseDTO newUser = userService.registerUser(user);
         return ResponseEntity.ok(newUser);
     }
 
-    // Lấy danh sách tất cả user
     @GetMapping
-    public List<UserEntity> getAllUsers() {
+    public List<UserResponseDTO> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    // Lấy user theo ID
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
         return userService.getUserById(id)
@@ -56,7 +51,6 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Xóa user theo ID
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
