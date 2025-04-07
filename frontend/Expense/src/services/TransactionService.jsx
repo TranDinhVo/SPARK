@@ -45,6 +45,7 @@ export const deleteTransaction = async (id) => {
   const result = await del(`transactions/${id}`);
   return result;
 };
+
 export const updateTransaction = async (id, options) => {
   const result = await patch(`transactions/${id}`, options);
   return result;
