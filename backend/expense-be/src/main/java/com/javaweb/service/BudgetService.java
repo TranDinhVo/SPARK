@@ -10,6 +10,7 @@ import com.javaweb.repository.BudgetRepository;
 import com.javaweb.repository.CategoryRepository;
 import com.javaweb.repository.TransactionRepository;
 import com.javaweb.repository.UserRepository;
+import com.javaweb.converter.BudgetConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -35,18 +36,32 @@ public class BudgetService {
 
     @Autowired
     private TransactionRepository transactionRepository;
+    
+    @Autowired
+    private BudgetConverter budgetConverter;
 
     public List<BudgetDTO> getAllBudgets(Long userId) {
         List<BudgetEntity> budgets = budgetRepository.findByUserBudgetId(userId);
         return budgets.stream()
-                .map(this::convertToDTO)
+                .map(budget -> budgetConverter.convertToDTO(budget, calculateCurrentSpending(
+                        budget.getUserBudget().getId(),
+                        budget.getCategoryBudget().getId(),
+                        budget.getStartDate(),
+                        budget.getEndDate())))
                 .collect(Collectors.toList());
     }
 
     public BudgetDTO getBudgetById(Long userId, Long budgetId) {
         BudgetEntity budget = budgetRepository.findByIdAndUserBudgetId(budgetId, userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Budget not found"));
-        return convertToDTO(budget);
+        
+        BigDecimal currentSpending = calculateCurrentSpending(
+                budget.getUserBudget().getId(),
+                budget.getCategoryBudget().getId(),
+                budget.getStartDate(),
+                budget.getEndDate());
+                
+        return budgetConverter.convertToDTO(budget, currentSpending);
     }
 
     public BudgetDTO createBudget(BudgetRequest budgetRequest) {
@@ -76,7 +91,14 @@ public class BudgetService {
         }
 
         BudgetEntity savedBudget = budgetRepository.save(budget);
-        return convertToDTO(savedBudget);
+        
+        BigDecimal currentSpending = calculateCurrentSpending(
+                savedBudget.getUserBudget().getId(),
+                savedBudget.getCategoryBudget().getId(),
+                savedBudget.getStartDate(),
+                savedBudget.getEndDate());
+                
+        return budgetConverter.convertToDTO(savedBudget, currentSpending);
     }
 
     public BudgetDTO updateBudget(Long userId, Long budgetId, BudgetRequest budgetRequest) {
@@ -102,7 +124,14 @@ public class BudgetService {
         }
 
         BudgetEntity updatedBudget = budgetRepository.save(budget);
-        return convertToDTO(updatedBudget);
+        
+        BigDecimal currentSpending = calculateCurrentSpending(
+                updatedBudget.getUserBudget().getId(),
+                updatedBudget.getCategoryBudget().getId(),
+                updatedBudget.getStartDate(),
+                updatedBudget.getEndDate());
+                
+        return budgetConverter.convertToDTO(updatedBudget, currentSpending);
     }
 
     public void deleteBudget(Long userId, Long budgetId) {
@@ -111,33 +140,11 @@ public class BudgetService {
         budgetRepository.delete(budget);
     }
 
-    private BudgetDTO convertToDTO(BudgetEntity budget) {
-        BudgetDTO dto = new BudgetDTO();
-        dto.setId(budget.getId());
-        dto.setAmountLimit(budget.getAmountLimit());
-        dto.setStartDate(budget.getStartDate());
-        dto.setEndDate(budget.getEndDate());
-        dto.setCategory(budget.getCategoryBudget().getName());
-        dto.setAlertThreshold(budget.getAlertThreshold());
-        
-        // Tính chi tiêu hiên tại trong thời gian hiện tại
-        BigDecimal moneyCurrent = calculateCurrentSpending(
-                budget.getUserBudget().getId(),
-                budget.getCategoryBudget().getId(),
-                budget.getStartDate(),
-                budget.getEndDate()
-        );
-        
-        dto.setMoneyCurrent(moneyCurrent);
-        
-        return dto;
-    }
-    
     private BigDecimal calculateCurrentSpending(Long userId, Long categoryId, LocalDate startDate, LocalDate endDate) {
-     //lấy tất cả Transaction cho ng dùng và danh mục này
+        //lấy tất cả Transaction cho ng dùng và danh mục này
         List<TransactionEntity> transactions = transactionRepository.findByUserTransactionId(userId);
         
-       //lọc giao dịch theo danh mục và khoản thời gian
+        //lọc giao dịch theo danh mục và khoản thời gian
         BigDecimal totalSpent = transactions.stream()
                 .filter(t -> t.getCategoryTransaction().getId().equals(categoryId))
                 .filter(t -> {
