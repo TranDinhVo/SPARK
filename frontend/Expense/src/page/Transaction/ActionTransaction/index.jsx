@@ -1,15 +1,19 @@
-import { Button, Col, Row } from "antd";
+import { Col, Row } from "antd";
 import AddTransaction from "../AddTransaction";
-import SortTransaction from "../SortTransaction";
 import ClearAllTransactions from "../ClearAllTransaction";
 import FilterTransaction from "../FilterTransaction";
+import SortItem from "../../../components/SortItem";
 function ActionTransaction(props) {
   const { onReLoad } = props;
   return (
     <>
-      <Row gutter={[10, 10]} className="mt-30 pd-20">
+      <Row
+        gutter={[10, 10]}
+        className="pd-20"
+        style={{ marginTop: "20px", marginLeft: "5px" }}
+      >
         <Col xl={1} style={{ marginRight: "10px" }}>
-          <SortTransaction />
+          <SortItem />
         </Col>
         <Col xl={2} style={{ marginRight: "25px" }}>
           <FilterTransaction onReLoad={onReLoad} />

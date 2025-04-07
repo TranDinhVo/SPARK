@@ -6,7 +6,7 @@ import {
   ReloadOutlined,
 } from "@ant-design/icons";
 
-function SortTransaction() {
+function SortItem() {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortOrder = searchParams.get("sort") || "";
 
@@ -57,4 +57,4 @@ function SortTransaction() {
   );
 }
 
-export default SortTransaction;
+export default SortItem;
