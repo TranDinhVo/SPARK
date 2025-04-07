@@ -102,6 +102,35 @@ public class UserEntity {
     )
     private List<RoleEntity> roles = new ArrayList<>();
 
+    
+    
+    
+    public UserEntity() {}
+	public UserEntity(Long id, String username, String fullname, String password, String phone, String email,
+			Boolean status, String avatarUrl, CurrencyEnum currency, String authToken, Instant createdAt,
+			List<WalletEntity> wallets, List<GoalEntity> goals, List<BorrowingEntity> borrowings,
+			List<TransactionEntity> transactions, List<BudgetEntity> budget, List<RoleEntity> roles) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.fullname = fullname;
+		this.password = password;
+		this.phone = phone;
+		this.email = email;
+		this.status = status;
+		this.avatarUrl = avatarUrl;
+		this.currency = currency;
+		this.authToken = authToken;
+		this.createdAt = createdAt;
+		this.wallets = wallets;
+		this.goals = goals;
+		this.borrowings = borrowings;
+		this.transactions = transactions;
+		this.budget = budget;
+		this.roles = roles;
+	}
+
+
 	public Long getId() {
 		return id;
 	}

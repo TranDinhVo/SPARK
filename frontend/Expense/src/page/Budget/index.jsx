@@ -8,10 +8,16 @@ import BudgetTable from "./ListBudget/BudgetTable";
 import "./Budget.scss";
 import BudgetComparison from "./BudgetComparison";
 import AddBudget from "./ActionBudget/AddBudget";
+import SortItem from "../../components/SortItem";
+import { useSearchParams } from "react-router-dom";
+import FilterBudget from "./ActionBudget/FilterBudget";
+import ClearAllBudget from "./ActionBudget/ClearAllBudget";
 
 function Budget() {
   const [budgets, setBudget] = useState([]);
   const [isGrid, setIsGrid] = useState(false);
+  const [searchParams] = useSearchParams();
+  const sortOrder = searchParams.get("sort") || "";
   const fetchApi = async () => {
     const result = await getBudget();
     setBudget(result);
@@ -38,11 +44,23 @@ function Budget() {
               <h4 className="title-budget">DANH SÁCH NGÂN SÁCH</h4>
             </Col>
           </Row>
-          <Row gutter={[20, 20]}>
-            <Col xl={1}>sort</Col>
-            <Col xl={2}>filtẻ</Col>
-            <Col xl={3}>clearAll</Col>
-            <Col xl={10}></Col>
+          <Row gutter={[10, 20]}>
+            <Col xl={1} style={{ marginLeft: "20px", marginRight: "10px" }}>
+              <SortItem />
+            </Col>
+            <Col
+              xl={2}
+              style={{
+                marginRight: "25px",
+                marginLeft: "auto",
+              }}
+            >
+              <FilterBudget onReLoad={handleReload} />
+            </Col>
+            <Col xl={3}>
+              <ClearAllBudget onReLoad={handleReload} />
+            </Col>
+            <Col xl={11}></Col>
             <Col xl={3}>
               <Button onClick={() => setIsGrid(false)}>
                 <UnorderedListOutlined />
@@ -52,7 +70,7 @@ function Budget() {
               </Button>
             </Col>
             <Col xl={3}>
-              <AddBudget />{" "}
+              <AddBudget />
             </Col>
           </Row>
           <Row gutter={[20, 20]}>
@@ -60,7 +78,11 @@ function Budget() {
               {isGrid ? (
                 <BudgetGrid budgets={budgets} onReLoad={handleReload} />
               ) : (
-                <BudgetTable budgets={budgets} onReLoad={handleReload} />
+                <BudgetTable
+                  budgets={budgets}
+                  onReLoad={handleReload}
+                  sortOrder={sortOrder}
+                />
               )}
             </Col>
           </Row>
