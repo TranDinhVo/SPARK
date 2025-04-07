@@ -65,16 +65,33 @@ public class BorrowingRequestDTO {
 	public void setDeadline(Instant deadline) {
 		this.deadline = deadline;
 	}
-//	public LoanTypeEnum getLoanType() {
-//		return loanType;
-//	}
-//	public void setLoanType(LoanTypeEnum loanType) {
-//		this.loanType = loanType;
-//	}
 	public Instant getCreatedAt() {
 		return createdAt;
 	}
 	public void setCreatedAt(Instant createdAt) {
 		this.createdAt = createdAt;
 	}
+	public void validate() {
+        if (id == null) {
+            throw new IllegalArgumentException("Id chưa được nhập");
+        }
+        if (amount == null) {
+            throw new IllegalArgumentException("Tiền mượn chưa được nhập");
+        }
+        if(userId == null) {
+        	throw new IllegalArgumentException("Id người dùng chưa được nhập");
+        }
+        if(deadline == null) {
+        	throw new IllegalArgumentException("Thời hạn chưa được nhập");
+        }
+        if(counterpartyName == null) {
+        	throw new IllegalArgumentException("Tên đối tác chưa được nhập");
+        }
+        if(loanType == null) {
+        	throw new IllegalArgumentException("Thể loại vay chưa được nhập");
+        }
+        if(walletId == null) {
+        	throw new IllegalArgumentException("Id ví chưa được nhập");
+        }
+    }
 }

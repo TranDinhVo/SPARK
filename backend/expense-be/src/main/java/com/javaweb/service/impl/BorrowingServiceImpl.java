@@ -58,9 +58,7 @@ public class BorrowingServiceImpl implements BorrowingService{
 
 	@Override
 	public BorrowingResponseDTO createNewBorrowing(BorrowingRequestDTO borrowingRequestDTO) {
-//		if(borrowingRepository.existsById(borrowingRequestDTO.getId()))
-//			throw new ExistIdException("Vui lòng tạo lại id khác!");
-//		
+		borrowingRequestDTO.validate();
 		BorrowingEntity newBorrowing = borrowingConverter.toUpdateBorrowingDTO(borrowingRequestDTO, new BorrowingEntity());
 		BorrowingResponseDTO response = borrowingConverter.toUpdateBorrowingEntity(newBorrowing, new BorrowingResponseDTO());
 		
