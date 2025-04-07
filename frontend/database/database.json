@@ -427,239 +427,50 @@
   ],
   "transactions": [
     {
-      "id": "1",
-      "category": "Ăn uống",
-      "date": "2025-03-01T08:30:00Z",
-      "type": "Khoản chi",
-      "amount": 150000,
-      "paymentMethod": "Tiền mặt",
-      "recurrence": null,
-      "note": "Ăn sáng"
-    },
-    {
-      "id": "4",
-      "category": "Internet",
-      "date": "2025-03-06T15:00:00Z",
-      "type": "Khoản chi",
-      "amount": 300000,
-      "paymentMethod": "Ví điện tử",
-      "recurrence": {
-        "type": "Tháng",
-        "next_date": "2025-04-06",
-        "status": {
-          "code": 0,
-          "label": "Tạm dừng"
-        }
-      },
-      "note": "Đóng tiền mạng"
-    },
-    {
-      "id": "5",
-      "category": "Mua sắm online",
-      "date": "2025-03-09T10:00:00Z",
-      "type": "Khoản chi",
-      "amount": 1200000,
-      "paymentMethod": "Thẻ ghi nợ",
-      "recurrence": null,
-      "note": "Mua điện thoại"
-    },
-    {
-      "id": "6",
-      "category": "Bảo hiểm",
-      "date": "2025-03-10T08:30:00Z",
-      "type": "Khoản chi",
-      "amount": 1000000,
-      "paymentMethod": "Chuyển khoản",
-      "recurrence": {
-        "type": "Năm",
-        "next_date": "2026-03-10",
-        "status": {
-          "code": -1,
-          "label": "Đã hủy"
-        }
-      },
-      "note": "Bảo hiểm y tế"
-    },
-    {
-      "id": "7",
-      "category": "Giải trí",
-      "date": "2025-03-12T19:30:00Z",
-      "type": "Khoản chi",
-      "amount": 400000,
-      "paymentMethod": "Tiền mặt",
-      "recurrence": null,
-      "note": "Xem phim"
-    },
-    {
-      "id": "8",
-      "category": "Sức khỏe",
-      "date": "2025-03-14T09:00:00Z",
-      "type": "Khoản chi",
-      "amount": 700000,
-      "paymentMethod": "Thẻ tín dụng",
-      "recurrence": null,
-      "note": "Khám bệnh"
-    },
-    {
-      "id": "9",
-      "category": "Tiết kiệm",
-      "date": "2025-03-15T10:00:00Z",
-      "type": "Khoản chi",
-      "amount": 2000000,
-      "paymentMethod": "Chuyển khoản",
-      "recurrence": {
-        "type": "Tháng",
-        "next_date": "2025-04-15",
-        "status": {
-          "code": 1,
-          "label": "Đang hoạt động"
-        }
-      },
-      "note": "Gửi tiết kiệm"
-    },
-    {
-      "id": "10",
-      "category": "Đầu tư",
-      "date": "2025-03-16T13:30:00Z",
-      "type": "Khoản chi",
-      "amount": 5000000,
-      "paymentMethod": "Chuyển khoản",
-      "recurrence": null,
-      "note": "Mua cổ phiếu"
-    },
-    {
-      "id": "11",
-      "category": "Xăng xe",
-      "date": "2025-03-18T08:00:00Z",
-      "type": "Khoản chi",
-      "amount": 100000,
-      "paymentMethod": "Tiền mặt",
-      "recurrence": null,
-      "note": "Đổ xăng"
-    },
-    {
-      "id": "12",
-      "category": "Lương thưởng",
-      "date": "2025-03-20T12:00:00Z",
+      "id": "a861",
       "type": "Khoản thu",
-      "amount": 5000000,
-      "paymentMethod": "Chuyển khoản",
-      "recurrence": null,
-      "note": "Thưởng quý"
-    },
-    {
-      "id": "13",
-      "category": "Du lịch",
-      "date": "2025-03-22T09:30:00Z",
-      "type": "Khoản chi",
-      "amount": 7000000,
-      "paymentMethod": "Thẻ ghi nợ",
-      "recurrence": null,
-      "note": "Đặt vé máy bay"
-    },
-    {
-      "id": "14",
-      "category": "Mua sách",
-      "date": "2025-03-24T15:45:00Z",
-      "type": "Khoản chi",
-      "amount": 300000,
-      "paymentMethod": "Tiền mặt",
-      "recurrence": null,
-      "note": "Mua sách lập trình"
-    },
-    {
-      "id": "15",
       "category": "Lương",
-      "date": "2025-03-25T12:00:00Z",
-      "type": "Khoản thu",
-      "amount": 12000000,
-      "paymentMethod": "Chuyển khoản",
+      "amount": "20000000",
+      "note": "Lương",
+      "date": "2025-04-07T07:27:49.668Z",
+      "paymentMethod": "Ví tiền mặt",
       "recurrence": {
-        "type": "Tháng",
-        "next_date": "2025-04-25",
+        "type": "Hằng tháng",
+        "next_date": null,
         "status": {
           "code": 1,
           "label": "Đang hoạt động"
         }
-      },
-      "note": "Lương tháng 3"
+      }
     },
     {
-      "id": "6a6b",
+      "id": "f897",
       "type": "Khoản chi",
       "category": "Ăn uống",
       "amount": "20000",
-      "note": "Ăn Trưa",
-      "date": "2025-03-28T03:42:50.231Z",
+      "note": "Ăn trưa",
+      "date": "2025-04-07T07:28:42.891Z",
       "paymentMethod": "Ví tiền mặt",
       "recurrence": null
     },
     {
-      "id": "c814",
+      "id": "72b4",
       "type": "Khoản chi",
       "category": "Ăn uống",
-      "amount": "123231",
-      "note": "test",
-      "date": "2025-03-28T17:39:20.622Z",
+      "amount": "20000",
+      "note": "Ăn tối",
+      "date": "2025-04-07T07:29:02.221Z",
       "paymentMethod": "Ví tiền mặt",
       "recurrence": null
     },
     {
-      "id": "bade",
+      "id": "a8a1",
       "type": "Khoản chi",
-      "category": "Ăn uống",
-      "amount": "312312",
-      "date": "2025-03-29T20:31:14.660Z",
-      "paymentMethod": "Ví ngân hàng",
-      "recurrence": null
-    },
-    {
-      "id": "eb9c",
-      "type": "Khoản chi",
-      "category": "Ăn uống",
-      "amount": "123123",
-      "date": "2025-03-29T20:35:45.516Z",
-      "paymentMethod": "Ví ngân hàng",
-      "recurrence": null
-    },
-    {
-      "id": "95d9",
-      "type": "Khoản chi",
-      "category": "Nhà hàng",
-      "amount": "3123",
-      "note": "23",
-      "date": "2025-03-29T20:45:35.227Z",
-      "paymentMethod": "Ví Momo",
-      "recurrence": null
-    },
-    {
-      "id": "e5f9",
-      "type": "Khoản chi",
-      "category": "Nhà hàng",
-      "amount": "123",
-      "note": "23123",
-      "date": "2025-03-29T20:46:00.096Z",
-      "paymentMethod": "Ví ngân hàng",
-      "recurrence": null
-    },
-    {
-      "id": "f73f",
-      "type": "Khoản chi",
-      "category": "Nhà hàng",
-      "amount": "123",
-      "note": "123",
-      "date": "2025-03-30T11:21:32.235Z",
-      "paymentMethod": "Ví ngân hàng",
-      "recurrence": null
-    },
-    {
-      "id": "d7e6",
-      "type": "Khoản thu",
-      "category": "Đầu tư",
-      "amount": "1000000",
-      "note": "Tiền lời",
-      "date": "2025-03-30T16:45:54.458Z",
-      "paymentMethod": "Ví ngân hàng",
+      "category": "Xăng xe",
+      "amount": "100000",
+      "note": "Xăng",
+      "date": "2025-04-07T07:29:21.606Z",
+      "paymentMethod": "Ví tiền mặt",
       "recurrence": {
         "type": "Hằng tuần",
         "next_date": null,
@@ -716,9 +527,16 @@
       "status": "DANG_HOAT_DONG"
     },
     {
-      "id": "b712",
-      "transactionId": "d7e6",
-      "recurringType": "Hằng năm",
+      "id": "891b",
+      "transactionId": "a861",
+      "recurringType": "Hằng tháng",
+      "nextDueDate": null,
+      "status": "DANG_HOAT_DONG"
+    },
+    {
+      "id": "fe10",
+      "transactionId": "a8a1",
+      "recurringType": "Hằng tuần",
       "nextDueDate": null,
       "status": "DANG_HOAT_DONG"
     }
@@ -773,7 +591,8 @@
       "endDate": "2025-04-30T00:00:00Z",
       "createdAt": "2025-03-01T00:00:00Z",
       "amountCurrent": 1500000,
-      "category": "Ăn uống"
+      "category": "Ăn uống",
+      "id": "34e9"
     },
     {
       "amountLimit": 3000000,
@@ -781,7 +600,8 @@
       "endDate": "2025-04-30T00:00:00Z",
       "createdAt": "2025-02-01T00:00:00Z",
       "amountCurrent": 1000000,
-      "category": "Giải trí"
+      "category": "Giải trí",
+      "id": "4f6c"
     },
     {
       "amountLimit": 7000000,
@@ -789,7 +609,8 @@
       "endDate": "2025-04-30T00:00:00Z",
       "createdAt": "2025-01-01T00:00:00Z",
       "amountCurrent": 2500000,
-      "category": "Mua sắm"
+      "category": "Mua sắm",
+      "id": "b8ed"
     },
     {
       "amountLimit": 10000000,
@@ -797,7 +618,8 @@
       "endDate": "2025-04-30T00:00:00Z",
       "createdAt": "2024-12-01T00:00:00Z",
       "amountCurrent": 4000000,
-      "category": "Nhà hàng"
+      "category": "Nhà hàng",
+      "id": "f355"
     },
     {
       "amountLimit": 10000000,
@@ -805,7 +627,8 @@
       "endDate": "2025-04-30T00:00:00Z",
       "createdAt": "2024-12-01T00:00:00Z",
       "amountCurrent": 4000000,
-      "category": "Chill"
+      "category": "Chill",
+      "id": "ecfb"
     },
     {
       "amountLimit": 10000000,
@@ -813,7 +636,16 @@
       "endDate": "2025-04-30T00:00:00Z",
       "createdAt": "2024-12-01T00:00:00Z",
       "amountCurrent": 4000000,
-      "category": "Hehe"
+      "category": "Hehe",
+      "id": "9753"
+    },
+    {
+      "id": "7007",
+      "category": "Ăn uống",
+      "amount": 123,
+      "startDate": "2025-04-01",
+      "endDate": "2025-05-06",
+      "createdAt": "2025-04-07T08:19:23.783Z"
     }
   ]
 }

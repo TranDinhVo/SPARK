@@ -82,6 +82,7 @@ function AddBudget() {
         className="button-add"
         icon={<PlusOutlined />}
         onClick={showModal}
+        style={{ marginLeft: "25px" }}
       >
         Thêm
       </Button>
