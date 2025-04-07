@@ -9,54 +9,66 @@ import Recurring from "../page/Transaction/Recurring/index";
 import { Navigate } from "react-router-dom";
 import GoalsSaving from "../page/GoalsSaving";
 import Statistics from "../page/Statistics";
+import LayoutIntroduce from "../layout/LayoutIntroduce";
+import PrivateLogin from "../components/PrivateLogin";
 
 export const routes = [
   {
-    path: "/",
-    element: <LayoutDefault />,
+    path: "",
+    element: <PrivateLogin />,
     children: [
       {
         path: "/",
-        element: <Dashboard />,
-      },
-      {
-        path: "budget",
-        element: <Budget />,
-      },
-      {
-        path: "transaction",
-        element: <Transaction />,
+        element: <LayoutDefault />,
         children: [
           {
-            index: true,
-            element: <Navigate to="recent" replace />,
+            path: "/",
+            element: <Dashboard />,
           },
           {
-            path: "recent",
-            element: <Recent />,
+            path: "budget",
+            element: <Budget />,
           },
           {
-            path: "expense",
-            element: <Expense />,
+            path: "transaction",
+            element: <Transaction />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="recent" replace />,
+              },
+              {
+                path: "recent",
+                element: <Recent />,
+              },
+              {
+                path: "expense",
+                element: <Expense />,
+              },
+              {
+                path: "income",
+                element: <Income />,
+              },
+              {
+                path: "recurring",
+                element: <Recurring />,
+              },
+            ],
           },
           {
-            path: "income",
-            element: <Income />,
+            path: "saving",
+            element: <GoalsSaving />,
           },
           {
-            path: "recurring",
-            element: <Recurring />,
+            path: "statistics",
+            element: <Statistics />,
           },
         ],
       },
-      {
-        path: "saving",
-        element: <GoalsSaving />,
-      },
-      {
-        path: "statistics",
-        element: <Statistics />,
-      },
     ],
+  },
+  {
+    path: "/introduce",
+    element: <LayoutIntroduce />,
   },
 ];

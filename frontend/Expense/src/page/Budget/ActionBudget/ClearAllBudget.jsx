@@ -1,9 +1,10 @@
 import { Button } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import Swal from "sweetalert2";
-import { deleteAllTransactions } from "../../../services/TransactionService";
+import { deleteAllBudgets } from "../../../services/BudgetService";
 
-function ClearAllTransactions({ onReload }) {
+function ClearAllBudget(props) {
+  const { onReload } = props;
   const handleClearAll = async () => {
     Swal.fire({
       title: "Bạn có chắc chắn muốn xóa tất cả giao dịch?",
@@ -15,7 +16,7 @@ function ClearAllTransactions({ onReload }) {
       confirmButtonText: "Hủy",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const response = await deleteAllTransactions();
+        const response = await deleteAllBudgets();
         if (response.success) {
           Swal.fire("Thành công!", response.message, "success");
           onReload();
@@ -43,5 +44,4 @@ function ClearAllTransactions({ onReload }) {
     </Button>
   );
 }
-
-export default ClearAllTransactions;
+export default ClearAllBudget;
