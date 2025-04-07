@@ -27,13 +27,12 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "goal")
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class GoalEntity {
 
-    @Id
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -59,4 +58,68 @@ public class GoalEntity {
 
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
+    
+    public Long getId() {
+    	return id;
+    }
+    
+    public void setId(Long id) {
+    	this.id = id;
+    }
+    
+    public UserEntity getUserGoal() {
+    	return userGoal;
+    }
+    
+    public void setUserGoal(UserEntity userGoal) {
+    	this.userGoal = userGoal;
+    }
+    
+    public List<TransactionEntity> getTransaction() {
+    	return transaction;
+    }
+    
+    public void setTransaction(List<TransactionEntity> transaction) {
+    	this.transaction = transaction;
+    }
+    
+    public String getGoalName() {
+    	return goalName;
+    }
+    
+    public void setGoalName(String goalName) {
+    	this.goalName = goalName;
+    }
+    
+    public BigDecimal getTargetAmount() {
+    	return targetAmount;
+    }
+    
+    public void setTargetAmount(BigDecimal targetAmount) {
+    	this.targetAmount = targetAmount;
+    }
+    
+    public Instant getDeadline() {
+    	return deadline;
+    }
+    
+    public void setDeadline(Instant deadline) {
+    	this.deadline = deadline;
+    }
+    
+    public GoalStatusEnum getStatus() {
+    	return status;
+    }
+    
+    public void setStatus(GoalStatusEnum status) {
+    	this.status = status;
+    }
+    
+    public Instant getCreatedAt() {
+    	return createdAt;
+    }
+    
+    public void setCreatedAt(Instant createdAt) {
+    	this.createdAt = createdAt;
+    }
 }

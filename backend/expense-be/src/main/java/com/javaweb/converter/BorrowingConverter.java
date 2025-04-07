@@ -19,14 +19,14 @@ public class BorrowingConverter {
 	private ModelMapper modelMapper;
 	
 	public BorrowingResponseDTO mapToBorrowingResponseDTO(Object[] row,List<Long> overdueIds, List<Long> completedIds) {
-	    BigDecimal amount = (row.length > 0 && row[0] != null) ? (BigDecimal) row[0] : BigDecimal.ZERO;
-	    BigDecimal interestRate = (row.length > 1 && row[1] != null) ? (BigDecimal) row[1] : BigDecimal.ZERO;
-	    Instant createdAt = (row.length > 2 && row[2] != null) ? ((Timestamp) row[2]).toInstant() : null;
-	    Instant deadline = (row.length > 3 && row[3] != null) ? ((Timestamp) row[3]).toInstant() : null;
-	    Long id = (row.length > 4 && row[4] != null) ? ((Number) row[4]).longValue() : null;
-	    String counterpartyName = (row.length > 7 && row[7] != null) ? (String) row[7] : "";
-	    String loanType = (row.length > 8 && row[8] != null) ? (String) row[8] : "";
-	    String status = (row.length > 9 && row[9] != null) ? (String) row[9] : "";
+		Long id = (row.length > 0 && row[0] != null) ? ((Number) row[0]).longValue() : null;
+		String counterpartyName = (row.length > 3 && row[3] != null) ? (String) row[3] : "";
+	    BigDecimal amount = (row.length > 4 && row[4] != null) ? (BigDecimal) row[4] : BigDecimal.ZERO;
+	    BigDecimal interestRate = (row.length > 5 && row[5] != null) ? (BigDecimal) row[5] : BigDecimal.ZERO;
+	    Instant deadline = (row.length > 6 && row[6] != null) ? ((Timestamp) row[6]).toInstant() : null;
+	    String loanType = (row.length > 7 && row[7] != null) ? (String) row[7] : "";
+	    String status = (row.length > 8 && row[8] != null) ? (String) row[8] : "";
+	    Instant createdAt = (row.length > 9 && row[9] != null) ? ((Timestamp) row[9]).toInstant() : null;
 	    BigDecimal paidAmount = (row.length > 10 && row[10] != null) ? (BigDecimal) row[10] : BigDecimal.ZERO;
 	    String walletName = (row.length > 11 && row[11] != null) ? (String) row[11] : "";
 

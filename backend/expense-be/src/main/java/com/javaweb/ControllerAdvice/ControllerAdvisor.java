@@ -37,4 +37,14 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler{
 		 	errorResponseDTO.setDetail(details);
 	        return new ResponseEntity<>(errorResponseDTO, HttpStatus.CONFLICT);
 	    }
+	 @ExceptionHandler(IllegalArgumentException.class)
+	    public ResponseEntity<Object> handleIllegalArgumentException(
+	    		IllegalArgumentException ex, WebRequest request) {
+		 	ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO();
+		 	errorResponseDTO.setError("Nhập lại thong tin!");
+		 	List<String> details = new ArrayList<String>();
+		 	details.add(ex.getMessage());
+		 	errorResponseDTO.setDetail(details);
+	        return new ResponseEntity<>(errorResponseDTO, HttpStatus.BAD_REQUEST);
+	    }
 }
