@@ -49,7 +49,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler{
 		 	details.add(ex.getMessage());
 		 	errorResponseDTO.setDetail(details);
 	        return new ResponseEntity<>(errorResponseDTO, HttpStatus.BAD_REQUEST);
-
+	 }
 	 @ExceptionHandler(WalletNotFoundException.class)
 	    public ResponseEntity<Object> handleWalletNotFoundException(WalletNotFoundException ex) {
 	        // Tạo ErrorResponseDTO và trả về thông báo lỗi cho WalletNotFoundException
