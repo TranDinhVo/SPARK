@@ -51,7 +51,7 @@ public class RecurringTransactionEntity {
     @Column(name = "status", length = 20)
     private RecurringStatusEnum status = RecurringStatusEnum.ACTIVE;
     
-    @Column(name = "createAt", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private Instant createAt = Instant.now();
     
 	

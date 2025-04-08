@@ -41,7 +41,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler{
 	    public ResponseEntity<Object> handleIllegalArgumentException(
 	    		IllegalArgumentException ex, WebRequest request) {
 		 	ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO();
-		 	errorResponseDTO.setError("Nhập lại thong tin!");
+		 	errorResponseDTO.setError("Nhập lại thông tin!");
 		 	List<String> details = new ArrayList<String>();
 		 	details.add(ex.getMessage());
 		 	errorResponseDTO.setDetail(details);

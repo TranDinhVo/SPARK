@@ -1,11 +1,14 @@
 package com.javaweb.service;
-import com.javaweb.model.BudgetResponseDTO;
 import java.util.List;
+import java.util.Map;
+
+import com.javaweb.model.request.BudgetRequestDTO;
+import com.javaweb.model.response.BudgetResponseDTO;
+
 
 public interface BudgetService {
-//    // Retrieve list of budget DTOs by user ID
-//    List<BudgetResponseDTO> getBudgetsByUserId(Long userId);
-//    
-//    // Retrieve a single budget DTO by budget ID
-//    BudgetResponseDTO getBudgetById(Long budgetId);
+	List<BudgetResponseDTO> getAllBudgets(Map<String,Object> params);
+	BudgetResponseDTO updatedBudget(BudgetRequestDTO request);
+	BudgetResponseDTO createNewBudget(BudgetRequestDTO request);
+	void deleteBudgetById(Long id);
 }
