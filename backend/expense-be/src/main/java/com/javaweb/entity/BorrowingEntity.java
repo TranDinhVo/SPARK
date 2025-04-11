@@ -2,17 +2,15 @@ package com.javaweb.entity;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.javaweb.enums.BorrowingStatusEnum;
 import com.javaweb.enums.LoanTypeEnum;
-import com.javaweb.model.response.BorrowingResponseDTO;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.ColumnResult;
-import jakarta.persistence.ConstructorResult;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,12 +21,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.SqlResultSetMapping;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "borrowing")
@@ -41,10 +34,6 @@ public class BorrowingEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity userBorrowing;
-
-    @ManyToOne
-    @JoinColumn(name = "wallet_id", nullable = false)
-    private WalletEntity walletBorrowing;
     
     @OneToMany(mappedBy = "borrowingTransaction", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TransactionEntity> transaction  = new ArrayList<>();
@@ -52,14 +41,17 @@ public class BorrowingEntity {
     @Column(name = "counterparty_name", nullable = false)
     private String counterpartyName;
     
-    @Column(name = "amount", precision = 15, scale = 2, nullable = false)
-    private BigDecimal amount;
+    @Column(name = "amount_loan", precision = 15, scale = 2, nullable = false)
+    private BigDecimal amountLoan;
     
     @Column(name = "interest_rate", precision = 5, scale = 2, nullable = false)
     private BigDecimal interestRate = BigDecimal.ZERO;
     
-    @Column(name = "deadline", nullable = false)
-    private Instant deadline;
+    @Column(name = "times", nullable = false)
+    private Long times; 
+    
+    @Column(name = "amount", nullable = false)
+    private BigDecimal amount;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "loan_type", nullable = false, length = 20)
@@ -69,28 +61,36 @@ public class BorrowingEntity {
     @Column(name = "status", length = 20)
     private BorrowingStatusEnum status = BorrowingStatusEnum.DANG_HOAT_DONG;
     
+    @Column(name="auto_create_transaction")
+    private Boolean autoCreateTransaction = false;
+    
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
+    
+    @Column(name = "next_due_date")
+    private LocalDate nextDueDate;
     
     public BorrowingEntity() {
     	super();
     }
-    
-    public BorrowingEntity(Long id, UserEntity userBorrowing, WalletEntity walletBorrowing,
-			List<TransactionEntity> transaction, String counterpartyName, BigDecimal amount, BigDecimal interestRate,
-			Instant deadline, LoanTypeEnum loanType, BorrowingStatusEnum status, Instant createdAt) {
+
+	public BorrowingEntity(Long id, UserEntity userBorrowing, List<TransactionEntity> transaction,
+			String counterpartyName, BigDecimal amountLoan, BigDecimal interestRate, Long times, BigDecimal amount,
+			LoanTypeEnum loanType, BorrowingStatusEnum status, Boolean autoCreateTransaction, Instant createdAt, LocalDate nextDueDate) {
 		super();
 		this.id = id;
 		this.userBorrowing = userBorrowing;
-		this.walletBorrowing = walletBorrowing;
 		this.transaction = transaction;
 		this.counterpartyName = counterpartyName;
-		this.amount = amount;
+		this.amountLoan = amountLoan;
 		this.interestRate = interestRate;
-		this.deadline = deadline;
+		this.times = times;
+		this.amount = amount;
 		this.loanType = loanType;
 		this.status = status;
+		this.autoCreateTransaction = autoCreateTransaction;
 		this.createdAt = createdAt;
+		this.nextDueDate = this.nextDueDate;
 	}
 
 	public Long getId() {
@@ -109,14 +109,6 @@ public class BorrowingEntity {
 		this.userBorrowing = userBorrowing;
 	}
 
-	public WalletEntity getWalletBorrowing() {
-		return walletBorrowing;
-	}
-
-	public void setWalletBorrowing(WalletEntity walletBorrowing) {
-		this.walletBorrowing = walletBorrowing;
-	}
-
 	public List<TransactionEntity> getTransaction() {
 		return transaction;
 	}
@@ -133,12 +125,12 @@ public class BorrowingEntity {
 		this.counterpartyName = counterpartyName;
 	}
 
-	public BigDecimal getAmount() {
-		return amount;
+	public BigDecimal getAmountLoan() {
+		return amountLoan;
 	}
 
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
+	public void setAmountLoan(BigDecimal amountLoan) {
+		this.amountLoan = amountLoan;
 	}
 
 	public BigDecimal getInterestRate() {
@@ -149,12 +141,20 @@ public class BorrowingEntity {
 		this.interestRate = interestRate;
 	}
 
-	public Instant getDeadline() {
-		return deadline;
+	public Long getTimes() {
+		return times;
 	}
 
-	public void setDeadline(Instant deadline) {
-		this.deadline = deadline;
+	public void setTimes(Long times) {
+		this.times = times;
+	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
 	}
 
 	public LoanTypeEnum getLoanType() {
@@ -173,11 +173,27 @@ public class BorrowingEntity {
 		this.status = status;
 	}
 
+	public Boolean getAutoCreateTransaction() {
+		return autoCreateTransaction;
+	}
+
+	public void setAutoCreateTransaction(Boolean autoCreateTransaction) {
+		this.autoCreateTransaction = autoCreateTransaction;
+	}
+
 	public Instant getCreatedAt() {
 		return createdAt;
 	}
 
 	public void setCreatedAt(Instant createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public LocalDate getNextDueDate() {
+		return nextDueDate;
+	}
+
+	public void setNextDueDate(LocalDate nextDueDate) {
+		this.nextDueDate = nextDueDate;
 	}
 }

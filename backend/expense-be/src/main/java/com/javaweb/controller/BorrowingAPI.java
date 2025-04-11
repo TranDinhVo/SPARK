@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.model.request.BorrowingRequestDTO;
 import com.javaweb.model.response.BorrowingResponseDTO;
+import com.javaweb.model.response.GoalResponseDTO;
 import com.javaweb.service.BorrowingService;
 
 @RestController
@@ -44,6 +45,21 @@ public class BorrowingAPI {
 		List<BorrowingResponseDTO> borrowings = borrowingService.searchBorrowings(params);
 		return borrowings;
 	    }
+	
+	@GetMapping("/{id}")
+	public BorrowingResponseDTO getBorowingById(@PathVariable Long id) {
+		return borrowingService.getById(id);
+	}
+	
+	@GetMapping("/user/{userId}")
+	public List<BorrowingResponseDTO> getBorowingByUserId(@PathVariable Long userId){
+		return borrowingService.getByUserId(userId);
+	}
+	
+	
+	
+	
+	
 	
 	//Chỉnh sửa 1 thông tin
 	@PatchMapping("/{id}")
