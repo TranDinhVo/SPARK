@@ -1,6 +1,7 @@
 .ant-layout-sider {
   height: calc(100vh - 120px) !important;
   background: linear-gradient(90deg, #531b8a, #49258f, #3a2181, #22094a);
+  border-top-left-radius: 20px;
 }
 .menu-sider {
   .menu {
