@@ -3,9 +3,30 @@ import DetailBudget from "../ActionBudget/DetialBudget";
 import EditBudget from "../ActionBudget/EditBudget";
 import { Table, Space } from "antd";
 import "./BudgetTable.scss";
+import { createStyles } from "antd-style";
+import { useEffect, useState } from "react";
+
+const useStyle = createStyles(({ css, token }) => {
+  const { antCls } = token;
+  return {
+    customTable: css`
+      .${antCls}-table {
+        ${antCls}-table-container {
+          ${antCls}-table-body ,
+          ${antCls}-table-content {
+            scrollbar-width: thin;
+            scrollbar-color: #feaeaea transparent;
+            scrollbar-gutter: stable;
+          }
+        }
+      }
+    `,
+  };
+});
 
 function BudgetTable(props) {
-  const { budgets, onReload } = props;
+  const { budgets, onReload, sortOrder } = props;
+  const [dataBudgets, setDataBudgets] = useState();
 
   const columns = [
     {
@@ -58,16 +79,33 @@ function BudgetTable(props) {
       ),
     },
   ];
+  const { styles } = useStyle();
+  useEffect(() => {
+    let filteredData = [...budgets];
+    console.log("filt", filteredData);
+    if (sortOrder === "asc") {
+      filteredData.sort((a, b) => b.amountLimit - a.amountLimit);
+    } else if (sortOrder === "desc") {
+      filteredData.sort((a, b) => a.amountLimit - b.amountLimit);
+    }
+
+    setDataBudgets(filteredData.reverse());
+  }, [sortOrder, budgets]);
+  console.log(dataBudgets);
   return (
     <>
       <div className="table-budget">
         <Table
-          dataSource={budgets}
+          className={styles.customTable}
           columns={columns}
+          dataSource={dataBudgets}
           rowKey="id"
           rowClassName={(_, index) =>
             index % 2 === 0 ? "even-budget" : "odd-budget"
           }
+          size="middle"
+          scroll={{ x: "100%", y: 220 }}
+          pagination={false}
         />
       </div>
     </>

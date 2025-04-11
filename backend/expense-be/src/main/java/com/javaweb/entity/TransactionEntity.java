@@ -65,5 +65,97 @@ public class TransactionEntity {
 
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
+	public TransactionEntity() {}
+	public TransactionEntity(Long id, UserEntity userTransaction, WalletEntity walletTransaction,
+			GoalEntity goalTransaction, BorrowingEntity borrowingTransaction, CategoryEntity categoryTransaction,
+			RecurringTransactionEntity recurringTransaction, BigDecimal amount, String description, Boolean status,
+			Instant createdAt) {
+		super();
+		this.id = id;
+		this.userTransaction = userTransaction;
+		this.walletTransaction = walletTransaction;
+		this.goalTransaction = goalTransaction;
+		this.borrowingTransaction = borrowingTransaction;
+		this.categoryTransaction = categoryTransaction;
+		this.recurringTransaction = recurringTransaction;
+		this.amount = amount;
+		this.description = description;
+		this.status = status;
+		this.createdAt = createdAt;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public UserEntity getUserTransaction() {
+		return userTransaction;
+	}
+	public void setUserTransaction(UserEntity userTransaction) {
+		this.userTransaction = userTransaction;
+	}
+	public WalletEntity getWalletTransaction() {
+		return walletTransaction;
+	}
+	public void setWalletTransaction(WalletEntity walletTransaction) {
+		this.walletTransaction = walletTransaction;
+	}
+	public GoalEntity getGoalTransaction() {
+		return goalTransaction;
+	}
+	public void setGoalTransaction(GoalEntity goalTransaction) {
+		this.goalTransaction = goalTransaction;
+	}
+	public BorrowingEntity getBorrowingTransaction() {
+		return borrowingTransaction;
+	}
+	public void setBorrowingTransaction(BorrowingEntity borrowingTransaction) {
+		this.borrowingTransaction = borrowingTransaction;
+	}
+	public CategoryEntity getCategoryTransaction() {
+		return categoryTransaction;
+	}
+	public void setCategoryTransaction(CategoryEntity categoryTransaction) {
+		this.categoryTransaction = categoryTransaction;
+	}
+	public RecurringTransactionEntity getRecurringTransaction() {
+		return recurringTransaction;
+	}
+	public void setRecurringTransaction(RecurringTransactionEntity recurringTransaction) {
+		this.recurringTransaction = recurringTransaction;
+	}
+	public BigDecimal getAmount() {
+		return amount;
+	}
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public Boolean getStatus() {
+		return status;
+	}
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(Instant createdAt) {
+		this.createdAt = createdAt;
+	}
+    
+    
+    
+    
+    
+    
+    
+    
     
 }

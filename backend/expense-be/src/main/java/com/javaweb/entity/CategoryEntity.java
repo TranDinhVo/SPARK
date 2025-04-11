@@ -41,7 +41,15 @@ public class CategoryEntity {
     @JoinColumn(name="type_id")
     private CategoryTypeEntity categoryType;
     
-    @Column(name="name",nullable = false, length = 100)
+    public CategoryTypeEntity getCategoryType() {
+		return categoryType;
+	}
+
+	public void setCategoryType(CategoryTypeEntity categoryType) {
+		this.categoryType = categoryType;
+	}
+
+	@Column(name="name",nullable = false, length = 100)
     private String name;
 
     @Column(name="icon_url", columnDefinition = "TEXT")
@@ -49,6 +57,8 @@ public class CategoryEntity {
 
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
+    
+    
 
 	public Long getId() {
 		return id;

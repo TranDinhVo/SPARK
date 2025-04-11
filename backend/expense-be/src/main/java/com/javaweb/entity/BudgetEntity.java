@@ -3,6 +3,7 @@ package com.javaweb.entity;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Optional;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,10 +19,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "budget")
 public class BudgetEntity {
 
@@ -51,7 +48,8 @@ public class BudgetEntity {
 
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
-    public Long getId() {
+
+	public Long getId() {
 		return id;
 	}
 
@@ -114,6 +112,6 @@ public class BudgetEntity {
 	public void setCreatedAt(Instant createdAt) {
 		this.createdAt = createdAt;
 	}
-
+    
 	
 }

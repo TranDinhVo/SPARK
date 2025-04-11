@@ -7,6 +7,26 @@ import EditTransaction from "../EditTransaction";
 import DetailTransaction from "../DetailTransaction/index";
 import { useOutletContext } from "react-router-dom";
 
+import { createStyles } from "antd-style";
+
+const useStyle = createStyles(({ css, token }) => {
+  const { antCls } = token;
+  return {
+    customTable: css`
+      .${antCls}-table {
+        ${antCls}-table-container {
+          ${antCls}-table-body ,
+          ${antCls}-table-content {
+            scrollbar-width: thin;
+            scrollbar-color: #feaeaea transparent;
+            scrollbar-gutter: stable;
+          }
+        }
+      }
+    `,
+  };
+});
+
 function MainTransaction(props) {
   const { recurring, type, sortOrder } = props;
   const { reload } = useOutletContext();
@@ -96,20 +116,21 @@ function MainTransaction(props) {
     },
   ].filter(Boolean);
 
+  const { styles } = useStyle();
   return (
     <>
       <div className="transaction-recent">
         <div className="recent__table">
           <Table
+            className={styles.customTable}
             dataSource={dataTransaction}
             columns={columns}
             rowKey="id"
             rowClassName={(_, index) =>
               index % 2 === 0 ? "even-row" : "odd-row"
             }
-            pagination={{
-              pageSize: 9,
-            }}
+            pagination={false}
+            scroll={{ x: "100%", y: 550 }}
           />
         </div>
       </div>

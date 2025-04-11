@@ -1,8 +1,9 @@
 .transaction-recent {
   margin-top: 10px;
   .ant-table {
-    padding: 30px;
-    border-radius: 30px;
+    padding: 25px;
+    padding-top: 15px;
+    border-radius: 20px;
   }
   .ant-table-thead {
     tr {
@@ -11,7 +12,8 @@
         font-size: 20px;
         // border-bottom: 1px solid #000;
         position: relative;
-        padding-bottom: 30px;
+        padding-bottom: 20px;
+        padding-top: 20px;
       }
     }
   }
@@ -59,6 +61,16 @@
 
       &:hover {
         background-color: rgba(241, 137, 255, 0.8) !important;
+      }
+    }
+  }
+  .ant-table-body {
+    tr {
+      td {
+        border-top: 4px solid #fff;
+        border-bottom: 4px solid #fff;
+        font-size: 16px;
+        height: 60px;
       }
     }
   }

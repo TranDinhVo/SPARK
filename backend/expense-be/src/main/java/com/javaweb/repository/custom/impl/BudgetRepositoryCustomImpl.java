@@ -38,15 +38,15 @@ public class BudgetRepositoryCustomImpl implements BudgetRepositoryCustom{
 
 				 if (!fieldName.equals("amount_from") && !fieldName.equals("amount_to") && value != null) {
 					 if (item.getType().equals(String.class)) {
-						 where.append(" AND g.").append(fieldName).append(" LIKE '%").append(value).append("%' ");
+						 where.append(" AND b.").append(fieldName).append(" LIKE '%").append(value).append("%' ");
 					 } else if (item.getType().equals(Long.class)) {
-						 where.append(" AND g.").append(fieldName).append(" = ").append(value);
+						 where.append(" AND b.").append(fieldName).append(" = ").append(value);
 					 } else if (item.getType().equals(BigDecimal.class)) {
-						 where.append(" AND g.").append(fieldName).append(" = ").append(value);
+						 where.append(" AND b.").append(fieldName).append(" = ").append(value);
 					 } else if (item.getType().equals(Instant.class)) {
 	                    	where.append(" AND b.").append(fieldName).append(" = '").append(value).append("' ");
 					 } else if (item.getType().isEnum()) {
-						 where.append(" AND g.").append(fieldName).append(" = '").append(value.toString()).append("' ");
+						 where.append(" AND b.").append(fieldName).append(" = '").append(value.toString()).append("' ");
 					 }
 				 }
 			 }
@@ -59,10 +59,10 @@ public class BudgetRepositoryCustomImpl implements BudgetRepositoryCustom{
 		BigDecimal amountFrom = builder.getAmount_from();
 		BigDecimal amountTo = builder.getAmount_to();
 		if(amountFrom != null) {
-			where.append(" AND g.amount >= "+amountFrom);
+			where.append(" AND b.amount >= "+amountFrom);
 		}
 		if(amountTo != null) {
-			where.append(" AND g.amount <= "+amountTo);
+			where.append(" AND b.amount <= "+amountTo);
 		}
 	 }
 	@Override
@@ -98,7 +98,7 @@ public class BudgetRepositoryCustomImpl implements BudgetRepositoryCustom{
 
 	@Override
 	public BudgetResponseDTO updatedBudget(BudgetRequestDTO request) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

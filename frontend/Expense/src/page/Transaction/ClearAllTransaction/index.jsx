@@ -35,7 +35,6 @@ function ClearAllTransactions({ onReload }) {
         padding: "8px 20px",
         height: "40px",
         width: "140px",
-
         borderRadius: "8px",
         border: "none",
       }}
