@@ -1,8 +1,8 @@
 package com.javaweb.enums;
 
 public enum CategoryTypeEnum {
-    EXPENSE("Khoản chi"),
-    INCOME("Khoản thu");
+    Chi("Khoản chi"),
+    Thu("Khoản thu");
 
     private final String description;
 

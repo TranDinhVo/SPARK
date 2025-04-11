@@ -38,13 +38,13 @@ public class GoalConverter {
 	public GoalResponseDTO mapToGoalResponseDTO(Object[]row) {
 		Long id = (row.length > 0 && row[0] != null) ? ((Number) row[0]).longValue() : null;
 		Long userId = (row.length > 1 && row[1] != null) ? ((Number) row[1]).longValue() : null;
-		String nameGoal = (row.length > 2 && row[2] != null) ? (String) row[2] : "";
-		BigDecimal targetAmount = (row.length > 3 && row[3] != null) ? ((BigDecimal) row[3]) : BigDecimal.ZERO;
+		BigDecimal targetAmount = (row.length > 2 && row[2] != null) ? ((BigDecimal) row[2]) : BigDecimal.ZERO;
+		Instant createAt = (row.length > 3 && row[3] != null) ? ((Timestamp) row[3]).toInstant() : null;
 		Instant deadline = (row.length > 4 && row[4] != null) ? ((Timestamp) row[4]).toInstant() : null;
-		String status = (row.length > 5 && row[5] != null) ? (String) row[5] : "";
-		Instant createAt = (row.length > 6 && row[6] != null) ? ((Timestamp) row[6]).toInstant() : null;
+		String nameGoal = (row.length > 5 && row[5] != null) ? (String) row[5] : "";
+		String status = (row.length > 6 && row[6] != null) ? (String) row[6] : "";
 		 BigDecimal currentAmount = (row.length > 7 && row[7] != null) ? (BigDecimal) row[7] : BigDecimal.ZERO;  
-	    return new GoalResponseDTO(id, userId, nameGoal, targetAmount, deadline, status, createAt, currentAmount);
+	    return new GoalResponseDTO(id, nameGoal, targetAmount, deadline, status, createAt, currentAmount);
 	}
 	public GoalEntity convertToEntity(GoalResponseDTO response) {
 		modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
@@ -63,5 +63,11 @@ public class GoalConverter {
 		GoalResponseDTO response = new GoalResponseDTO();
 		modelMapper.map(entity,response);
 		return response;
+	}
+	
+	public GoalEntity convertToEntity(GoalResponseDTO response, GoalEntity entity) {
+		modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+		modelMapper.map(response, entity);
+		return entity;
 	}
 }

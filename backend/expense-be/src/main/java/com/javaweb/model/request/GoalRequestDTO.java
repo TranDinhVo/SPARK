@@ -41,9 +41,6 @@ public class GoalRequestDTO {
 		this.deadline = deadline;
 	}
 	public void validate() {
-        if (id == null) {
-            throw new IllegalArgumentException("Id goal chưa được nhập");
-        }
         if (targetAmount == null) {
             throw new IllegalArgumentException("Mục tiêu tiền cần đạt chưa được nhập");
         }

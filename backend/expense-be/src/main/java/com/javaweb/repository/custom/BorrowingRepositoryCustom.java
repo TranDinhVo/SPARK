@@ -10,4 +10,6 @@ import com.javaweb.model.response.BorrowingResponseDTO;
 public interface BorrowingRepositoryCustom {
 	List<BorrowingResponseDTO> searchBorrowings(BorrowingSearchBuilder builder);
 	BorrowingResponseDTO updateBorrowing(BorrowingRequestDTO request, BorrowingEntity exist);
+	BorrowingEntity updateEntity(BorrowingEntity entity);
+	BorrowingResponseDTO updateStatus(BorrowingResponseDTO response);
 }

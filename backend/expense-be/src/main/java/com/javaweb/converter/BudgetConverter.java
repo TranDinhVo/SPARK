@@ -43,22 +43,11 @@ public class BudgetConverter {
 	public BudgetResponseDTO mapToGoalResponseDTO(Object[] row) {
 		Long id = (row.length > 0 && row[0] != null) ? ((Number) row[0]).longValue() : null;
 		Long userId = (row.length > 1 && row[1] != null) ? ((Number) row[1]).longValue() : null;
-		Long categoryId = (row.length > 2 && row[2] != null) ? ((Number) row[2]).longValue() : null;
+		Float alertThreshold = (row.length > 2 && row[2] != null) ? ((Float) row[2]).floatValue() : null;
 		BigDecimal amountLimit = (row.length > 3 && row[3] != null) ? (BigDecimal) row[3] : BigDecimal.ZERO; 
-//		LocalDate startDate = (row.length > 4 && row[4] != null) ? new Timestamp(((Date) row[4]).getTime()).toInstant(): null;
-//		LocalDate endDate = (row.length > 5 && row[5] != null) ? new Timestamp(((Date) row[5]).getTime()).toInstant(): null;
-		LocalDate startDate = null;
-	    if (row.length > 4 && row[4] != null) {
-	        Date date = (Date) row[4];
-	        startDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-	    }
-
-	    LocalDate endDate = null;
-	    if (row.length > 5 && row[5] != null) {
-	        Date date = (Date) row[5];
-	        endDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-	    }
-		Float alertThreshold = (row.length > 6 && row[6] != null) ? ((Float) row[6]).floatValue() : null;
+		LocalDate endDate = (row.length > 4 && row[4] != null) ? ((java.sql.Date) row[4]).toLocalDate() : null;
+		LocalDate startDate = (row.length > 5 && row[5] != null) ? ((java.sql.Date) row[5]).toLocalDate() : null;
+		Long categoryId = (row.length > 6 && row[6] != null) ? ((Number) row[6]).longValue() : null;
 		Instant createAt = (row.length > 7 && row[7] != null) ? ((Timestamp) row[7]).toInstant() : null;
 		String nameBudget = (row.length > 8 && row[8] != null) ? (String) row[8] : "";
 		BigDecimal usedAmount = (row.length > 9 && row[9] != null) ? (BigDecimal) row[9] : BigDecimal.ZERO;  

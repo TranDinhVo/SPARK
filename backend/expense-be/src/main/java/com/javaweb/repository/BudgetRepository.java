@@ -9,5 +9,5 @@ import com.javaweb.model.response.BudgetResponseDTO;
 import com.javaweb.repository.custom.BudgetRepositoryCustom;
 
 public interface BudgetRepository extends JpaRepository<BudgetEntity, Long>,BudgetRepositoryCustom {
-	List<BudgetResponseDTO>findByUserId(Long userId);
+	List<BudgetEntity>findByUserBudget_Id(Long userId);
 }

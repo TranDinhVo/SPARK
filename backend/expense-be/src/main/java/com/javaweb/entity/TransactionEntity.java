@@ -12,16 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "transaction")
 public class TransactionEntity {
 
@@ -32,10 +24,6 @@ public class TransactionEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity userTransaction;
-
-    @ManyToOne
-    @JoinColumn(name = "wallet_id", nullable = false)
-    private WalletEntity walletTransaction;
 
     @ManyToOne
     @JoinColumn(name = "goal_id")
@@ -66,14 +54,13 @@ public class TransactionEntity {
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
 	public TransactionEntity() {}
-	public TransactionEntity(Long id, UserEntity userTransaction, WalletEntity walletTransaction,
-			GoalEntity goalTransaction, BorrowingEntity borrowingTransaction, CategoryEntity categoryTransaction,
+	public TransactionEntity(Long id, UserEntity userTransaction, GoalEntity goalTransaction,
+			BorrowingEntity borrowingTransaction, CategoryEntity categoryTransaction,
 			RecurringTransactionEntity recurringTransaction, BigDecimal amount, String description, Boolean status,
 			Instant createdAt) {
 		super();
 		this.id = id;
 		this.userTransaction = userTransaction;
-		this.walletTransaction = walletTransaction;
 		this.goalTransaction = goalTransaction;
 		this.borrowingTransaction = borrowingTransaction;
 		this.categoryTransaction = categoryTransaction;
@@ -94,12 +81,6 @@ public class TransactionEntity {
 	}
 	public void setUserTransaction(UserEntity userTransaction) {
 		this.userTransaction = userTransaction;
-	}
-	public WalletEntity getWalletTransaction() {
-		return walletTransaction;
-	}
-	public void setWalletTransaction(WalletEntity walletTransaction) {
-		this.walletTransaction = walletTransaction;
 	}
 	public GoalEntity getGoalTransaction() {
 		return goalTransaction;
@@ -149,13 +130,5 @@ public class TransactionEntity {
 	public void setCreatedAt(Instant createdAt) {
 		this.createdAt = createdAt;
 	}
-    
-    
-    
-    
-    
-    
-    
-    
-    
+	    
 }
