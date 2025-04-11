@@ -8,37 +8,39 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import logo from "../../assets/images/logo.png";
-import "../../assets/scss/LayoutDefault.scss";
+import "./LayoutDefault.scss";
 import MenuSider from "../../components/MenuSider";
-import { Outlet, useLocation } from "react-router-dom";
-import { useState } from "react";
+// import FloatingSettingButton from "../../components/FloatingSettingButton";
+// import ThemeSettingsPanel from "../../components/ThemeSettingsPanel";
+// import { Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import ThemeSettingContainer from "../../components/ThemeSettingContainer";
 
-const { Footer, Sider, Content } = Layout;
+import "../../assets/styles/variable.scss";
+
+const { Sider, Content } = Layout;
 
 function LayoutDefault() {
   const [collapse, setCollapse] = useState(false);
-  const location = useLocation();
 
-  const pageTitles = {
-    "/dashboard": "Dashboard",
-    "/expense": "Expense",
-    "/budget": "Budget",
-    "/transaction": "Transaction",
-    "/transaction/recent": "Transaction",
-    "/transaction/income": "Transaction",
-    "/transaction/expense": "Transaction",
-    "/transaction/recurring": "Transaction",
-    "/saving": "Goals / Saving",
-    "/statistics": "Statistics",
+  const changeThemeColor = (color) => {
+    document.documentElement.style.setProperty("--primary-color", color);
+    localStorage.setItem("theme-color", color);
   };
+  useEffect(() => {
+    const savedColor = localStorage.getItem("theme-color");
+    if (savedColor) {
+      // document.documentElement.style.setProperty("--primary-color", savedColor);
+    }
+  }, []);
 
-  const title = pageTitles[location.pathname] || "Dashboard";
   return (
     <>
       <Layout className="layout-default">
         <header className="header">
           <div
             className={"header__logo " + (collapse && "header__logo--collapse")}
+            style={{ background: "var(--primary-color)" }}
           >
             <img src={logo} alt="Logo" className="header__logo--img" />
           </div>
@@ -54,7 +56,6 @@ function LayoutDefault() {
                     }}
                   />
                 </div>
-                <h2 className="header__nav--title">{title}</h2>
               </div>
               <div className="header__nav--right">
                 <Button
@@ -129,7 +130,10 @@ function LayoutDefault() {
           </Sider>
           <Content className="content">
             {/* <Outlet /> */}
-            <Outlet />
+            <h6 style={{ color: "var(--primary-color-light)" }}>Tiêu đề</h6>
+            <button onClick={() => changeThemeColor("red")}>Nút</button>
+
+            <ThemeSettingContainer />
           </Content>
         </Layout>
         {/* <Footer>Copy right @</Footer> */}
