@@ -462,23 +462,6 @@
       "date": "2025-04-07T07:29:02.221Z",
       "paymentMethod": "Ví tiền mặt",
       "recurrence": null
-    },
-    {
-      "id": "a8a1",
-      "type": "Khoản chi",
-      "category": "Xăng xe",
-      "amount": "100000",
-      "note": "Xăng",
-      "date": "2025-04-07T07:29:21.606Z",
-      "paymentMethod": "Ví tiền mặt",
-      "recurrence": {
-        "type": "Hằng tuần",
-        "next_date": null,
-        "status": {
-          "code": 1,
-          "label": "Đang hoạt động"
-        }
-      }
     }
   ],
   "recurring-transactions": [
@@ -530,13 +513,6 @@
       "id": "891b",
       "transactionId": "a861",
       "recurringType": "Hằng tháng",
-      "nextDueDate": null,
-      "status": "DANG_HOAT_DONG"
-    },
-    {
-      "id": "fe10",
-      "transactionId": "a8a1",
-      "recurringType": "Hằng tuần",
       "nextDueDate": null,
       "status": "DANG_HOAT_DONG"
     }
@@ -622,30 +598,12 @@
       "id": "f355"
     },
     {
-      "amountLimit": 10000000,
-      "startDate": "2024-12-01",
-      "endDate": "2025-04-30T00:00:00Z",
-      "createdAt": "2024-12-01T00:00:00Z",
-      "amountCurrent": 4000000,
-      "category": "Chill",
-      "id": "ecfb"
-    },
-    {
-      "amountLimit": 10000000,
-      "startDate": "2024-12-01",
-      "endDate": "2025-04-30T00:00:00Z",
-      "createdAt": "2024-12-01T00:00:00Z",
-      "amountCurrent": 4000000,
-      "category": "Hehe",
-      "id": "9753"
-    },
-    {
-      "id": "7007",
+      "id": "05d6",
       "category": "Ăn uống",
-      "amount": 123,
-      "startDate": "2025-04-01",
-      "endDate": "2025-05-06",
-      "createdAt": "2025-04-07T08:19:23.783Z"
+      "amount": 123123,
+      "startDate": "2025-05-14",
+      "endDate": "2025-05-27",
+      "createdAt": "2025-04-08T09:48:13.615Z"
     }
   ]
 }

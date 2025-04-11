@@ -25,7 +25,7 @@ const useStyle = createStyles(({ css, token }) => {
 });
 
 function BudgetTable(props) {
-  const { budgets, onReload, sortOrder } = props;
+  const { budgets, onReLoad, sortOrder } = props;
   const [dataBudgets, setDataBudgets] = useState();
 
   const columns = [
@@ -72,8 +72,8 @@ function BudgetTable(props) {
       key: "action",
       render: (_, record) => (
         <Space>
+          <DeleteBudget record={record} onReload={onReLoad} />
           <EditBudget record={record} />
-          <DeleteBudget record={record} />
           <DetailBudget record={record} />
         </Space>
       ),
