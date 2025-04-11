@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import com.javaweb.Builder.BudgetSearchBuilder;
 import com.javaweb.converter.BudgetConverter;
+import com.javaweb.entity.BudgetEntity;
 import com.javaweb.model.request.BudgetRequestDTO;
 import com.javaweb.model.response.BudgetResponseDTO;
-import com.javaweb.model.response.GoalResponseDTO;
 import com.javaweb.repository.custom.BudgetRepositoryCustom;
 
 import jakarta.persistence.EntityManager;
@@ -95,17 +95,19 @@ public class BudgetRepositoryCustomImpl implements BudgetRepositoryCustom{
 	    	.toList();
 		return responseList;
 	}
-
+	
 	@Override
-	public BudgetResponseDTO updatedBudget(BudgetRequestDTO request) {
-		
-		return null;
-	}
-
-	@Override
-	public BudgetResponseDTO updateRate(BudgetResponseDTO response) {
-		
-		return null;
+	public void getUsedAmount(BudgetResponseDTO response) {
+		StringBuilder sql = new StringBuilder("SELECT COALESCE(SUM(t.amount), 0) AS usedAmount \r\n"
+				+ "FROM budget AS b\r\n"
+				+ "JOIN category AS c ON b.category_id = c.id LEFT JOIN transaction AS t\r\n"
+				+ "ON b.category_id = t.category_id\r\n"
+				+ "AND t.user_id = b.user_id\r\n"
+				+ "AND t.created_at BETWEEN b.start_date AND b.end_date\r\n ");
+		StringBuilder where = new StringBuilder(" WHERE 1=1 AND b.id = ").append(response.getId()).append(" ");
+		sql.append(where).append(" GROUP BY b.id;");
+		Query query = entityManager.createNativeQuery(sql.toString());
+		response.setUsedAmount((BigDecimal) query.getSingleResult());
 	}
 
 }

@@ -2,7 +2,9 @@ package com.javaweb.repository.custom.impl;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,65 +35,20 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 	@PersistenceContext
     private EntityManager entityManager;
 	
-	public BorrowingEntity updateVallet(BorrowingRequestDTO request, BorrowingEntity exist) {
-		if (request.getWalletId() != null 
-			    && !request.getWalletId().equals(exist.getWalletBorrowing().getId())) {
-
-			    BigDecimal amount = exist.getAmount();
-			    Long oldWalletId = request.getWalletId(); // ví cũ
-			    Long newWalletId = exist.getWalletBorrowing().getId(); // ví mới
-
-			    boolean isChoVay = "CHO_VAY".equals(exist.getLoanType().toString());
-
-			    String sqlUpdateOld = "UPDATE wallet SET balance = balance " 
-			                        + (isChoVay ? "+" : "-") 
-			                        + " :amount WHERE id = :walletId";
-
-			    String sqlUpdateNew = "UPDATE wallet SET balance = balance " 
-			                        + (isChoVay ? "-" : "+") 
-			                        + " :amount WHERE id = :walletId";
-
-			    try {
-			        // Update old wallet
-			        entityManager.createNativeQuery(sqlUpdateOld)
-			            .setParameter("amount", amount)
-			            .setParameter("walletId", oldWalletId)
-			            .executeUpdate();
-
-			        // Update new wallet
-			        entityManager.createNativeQuery(sqlUpdateNew)
-			            .setParameter("amount", amount)
-			            .setParameter("walletId", newWalletId)
-			            .executeUpdate();
-
-			    } catch (Exception e) {
-			        e.printStackTrace(); // hoặc log bằng logger cho production
-			    }
-			}
-		return exist;
-	}
-	
+	@Override
 	public BorrowingResponseDTO updateStatus(BorrowingResponseDTO response) {
-		if (response.getPaidAmount().compareTo(response.getAmount()) < 0) {
-	        if (response.getDeadline() != null && response.getDeadline().isBefore(Instant.now())) {
-	        	response.setStatus(BorrowingStatusEnum.QUA_HAN);
-	        } else
-	        	response.setStatus(BorrowingStatusEnum.DANG_HOAT_DONG);
+		if(response.getStatus()==BorrowingStatusEnum.DA_HUY) return response;
+		if (response.getRemainTimes() != null && response.getRemainTimes() == response.getTimes()) {
+			response.setStatus(BorrowingStatusEnum.HOAN_THANH);
 	    }
 	    else {
-	    	response.setStatus(BorrowingStatusEnum.HOAN_THANH);
+	    	response.setStatus(BorrowingStatusEnum.DANG_HOAT_DONG);
 	    }
+		
 		return response;
 	}
 	
-	public void updateStatuses(List<Long> overdueIds, List<Long> completedIds) {
-	    if (!overdueIds.isEmpty()) {
-	        entityManager.createQuery("UPDATE BorrowingEntity b SET b.status = :status WHERE b.id IN :ids")
-	                .setParameter("status", BorrowingStatusEnum.QUA_HAN)
-	                .setParameter("ids", overdueIds)
-	                .executeUpdate();
-	    }
-
+	public void updateStatuses(List<Long> completedIds) {
 	    if (!completedIds.isEmpty()) {
 	        entityManager.createQuery("UPDATE BorrowingEntity b SET b.status = :status WHERE b.id IN :ids")
 	                .setParameter("status", BorrowingStatusEnum.HOAN_THANH)
@@ -102,8 +59,7 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 	}
 	
 	 public void querySqlJoin(BorrowingSearchBuilder builder, StringBuilder sql) {
-	            sql.append(" LEFT JOIN transaction t ON b.id = t.borrowing_id AND ((b.loan_type = 'CHO_MUON' AND t.category_id = 8) OR (b.loan_type = 'DI_VAY' AND t.category_id = 6)) ");
-	            sql.append("INNER JOIN wallet AS w ON w.id = b.wallet_id ");
+	            sql.append(" LEFT JOIN transaction t ON b.id = t.borrowing_id");
 	    }
 	
 	
@@ -135,8 +91,8 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 	}
 	
 	 public void specialQuery(BorrowingSearchBuilder builder, StringBuilder where) {
-	        BigDecimal amountFrom = builder.getAmountFrom();
-	        BigDecimal amountTo = builder.getAmountTo();
+	        BigDecimal amountFrom = builder.getAmount_from();
+	        BigDecimal amountTo = builder.getAmount_to();
 	        if(amountFrom != null) {
 	            where.append(" AND b.amount >= "+amountFrom);
 	        }
@@ -147,14 +103,13 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 	
 	@Override
 	public List<BorrowingResponseDTO> searchBorrowings(BorrowingSearchBuilder builder){
-		 StringBuilder sql = new StringBuilder("SELECT b.*,COALESCE(SUM(t.amount), 0) AS paidAmount, w.`name` AS walletName FROM borrowing b ");
+		 StringBuilder sql = new StringBuilder("SELECT b.*,COALESCE(SUM(t.amount), 0) AS paidAmount, COUNT(t.borrowing_id) AS remainTimes FROM borrowing b ");
 		 StringBuilder where = new StringBuilder(" WHERE 1=1 ");
 		 querySqlJoin(builder,sql);
 	     normalQuery(builder,where);
 	     specialQuery(builder,where);
 	     sql.append(where).append(" GROUP BY b.id; ");
 	     
-	     List<Long> overdueIds = new ArrayList<>();
 		 List<Long> completedIds = new ArrayList<>();
 	     Query query = entityManager.createNativeQuery(sql.toString());
 	     List<Object[]> results = query.getResultList();
@@ -162,15 +117,12 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 	     List<BorrowingResponseDTO> responseList =  results.stream().map(row -> {
 	    	    try {
 	    	    	 BorrowingResponseDTO dto = borrowingConverter
-	    	    			 .mapToBorrowingResponseDTO(row,overdueIds,completedIds);
+	    	    			 .mapToBorrowingResponseDTO(row);
 	    	    	 //cập nhật lại status
 	    	 	    dto = updateStatus(dto);
-	    	 	    if (dto.getStatus().toString().equals(BorrowingStatusEnum.QUA_HAN.name())) {
-	    	 	    	overdueIds.add(dto.getId());
-	    	 	    } else if (dto.getStatus().toString().equals(BorrowingStatusEnum.HOAN_THANH.name())) {
+	    	 	    if (dto.getStatus().toString().equals(BorrowingStatusEnum.HOAN_THANH.name())) {
 	    	 	    	completedIds.add(dto.getId());
 	    	 	    }
-	    	 	    
 	                return dto;
 	    	     }catch (Exception e) {
 	                    e.printStackTrace();
@@ -180,30 +132,27 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 	    	.filter(dto -> dto != null)
 	    	.toList();
 	     //đồng bộ status ở database với kết quả trả ra
-	     updateStatuses(overdueIds, completedIds);
+	     updateStatuses(completedIds);
 	     return responseList;
 	}
 	@Transactional
 	@Override
 	public BorrowingResponseDTO updateBorrowing(BorrowingRequestDTO request, BorrowingEntity exist) {
-		//cập nhật ví
-		exist = updateVallet(request,exist);
 		entityManager.merge(exist);
-		
 		exist = borrowingConverter.toUpdateBorrowingDTO(request, exist);
 		
 		StringBuilder sql = new StringBuilder
-				("SELECT COALESCE(SUM(t.amount), 0) AS paidAmount FROM borrowing b LEFT JOIN transaction t ON b.id = t.borrowing_id AND ((b.loan_type = 'CHO_MUON' AND t.category_id = 8) OR (b.loan_type = 'DI_VAY' AND t.category_id = 6)) ");
+				("SELECT COALESCE(SUM(t.amount), 0) AS paidAmount, COUNT(t.borrowing_id) AS remainTimes FROM borrowing b LEFT JOIN transaction t ON b.id = t.borrowing_id");
 		
-		StringBuilder where = new StringBuilder("WHERE 1=1 ");
+		StringBuilder where = new StringBuilder(" WHERE 1=1 ");
 		where.append(" AND b.id = ").append(exist.getId()).append(";");
 		sql.append(where);
 		Query query = entityManager.createNativeQuery(sql.toString());
-		BigDecimal paidAmount = (BigDecimal) query.getSingleResult();
 	    
-	    BorrowingResponseDTO result = new BorrowingResponseDTO();
-	    result.setPaidAmount(paidAmount);
-	    result.setWalletName(exist.getWalletBorrowing().getName());
+		BorrowingResponseDTO result = new BorrowingResponseDTO();
+		Object[] resultJoin = (Object[]) query.getSingleResult();
+		result.setPaidAmount( (BigDecimal) resultJoin[0]);
+		result.setRemainTimes(((Number) resultJoin[1]).longValue());
 	    result = borrowingConverter.toUpdateBorrowingEntity(exist, result);
 	    
 		 result = updateStatus(result);
@@ -211,6 +160,18 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 		 entityManager.merge(exist);
 		    
 	    return result;
+	}
+
+	@Override
+	public BorrowingEntity updateEntity(BorrowingEntity entity) {
+		entity.setAmount(entity.getAmountLoan().divide(BigDecimal.valueOf(entity.getTimes()),2,RoundingMode.HALF_UP));
+		entity.setNextDueDate(
+		        entity.getCreatedAt()
+		            .atZone(ZoneId.systemDefault())
+		            .toLocalDate()
+		            .plusMonths(1)
+		    );
+		return entity;
 	}
 
 }

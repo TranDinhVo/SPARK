@@ -43,6 +43,9 @@ public class RecurringTransactionEntity {
     @Column(name = "next_due_date")
     private LocalDate nextDueDate;
 
+    @Column(name = "auto_create_transaction")
+    private Boolean autoCreateTransaction;
+    
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 20)
     private RecurringStatusEnum status = RecurringStatusEnum.ACTIVE;
@@ -52,27 +55,37 @@ public class RecurringTransactionEntity {
     
 	
 
-    public RecurringTransactionEntity() {}
-	
-	public RecurringTransactionEntity(Long id, String name, List<TransactionEntity> transactions,
-			RecurringTypeEnum recurrenceType, LocalDate nextDueDate, RecurringStatusEnum status, Instant createAt) {
+    public RecurringTransactionEntity(Long id, String name, List<TransactionEntity> transactions,
+			RecurringTypeEnum recurrenceType, LocalDate nextDueDate, Boolean autoCreateTransaction,
+			RecurringStatusEnum status, Instant createAt) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.transactions = transactions;
 		this.recurrenceType = recurrenceType;
 		this.nextDueDate = nextDueDate;
+		this.autoCreateTransaction = autoCreateTransaction;
 		this.status = status;
 		this.createAt = createAt;
 	}
+
+
+
+	public RecurringTransactionEntity() {}
+
+
 
 	public Long getId() {
 		return id;
 	}
 
+
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+
 
 	public String getName() {
 		return name;
@@ -102,37 +115,58 @@ public class RecurringTransactionEntity {
 		return recurrenceType;
 	}
 
+
+
 	public void setRecurrenceType(RecurringTypeEnum recurrenceType) {
 		this.recurrenceType = recurrenceType;
 	}
+
+
 
 	public LocalDate getNextDueDate() {
 		return nextDueDate;
 	}
 
+
+
 	public void setNextDueDate(LocalDate nextDueDate) {
 		this.nextDueDate = nextDueDate;
 	}
+
+
+
+	public Boolean getAutoCreateTransaction() {
+		return autoCreateTransaction;
+	}
+
+
+
+	public void setAutoCreateTransaction(Boolean autoCreateTransaction) {
+		this.autoCreateTransaction = autoCreateTransaction;
+	}
+
+
 
 	public RecurringStatusEnum getStatus() {
 		return status;
 	}
 
+
+
 	public void setStatus(RecurringStatusEnum status) {
 		this.status = status;
 	}
+
+
 
 	public Instant getCreateAt() {
 		return createAt;
 	}
 
+
+
 	public void setCreateAt(Instant createAt) {
 		this.createAt = createAt;
 	}
-
-    
-  
-    
-    
-    
+	
 }

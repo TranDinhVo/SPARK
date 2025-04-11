@@ -80,7 +80,7 @@ public class GoalRepositoryCustomImpl implements GoalRepositoryCustom{
 	public List<GoalResponseDTO> getAllGoals(GoalSearchBuilder builder) {
 		//Tạo lệnh SQL với điều kiện lọc
 		StringBuilder sql = new StringBuilder("SELECT g.*, COALESCE(SUM(t.amount), 0) AS currentAmount FROM goal AS g "
-				+ "LEFT JOIN transaction AS t ON g.id = t.goal_id AND t.category_id = 55 ");
+				+ "LEFT JOIN transaction AS t ON g.id = t.goal_id");
 		StringBuilder where = new StringBuilder(" WHERE 1=1 ");
 		normalQuery(builder,where);
 		specialQuery(builder,where);
@@ -106,7 +106,7 @@ public class GoalRepositoryCustomImpl implements GoalRepositoryCustom{
 	@Override
 	public GoalResponseDTO updateStatus(GoalResponseDTO response) {
 		if(response.getStatus().equals(GoalStatusEnum.TAM_DUNG)) return response;
-		else if (response.getCurrentAmount().compareTo(response.getTargetAmount()) < 0) {
+		else if (response.getCurrentAmount() == null || response.getCurrentAmount().compareTo(response.getTargetAmount()) < 0) {
 	        if (response.getDeadline() != null && response.getDeadline().isBefore(Instant.now())) {
 	        	response.setStatus(GoalStatusEnum.THAT_BAI);
 	        } else
@@ -121,7 +121,7 @@ public class GoalRepositoryCustomImpl implements GoalRepositoryCustom{
 	@Override
 	public void getCurrentAmount(GoalResponseDTO response) {
 		StringBuilder sql = new StringBuilder("SELECT COALESCE(SUM(t.amount), 0) AS currentAmount FROM goal AS g "
-				+ " LEFT JOIN transaction AS t ON g.id = t.goal_id AND t.category_id = 55");
+				+ " LEFT JOIN transaction AS t ON g.id = t.goal_id ");
 		StringBuilder where = new StringBuilder(" WHERE 1=1 AND g.id = ").append(response.getId()).append(" ");
 		sql.append(where).append(" GROUP BY g.id;");
 		Query query = entityManager.createNativeQuery(sql.toString());

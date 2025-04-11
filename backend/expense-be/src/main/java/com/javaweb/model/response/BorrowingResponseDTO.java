@@ -2,49 +2,41 @@ package com.javaweb.model.response;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDate;
 
 import com.javaweb.enums.BorrowingStatusEnum;
 import com.javaweb.enums.LoanTypeEnum;
 public class BorrowingResponseDTO {
 	//Trả borrow
 	private Long id;//khóa chính
-	private String walletName;//tên ví
 	private String counterpartyName;//tên đối tác
-    private BigDecimal amount;//số tiền mượn
+    private BigDecimal amountLoan;//số tiền mượn
     private BigDecimal interestRate;//lãi
-    private Instant deadline;
+    private Long remainTimes; // số lần còn lại
+    private Long times;
     private LoanTypeEnum loanType;//kiểu mượn
     private BorrowingStatusEnum status;//tình trạng
     private Instant createdAt;
+    private LocalDate nextDueDate;
     private BigDecimal paidAmount;//tiền đã trả
     
-    public BorrowingResponseDTO(Long id, String walletName, String counterpartyName, BigDecimal amount,
-    		BigDecimal interestRate, Instant deadline, String loanType, String status, Instant createdAt,
-    		BigDecimal paidAmount) {
-    	super();
-    	this.id = id;
-    	this.walletName = walletName;
-    	this.counterpartyName = counterpartyName;
-    	this.amount = amount;
-    	this.interestRate = interestRate;
-    	this.deadline = deadline;
-    	this.loanType = LoanTypeEnum.valueOf(loanType);
-    	this.status = BorrowingStatusEnum.valueOf(status);
-    	this.createdAt = createdAt;
-    	this.paidAmount = paidAmount;
-    }
-    
-	public BorrowingResponseDTO() {
+	public BorrowingResponseDTO() {} 
+	public BorrowingResponseDTO(Long id, String counterpartyName, BigDecimal amountLoan, BigDecimal interestRate,
+			Long remainTimes, Long times, LoanTypeEnum loanType, BorrowingStatusEnum status, Instant createdAt, LocalDate nextDueDate,
+			BigDecimal paidAmount) {
 		super();
-	}
-	public String getWalletName() {
-		return walletName;
-	}
-	public void setWalletName(String walletName) {
-		this.walletName = walletName;
-	}
-	public BigDecimal getInterestRate() {
-		return interestRate;
+		this.id = id;
+		this.counterpartyName = counterpartyName;
+		this.amountLoan = amountLoan;
+		this.interestRate = interestRate;
+		this.remainTimes = remainTimes;
+		this.loanType = loanType;
+		this.status = status;
+		this.createdAt = createdAt;
+		this.nextDueDate = nextDueDate;
+		this.paidAmount = paidAmount;
+		this.times = times;
+		
 	}
 	public Long getId() {
 		return id;
@@ -55,29 +47,38 @@ public class BorrowingResponseDTO {
 	public String getCounterpartyName() {
 		return counterpartyName;
 	}
-	public void setCounterpartyName(String counterparty_name) {
-		this.counterpartyName = counterparty_name;
+	public void setCounterpartyName(String counterpartyName) {
+		this.counterpartyName = counterpartyName;
 	}
-	public BigDecimal getAmount() {
-		return amount;
+	public BigDecimal getAmountLoan() {
+		return amountLoan;
 	}
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
+	public void setAmountLoan(BigDecimal amountLoan) {
+		this.amountLoan = amountLoan;
 	}
-	public void setInterestRate(BigDecimal interest_rate) {
-		this.interestRate = interest_rate;
+	public BigDecimal getInterestRate() {
+		return interestRate;
 	}
-	public Instant getDeadline() {
-		return deadline;
+	public void setInterestRate(BigDecimal interestRate) {
+		this.interestRate = interestRate;
 	}
-	public void setDeadline(Instant deadline) {
-		this.deadline = deadline;
+	public Long getRemainTimes() {
+		return remainTimes;
+	}
+	public void setRemainTimes(Long remainTimes) {
+		this.remainTimes = remainTimes;
+	}
+	public Long getTimes() {
+		return times;
+	}
+	public void setTimes(Long times) {
+		this.times = times;
 	}
 	public LoanTypeEnum getLoanType() {
 		return loanType;
 	}
-	public void setLoanType(LoanTypeEnum loan_type) {
-		this.loanType = loan_type;
+	public void setLoanType(LoanTypeEnum loanType) {
+		this.loanType = loanType;
 	}
 	public BorrowingStatusEnum getStatus() {
 		return status;
@@ -88,8 +89,14 @@ public class BorrowingResponseDTO {
 	public Instant getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(Instant created_at) {
-		this.createdAt = created_at;
+	public void setCreatedAt(Instant createdAt) {
+		this.createdAt = createdAt;
+	}
+	public LocalDate getNextDueDate() {
+		return nextDueDate;
+	}
+	public void setNextDueDate(LocalDate nextDueDate) {
+		this.nextDueDate = nextDueDate;
 	}
 	public BigDecimal getPaidAmount() {
 		return paidAmount;
@@ -97,6 +104,5 @@ public class BorrowingResponseDTO {
 	public void setPaidAmount(BigDecimal paidAmount) {
 		this.paidAmount = paidAmount;
 	}
-    
 	
 }

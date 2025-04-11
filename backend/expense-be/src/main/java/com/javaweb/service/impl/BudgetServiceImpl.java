@@ -88,13 +88,19 @@ public class BudgetServiceImpl implements BudgetService {
 	@Override
 	public BudgetResponseDTO getById(Long id) {
 		BudgetEntity entity = budgetRepository.findById(id).get();
-		return budgetConverter.convertToResponse(entity);
+		BudgetResponseDTO response = budgetConverter.convertToResponse(entity);
+		budgetRepository.getUsedAmount(response);
+		return response;
 	}
 
 	@Override
 	public List<BudgetResponseDTO> getByUserId(Long userId) {
-		 // BudgetSearchBuilder builder = new BudgetSearchBuilder.Builder().setUser_id(userId).build();
-		List<BudgetResponseDTO> response =  budgetRepository.findByUserId(id);           // budgetRepository.getAllBudgets(builder);
-		return response;
+		List<BudgetEntity> entities =  budgetRepository.findByUserBudget_Id(userId);
+		List<BudgetResponseDTO> responseList = entities.stream().map(entity -> {
+			BudgetResponseDTO response = budgetConverter.convertToResponse(entity);
+			budgetRepository.getUsedAmount(response);
+			return response;
+		}).collect(Collectors.toList());
+		return responseList;
 	}
 }
