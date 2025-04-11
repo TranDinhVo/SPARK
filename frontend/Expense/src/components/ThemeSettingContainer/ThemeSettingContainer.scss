@@ -1,0 +1,122 @@
+.theme-setting__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.theme-setting__floating-btn {
+  position: fixed;
+  top: 20%;
+  right: 0;
+  transform: translateX(0);
+  transition: transform 0.7s ease;
+  background-color: var(--primary-color, #ff69b4);
+  color: white;
+  border: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  width: 48px;
+  height: 48px;
+  font-size: 24px;
+  z-index: 1002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    font-size: 28px;
+    animation: spin 1.5s linear infinite;
+  }
+
+  &.move-left {
+    transform: translateX(-500px); // đúng bằng chiều rộng panel
+  }
+}
+
+.theme-setting__panel {
+  position: fixed;
+  top: 10%;
+  right: -500px;
+  width: 500px;
+  max-width: 90vw;
+  height: auto;
+  max-height: 80vh;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  transition: right 0.7s ease;
+  z-index: 1001;
+  padding: 20px;
+  border-radius: 8px;
+
+  &.visible {
+    right: 0;
+  }
+}
+
+.theme-setting__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.theme-setting__close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+}
+
+.color-palette {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.color-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border 0.3s ease;
+
+  &.selected {
+    // outline: 2px solid var(--primary-color);
+    // outline-offset: 2px;
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+
+      width: 20px;
+      height: 30px;
+      border-top: 5px solid var(--primary-color-light);
+    }
+  }
+
+  .color-inner {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
