@@ -8,7 +8,7 @@ import com.javaweb.enums.GoalStatusEnum;
 
 public class GoalResponseDTO {
     private Long id;
-    private Long userId;
+//    private Long userId;
     private String goalName;
     private BigDecimal targetAmount;
     private BigDecimal currentAmount;
@@ -16,9 +16,9 @@ public class GoalResponseDTO {
     private Instant deadline;
     private GoalStatusEnum status;
 
-	public GoalResponseDTO(Long id, Long userId, String nameGoal, BigDecimal targetAmount, Instant deadline, String status, Instant createAt, BigDecimal currentAmount) {
+	public GoalResponseDTO(Long id, String nameGoal, BigDecimal targetAmount, Instant deadline, String status, Instant createAt, BigDecimal currentAmount) {
     	this.id = id;
-    	this.userId = userId;
+//    	this.userId = userId;
     	this.goalName = nameGoal;
     	this.targetAmount = targetAmount;
     	this.currentAmount = currentAmount;
@@ -31,13 +31,13 @@ public class GoalResponseDTO {
 	public GoalResponseDTO() {
 		super();
 	}
-	public Long getUserId() {
-		return userId;
-	}
-	
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+//	public Long getUserId() {
+//		return userId;
+//	}
+//	
+//	public void setUserId(Long userId) {
+//		this.userId = userId;
+//	}
 	public Long getId() {
 		return id;
 	}

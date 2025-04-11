@@ -29,6 +29,16 @@ public class GoalsAPI {
 		return goalService.getAllGoal(params);
 	}
 	
+	@GetMapping("/{id}")
+	public GoalResponseDTO getGoal(@PathVariable Long id) {
+		return goalService.getGoal(id);
+	}
+	
+	@GetMapping("/user/{userId}")
+	public List<GoalResponseDTO> getByUserId(@PathVariable Long userId){
+		return goalService.getByUserId(userId);
+	}
+	
 	@PatchMapping("/{id}")
 	public GoalResponseDTO updateGoal(
 			@PathVariable Long id,

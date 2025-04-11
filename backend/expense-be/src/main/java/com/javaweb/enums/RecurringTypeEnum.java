@@ -5,6 +5,7 @@ import java.util.TreeMap;
 
 public enum RecurringTypeEnum {
 
+	DAILY("Ngày"),
 	MONTHLY("Tháng"),
     WEEKLY("Tuần"),
     QUARTERLY("Quý"),

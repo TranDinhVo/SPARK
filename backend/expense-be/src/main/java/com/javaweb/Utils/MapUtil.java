@@ -2,6 +2,7 @@ package com.javaweb.Utils;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class MapUtil {
@@ -20,6 +21,9 @@ public class MapUtil {
 	            obj = obj.toString();
 	        } else if (tClass.isEnum()) {
 	            obj = obj != "" ? Enum.valueOf((Class<Enum>) tClass, obj.toString()) : null;
+	        }
+	        else if (tClass.equals(LocalDate.class)) {
+	        	obj = obj.toString().isEmpty() ? null : LocalDate.parse(obj.toString());
 	        }
 	        return tClass.cast(obj);
 	    }

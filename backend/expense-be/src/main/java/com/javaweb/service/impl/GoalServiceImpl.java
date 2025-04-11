@@ -1,5 +1,6 @@
 package com.javaweb.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.javaweb.Builder.GoalSearchBuilder;
 import com.javaweb.converter.GoalConverter;
+import com.javaweb.entity.BudgetEntity;
 import com.javaweb.entity.GoalEntity;
 import com.javaweb.model.request.GoalRequestDTO;
+import com.javaweb.model.response.BudgetResponseDTO;
 import com.javaweb.model.response.GoalResponseDTO;
 import com.javaweb.repository.GoalRepository;
 import com.javaweb.service.GoalService;
@@ -34,10 +37,10 @@ public class GoalServiceImpl implements GoalService{
 		List<GoalResponseDTO> result = goalRepository.getAllGoals(builder);
 		List<GoalEntity> updatedEntities = result.stream()
 		        .map(item -> {
+		        	GoalEntity updateEntity = goalRepository.findById(item.getId()).get();
 		            GoalResponseDTO updatedItem = goalRepository.updateStatus(item); // Cập nhật status
-//		            GoalEntity updateEntity = goalRepository.findById(updatedItem.getId()).get();
-//		            updateEntity =  // Chuyển đổi sang entity
-		            return goalConverter.convertToEntity(updatedItem);
+		            updateEntity = goalConverter.convertToEntity(updatedItem,updateEntity);
+		            return updateEntity;
 		        })
 		        .collect(Collectors.toList());
 
@@ -60,9 +63,9 @@ public class GoalServiceImpl implements GoalService{
 		//Cập nhật status của response
 		response = goalRepository.updateStatus(response);
 		goalRepository.getCurrentAmount(response);
-		
+		entity.setStatus(response.getStatus());
 		//Cập nhật entity ở database
-		goalRepository.save(goalConverter.convertToEntity(response));
+		goalRepository.save(entity);
 		
 		return response;
 	}
@@ -79,7 +82,9 @@ public class GoalServiceImpl implements GoalService{
 		goalRepository.save(entity);
 		
 		//Chuyển đầu ra response
-		return goalConverter.convertToResponse(entity);
+		GoalResponseDTO response = goalConverter.convertToResponse(entity);
+		response.setCurrentAmount(BigDecimal.ZERO);
+		return response;
 	}
 
 	@Override
@@ -88,6 +93,29 @@ public class GoalServiceImpl implements GoalService{
 	        throw new EntityNotFoundException("Không tìm thấy khoản tiết kiệm với ID: " + id);
 	    }
 	    goalRepository.deleteById(id);
+	}
+
+	@Override
+	public GoalResponseDTO getGoal(Long id) {
+		if (!goalRepository.existsById(id)) {
+	        throw new EntityNotFoundException("Không tìm thấy mục tiêu tiết kiệm với ID: " + id);
+	    }
+		GoalResponseDTO response = goalConverter.convertToResponse(goalRepository.findById(id).get());
+		goalRepository.getCurrentAmount(response);
+		goalRepository.updateStatus(response);
+		return response;
+	}
+
+	@Override
+	public List<GoalResponseDTO> getByUserId(Long userId) {
+		List<GoalEntity> entities =  goalRepository.findByUserGoal_Id(userId);
+		List<GoalResponseDTO> responseList = entities.stream().map(entity -> {
+			GoalResponseDTO response = goalConverter.convertToResponse(entity);
+			goalRepository.getCurrentAmount(response);
+			goalRepository.updateStatus(response);
+			return response;
+		}).collect(Collectors.toList());
+		return responseList;
 	}
 	
 	
