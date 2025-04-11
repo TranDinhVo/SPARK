@@ -23,10 +23,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "recurring_transactions")
 public class RecurringTransactionEntity {
 

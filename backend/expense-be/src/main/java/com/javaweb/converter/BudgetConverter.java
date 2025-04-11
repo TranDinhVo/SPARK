@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Map;
 
 import org.modelmapper.Conditions;
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Component;
 import com.javaweb.Builder.BudgetSearchBuilder;
 import com.javaweb.Utils.MapUtil;
 import com.javaweb.entity.BudgetEntity;
-import com.javaweb.entity.CategoryEntity;
+import com.javaweb.model.request.BudgetRequestDTO;
 import com.javaweb.model.response.BudgetResponseDTO;
 import com.javaweb.repository.CategoryRepository;
 
@@ -42,27 +44,42 @@ public class BudgetConverter {
 		Long id = (row.length > 0 && row[0] != null) ? ((Number) row[0]).longValue() : null;
 		Long userId = (row.length > 1 && row[1] != null) ? ((Number) row[1]).longValue() : null;
 		Long categoryId = (row.length > 2 && row[2] != null) ? ((Number) row[2]).longValue() : null;
-		BigDecimal amountLimit = (row.length > 3 && row[3] != null) ? (BigDecimal) row[3] : BigDecimal.ZERO;  
-//		Instant startDate = (row.length > 4 && row[4] != null) ? ((Timestamp) row[4]).toInstant() : null;
-//		Instant endDate = (row.length > 5 && row[5] != null) ? ((Timestamp) row[5]).toInstant() : null;
-		Instant startDate = (row.length > 4 && row[4] != null) ? new Timestamp(((Date) row[4]).getTime()).toInstant(): null;
-		Instant endDate = (row.length > 5 && row[5] != null) ? new Timestamp(((Date) row[5]).getTime()).toInstant(): null;
+		BigDecimal amountLimit = (row.length > 3 && row[3] != null) ? (BigDecimal) row[3] : BigDecimal.ZERO; 
+//		LocalDate startDate = (row.length > 4 && row[4] != null) ? new Timestamp(((Date) row[4]).getTime()).toInstant(): null;
+//		LocalDate endDate = (row.length > 5 && row[5] != null) ? new Timestamp(((Date) row[5]).getTime()).toInstant(): null;
+		LocalDate startDate = null;
+	    if (row.length > 4 && row[4] != null) {
+	        Date date = (Date) row[4];
+	        startDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	    }
+
+	    LocalDate endDate = null;
+	    if (row.length > 5 && row[5] != null) {
+	        Date date = (Date) row[5];
+	        endDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	    }
 		Float alertThreshold = (row.length > 6 && row[6] != null) ? ((Float) row[6]).floatValue() : null;
 		Instant createAt = (row.length > 7 && row[7] != null) ? ((Timestamp) row[7]).toInstant() : null;
 		String nameBudget = (row.length > 8 && row[8] != null) ? (String) row[8] : "";
 		BigDecimal usedAmount = (row.length > 9 && row[9] != null) ? (BigDecimal) row[9] : BigDecimal.ZERO;  
-	    return new BudgetResponseDTO(id, amountLimit, startDate, endDate, alertThreshold,  createAt, usedAmount, nameBudget);
+	    return new BudgetResponseDTO(id, nameBudget, amountLimit, usedAmount, startDate, endDate, alertThreshold,  createAt);
 	}
 	public BudgetEntity convertToEntity(BudgetResponseDTO response) {
 		modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
 		BudgetEntity entity = new BudgetEntity();
 		modelMapper.map(response, entity);
-		
-//		if (response.getCategoryId() != null) {
-//	        CategoryEntity category = categoryRepository.findById(response.getCategoryId())
-//	            .orElseThrow(() -> new RuntimeException("Category không tồn tại"));
-//	        entity.setCategoryBudget(category); // ✅ Hibernate quản lý được entity này
-//	    }
 	    return entity;
+	}
+	public BudgetEntity mapToEntity(BudgetRequestDTO request) {
+		modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+		BudgetEntity entity = new BudgetEntity();
+		modelMapper.map(request, entity);
+		return entity;
+	}
+	public BudgetResponseDTO convertToResponse(BudgetEntity entity) {
+		BudgetResponseDTO response = new BudgetResponseDTO();
+		modelMapper.map(entity,response);
+		response.setBudgetName(entity.getCategoryBudget().getName());
+		return response;
 	}
 }

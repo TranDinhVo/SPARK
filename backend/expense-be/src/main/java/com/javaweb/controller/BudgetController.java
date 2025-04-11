@@ -30,6 +30,16 @@ public class BudgetController {
         return budgetService.getAllBudgets(params);
     }
     
+    @GetMapping("/{id}")
+    public BudgetResponseDTO getById(@PathVariable Long id) {
+        return budgetService.getById(id);
+    }
+    
+    @GetMapping("/user/{userId}")
+    public List<BudgetResponseDTO> getByUserId(@PathVariable Long userId) {
+        return budgetService.getByUserId(userId);
+    }
+    
     @PatchMapping("/{id}")
     public BudgetResponseDTO updatedBudget(
     		@PathVariable Long id,

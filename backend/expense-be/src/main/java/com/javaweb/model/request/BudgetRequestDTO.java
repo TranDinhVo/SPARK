@@ -15,13 +15,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 public class BudgetRequestDTO {
-    private Long id;
+	private Long id;
     private Long userId;
     private Long categoryId;
     private BigDecimal amountLimit;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Float alertThreshold;
+    private Float alertThreshold = 0.8f;
+    
 	public Long getId() {
 		return id;
 	}
@@ -64,4 +65,18 @@ public class BudgetRequestDTO {
 	public void setAlertThreshold(Float alertThreshold) {
 		this.alertThreshold = alertThreshold;
 	}
+	public void validate() {
+        if (amountLimit == null) {
+            throw new IllegalArgumentException("Ngân sách tiền cần đạt chưa được nhập");
+        }
+        if(userId == null) {
+        	throw new IllegalArgumentException("Id người dùng chưa được nhập");
+        }
+        if(startDate == null) {
+        	throw new IllegalArgumentException("Thời gian bắt đầu chưa được nhập");
+        }
+        if(endDate == null) {
+        	throw new IllegalArgumentException("Thời gian kết thúc chưa được nhập");
+        }
+    }
 }

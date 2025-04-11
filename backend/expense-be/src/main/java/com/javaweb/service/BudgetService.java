@@ -11,4 +11,6 @@ public interface BudgetService {
 	BudgetResponseDTO updatedBudget(BudgetRequestDTO request);
 	BudgetResponseDTO createNewBudget(BudgetRequestDTO request);
 	void deleteBudgetById(Long id);
+	BudgetResponseDTO getById(Long id);
+	List<BudgetResponseDTO> getByUserId(Long id);
 }

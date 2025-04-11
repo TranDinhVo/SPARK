@@ -48,9 +48,7 @@ function LayoutIntroduce() {
         </header>
         <Layout>
           <Content className="content">
-            <div className="content__slider">
-              <SliderHome />
-            </div>
+            <div className="content__slider">{/* <SliderHome /> */}</div>
           </Content>
         </Layout>
         {/* <Footer>Copy right @</Footer> */}

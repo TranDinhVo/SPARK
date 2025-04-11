@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<TransactionEntity, Long> {
     
-    List<TransactionEntity> findByUserTransactionId(Long userId);
+	List<TransactionEntity> findByUserTransactionId(Long userId);
     
 }
 
