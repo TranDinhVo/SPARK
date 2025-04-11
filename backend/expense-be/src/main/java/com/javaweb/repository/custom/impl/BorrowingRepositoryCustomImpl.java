@@ -38,7 +38,7 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 	@Override
 	public BorrowingResponseDTO updateStatus(BorrowingResponseDTO response) {
 		if(response.getStatus()==BorrowingStatusEnum.DA_HUY) return response;
-		if (response.getRemainTimes() != null && response.getRemainTimes() == 0) {
+		if (response.getRemainTimes() != null && response.getRemainTimes() == response.getTimes()) {
 			response.setStatus(BorrowingStatusEnum.HOAN_THANH);
 	    }
 	    else {
