@@ -11,7 +11,8 @@ import { createBudget } from "../../../services/BudgetService";
 
 dayjs.locale("vi");
 const { RangePicker } = DatePicker;
-function AddBudget() {
+function AddBudget(props) {
+  const { onReLoad } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
   const [categories, setCategories] = useState([]);
@@ -64,6 +65,7 @@ function AddBudget() {
         });
         form.resetFields();
         setIsModalOpen(false);
+        onReLoad();
       }
     } catch (error) {
       console.error("Lỗi khi thêm giao dịch:", error);

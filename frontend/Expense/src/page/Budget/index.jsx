@@ -26,7 +26,8 @@ function Budget() {
     fetchApi();
   }, []);
 
-  const handleReload = () => {
+  const onReLoad = () => {
+    console.log("reload");
     fetchApi();
   };
   return (
@@ -55,10 +56,10 @@ function Budget() {
                 marginLeft: "auto",
               }}
             >
-              <FilterBudget onReLoad={handleReload} />
+              <FilterBudget onReLoad={onReLoad} />
             </Col>
             <Col xl={3}>
-              <ClearAllBudget onReLoad={handleReload} />
+              <ClearAllBudget onReLoad={onReLoad} />
             </Col>
             <Col xl={11}></Col>
             <Col xl={3}>
@@ -70,17 +71,17 @@ function Budget() {
               </Button>
             </Col>
             <Col xl={3}>
-              <AddBudget />
+              <AddBudget onReLoad={onReLoad} />
             </Col>
           </Row>
           <Row gutter={[20, 20]}>
             <Col xl={24}>
               {isGrid ? (
-                <BudgetGrid budgets={budgets} onReLoad={handleReload} />
+                <BudgetGrid budgets={budgets} onReLoad={onReLoad} />
               ) : (
                 <BudgetTable
                   budgets={budgets}
-                  onReLoad={handleReload}
+                  onReLoad={onReLoad}
                   sortOrder={sortOrder}
                 />
               )}
