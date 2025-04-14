@@ -2,12 +2,18 @@ import { Button, Layout } from "antd";
 import { SunOutlined } from "@ant-design/icons";
 import logoBasic from "../../assets/images/LogoBasic.png";
 import "../../assets/scss/LayoutIntroduce.scss";
-import Login from "../../components/Login";
+import Login from "../Login";
 import SliderHome from "../../components/SliderHome";
+import { useSelector } from "react-redux";
+import Logout from "../Logout";
+import { getCookie } from "../../helpers/cookie";
 
 const { Content } = Layout;
 
-function LayoutIntroduce() {
+function Introduce() {
+  const token = getCookie("token");
+  console.log(token);
+  const isLogin = useSelector((state) => state.loginReducer);
   return (
     <>
       <Layout className="layout-introduce">
@@ -57,4 +63,4 @@ function LayoutIntroduce() {
   );
 }
 
-export default LayoutIntroduce;
+export default Introduce;
