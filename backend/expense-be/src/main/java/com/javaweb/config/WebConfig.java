@@ -13,7 +13,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000") // Cho phép frontend ReactJS truy cập
+                        .allowedOrigins("http://localhost:5173") // Cho phép frontend ReactJS truy cập
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
             }
         };

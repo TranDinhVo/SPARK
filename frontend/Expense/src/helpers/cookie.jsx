@@ -17,7 +17,7 @@ export function getCookie(cname) {
 // End lấy cookie
 
 // Hàm tạo cookie
-export function setCooie(cname, cvalue, exdays) {
+export function setCookie(cname, cvalue, exdays) {
   var d = new Date();
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
   var expires = "expires" + d.toUTCString();
