@@ -13,4 +13,5 @@ public interface BudgetService {
 	void deleteBudgetById(Long id);
 	BudgetResponseDTO getById(Long id);
 	List<BudgetResponseDTO> getByUserId(Long id);
+	
 }

@@ -4,11 +4,21 @@ import java.time.Instant;
 
 public class CategoryResponseDTO {
     private Long id;
+    private Long userId; 
     private String name;
-    private String type; //  Sửa từ Long thành String do mình sử dụng type enum  là chi và thu
+    private String type;
     private String iconUrl;
     private String color;
     private Instant createdAt = Instant.now();
+
+    // Thêm getter và setter cho userId
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public Long getId() {
         return id;

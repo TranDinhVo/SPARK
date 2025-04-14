@@ -1,106 +1,118 @@
-package com.javaweb.service.impl;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.javaweb.Builder.BudgetSearchBuilder;
-import com.javaweb.converter.BudgetConverter;
-import com.javaweb.entity.BudgetEntity;
-import com.javaweb.entity.CategoryEntity;
-import com.javaweb.model.request.BudgetRequestDTO;
-import com.javaweb.model.response.BudgetResponseDTO;
-import com.javaweb.repository.BudgetRepository;
-import com.javaweb.repository.CategoryRepository;
-import com.javaweb.service.BudgetService;
-
-import jakarta.persistence.EntityNotFoundException;
-
-@Service
-public class BudgetServiceImpl implements BudgetService {
-
-	@Autowired
-	CategoryRepository categoryRepository;
+	package com.javaweb.service.impl;
+	import java.math.BigDecimal;
+	import java.util.List;
+	import java.util.Map;
+	import java.util.stream.Collectors;
 	
-	@Autowired
-	BudgetConverter budgetConverter;
+	import org.springframework.beans.factory.annotation.Autowired;
+	import org.springframework.stereotype.Service;
 	
-	@Autowired
-	BudgetRepository budgetRepository;
+	import com.javaweb.Builder.BudgetSearchBuilder;
+	import com.javaweb.converter.BudgetConverter;
+	import com.javaweb.entity.BudgetEntity;
+	import com.javaweb.entity.CategoryEntity;
+	import com.javaweb.model.request.BudgetRequestDTO;
+	import com.javaweb.model.response.BudgetResponseDTO;
+	import com.javaweb.repository.BudgetRepository;
+	import com.javaweb.repository.CategoryRepository;
+	import com.javaweb.service.BudgetService;
 	
-	@Override
-	public List<BudgetResponseDTO> getAllBudgets(Map<String, Object> params) {
-		//Chuyển đổi dữ liệu từ map qua Builder
-		BudgetSearchBuilder builder = budgetConverter.toBudgetSearchBuilder(params);
-		//Lấy dữ liệu từ repository
-		List<BudgetResponseDTO> result = budgetRepository.getAllBudgets(builder);
-		//Cập nhật tỉ lệ alert_threshold
-		List<BudgetEntity> updatedEntities = result.stream()
-		        .map(item -> {
-		            return budgetConverter.convertToEntity(item);
-		        })
-		        .collect(Collectors.toList());
-		return result;
-	}
+	import jakarta.persistence.EntityNotFoundException;
+	
+	@Service
+	public class BudgetServiceImpl implements BudgetService {
+	
+		@Autowired
+		CategoryRepository categoryRepository;
+		
+		@Autowired
+		BudgetConverter budgetConverter;
+		
+		@Autowired
+		BudgetRepository budgetRepository;
+		
+		@Override
+		public List<BudgetResponseDTO> getAllBudgets(Map<String, Object> params) {
+			//Chuyển đổi dữ liệu từ map qua Builder
+			BudgetSearchBuilder builder = budgetConverter.toBudgetSearchBuilder(params);
+			//Lấy dữ liệu từ repository
+			List<BudgetResponseDTO> result = budgetRepository.getAllBudgets(builder);
+			//Cập nhật tỉ lệ alert_threshold
+			List<BudgetEntity> updatedEntities = result.stream()
+			        .map(item -> {
+			            return budgetConverter.convertToEntity(item);
+			        })
+			        .collect(Collectors.toList());
+			return result;
+		}
+	
 
-	@Override
-	public BudgetResponseDTO updatedBudget(BudgetRequestDTO request) {
-		BudgetEntity entity = budgetRepository.findById(request.getId()).get();
-		//Cập nhật dữ liệu từ request về entity
-		entity = budgetConverter.mapToEntity(request);
-		//Chuyển dữ liệu qua response
-		BudgetResponseDTO response = budgetConverter.convertToResponse(entity);
-		//Cập nhật entity ở database
-		budgetRepository.save(budgetConverter.convertToEntity(response));
-		return response;
-	}
 
-	@Override
-	public BudgetResponseDTO createNewBudget(BudgetRequestDTO request) {
-		//Thỏa điều kiện không null
-		request.validate();
-				
-		//Chuyển request sang entity
-		BudgetEntity entity = budgetConverter.mapToEntity(request);
-		CategoryEntity category = categoryRepository.findById(request.getCategoryId())
-			 .orElseThrow(() -> new RuntimeException("Category không tồn tại với ID: " + request.getCategoryId()));
-		entity.setCategoryBudget(category);
-		//Lưu vào database
-		budgetRepository.save(entity);
-				
-		//Chuyển đầu ra response
-		BudgetResponseDTO response =  budgetConverter.convertToResponse(entity);
-		response.setUsedAmount(BigDecimal.ZERO);
-		return response;
-	}
+		@Override
+		public BudgetResponseDTO updatedBudget(BudgetRequestDTO request) {
+		    BudgetEntity entity = budgetRepository.findById(request.getId())
+		        .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy ngân sách với ID: " + request.getId()));
 
-	@Override
-	public void deleteBudgetById(Long id) {
-		if (!budgetRepository.existsById(id)) {
-	        throw new EntityNotFoundException("Không tìm thấy khoản tiết kiệm với ID: " + id);
-	    }
-	    budgetRepository.deleteById(id);
-	}
+		    // Gọi method từ converter để cập nhật entity
+		    budgetConverter.updateEntityFromRequest(entity, request);
 
-	@Override
-	public BudgetResponseDTO getById(Long id) {
-		BudgetEntity entity = budgetRepository.findById(id).get();
-		BudgetResponseDTO response = budgetConverter.convertToResponse(entity);
-		budgetRepository.getUsedAmount(response);
-		return response;
-	}
+		    // Nếu categoryId được truyền trong request thì cập nhật
+		    if (request.getCategoryId() != null) {
+		        CategoryEntity category = categoryRepository.findById(request.getCategoryId())
+		            .orElseThrow(() -> new RuntimeException("Category không tồn tại với ID: " + request.getCategoryId()));
+		        entity.setCategoryBudget(category);
+		    }
 
-	@Override
-	public List<BudgetResponseDTO> getByUserId(Long userId) {
-		List<BudgetEntity> entities =  budgetRepository.findByUserBudget_Id(userId);
-		List<BudgetResponseDTO> responseList = entities.stream().map(entity -> {
-			BudgetResponseDTO response = budgetConverter.convertToResponse(entity);
-			budgetRepository.getUsedAmount(response);
+		    budgetRepository.save(entity);
+		    return budgetConverter.convertToResponse(entity);
+		}
+
+
+	
+		@Override
+		public BudgetResponseDTO createNewBudget(BudgetRequestDTO request) {
+			//Thỏa điều kiện không null
+			request.validate();
+					
+			//Chuyển request sang entity
+			BudgetEntity entity = budgetConverter.mapToEntity(request);
+			CategoryEntity category = categoryRepository.findById(request.getCategoryId())
+				 .orElseThrow(() -> new RuntimeException("Category không tồn tại với ID: " + request.getCategoryId()));
+			entity.setCategoryBudget(category);
+			//Lưu vào database
+			budgetRepository.save(entity);
+					
+			//Chuyển đầu ra response
+			BudgetResponseDTO response =  budgetConverter.convertToResponse(entity);
+			response.setUsedAmount(BigDecimal.ZERO);
 			return response;
-		}).collect(Collectors.toList());
-		return responseList;
+		}
+	
+		@Override
+		public void deleteBudgetById(Long id) {
+			if (!budgetRepository.existsById(id)) {
+		        throw new EntityNotFoundException("Không tìm thấy khoản tiết kiệm với ID: " + id);
+		    }
+		    budgetRepository.deleteById(id);
+		}
+	
+		@Override
+		public BudgetResponseDTO getById(Long id) {
+		    BudgetEntity entity = budgetRepository.findById(id)
+		        .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy ngân sách với ID: " + id));
+		    BudgetResponseDTO response = budgetConverter.convertToResponse(entity);
+		    budgetRepository.getUsedAmount(response);
+		    return response;
+		}
+	
+		@Override
+		public List<BudgetResponseDTO> getByUserId(Long userId) {
+			List<BudgetEntity> entities =  budgetRepository.findByUserBudget_Id(userId);
+			List<BudgetResponseDTO> responseList = entities.stream().map(entity -> {
+				BudgetResponseDTO response = budgetConverter.convertToResponse(entity);
+				budgetRepository.getUsedAmount(response);
+				return response;
+			}).collect(Collectors.toList());
+			return responseList;
+		}
 	}
-}

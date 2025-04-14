@@ -42,16 +42,16 @@ public class BorrowingEntity {
     private String counterpartyName;
     
     @Column(name = "amount_loan", precision = 15, scale = 2, nullable = false)
-    private BigDecimal amountLoan;
+    private BigDecimal amountLoan = BigDecimal.ZERO; // Thêm giá trị mặc định
     
     @Column(name = "interest_rate", precision = 5, scale = 2, nullable = false)
     private BigDecimal interestRate = BigDecimal.ZERO;
     
     @Column(name = "times", nullable = false)
-    private Long times; 
+    private Long times = 0L;
     
     @Column(name = "amount", nullable = false)
-    private BigDecimal amount;
+    private BigDecimal amount = BigDecimal.ZERO; // Thêm giá trị mặc định
     
     @Enumerated(EnumType.STRING)
     @Column(name = "loan_type", nullable = false, length = 20)
@@ -82,15 +82,15 @@ public class BorrowingEntity {
 		this.userBorrowing = userBorrowing;
 		this.transaction = transaction;
 		this.counterpartyName = counterpartyName;
-		this.amountLoan = amountLoan;
-		this.interestRate = interestRate;
-		this.times = times;
-		this.amount = amount;
+		this.amountLoan = amountLoan != null ? amountLoan : BigDecimal.ZERO; // Kiểm tra null
+		this.interestRate = interestRate != null ? interestRate : BigDecimal.ZERO; // Kiểm tra null
+		this.times = times != null ? times : 0L;
+		this.amount = amount != null ? amount : BigDecimal.ZERO; // Kiểm tra null
 		this.loanType = loanType;
-		this.status = status;
-		this.autoCreateTransaction = autoCreateTransaction;
-		this.createdAt = createdAt;
-		this.nextDueDate = this.nextDueDate;
+		this.status = status != null ? status : BorrowingStatusEnum.DANG_HOAT_DONG; // Kiểm tra null
+		this.autoCreateTransaction = autoCreateTransaction != null ? autoCreateTransaction : false; // Kiểm tra null
+		this.createdAt = createdAt != null ? createdAt : Instant.now(); // Kiểm tra null
+		this.nextDueDate = nextDueDate;
 	}
 
 	public Long getId() {
@@ -126,35 +126,35 @@ public class BorrowingEntity {
 	}
 
 	public BigDecimal getAmountLoan() {
-		return amountLoan;
+		return amountLoan != null ? amountLoan : BigDecimal.ZERO; // Đảm bảo không trả về null
 	}
 
 	public void setAmountLoan(BigDecimal amountLoan) {
-		this.amountLoan = amountLoan;
+		this.amountLoan = amountLoan != null ? amountLoan : BigDecimal.ZERO; // Kiểm tra null
 	}
 
 	public BigDecimal getInterestRate() {
-		return interestRate;
+		return interestRate != null ? interestRate : BigDecimal.ZERO; // Đảm bảo không trả về null
 	}
 
 	public void setInterestRate(BigDecimal interestRate) {
-		this.interestRate = interestRate;
+		this.interestRate = interestRate != null ? interestRate : BigDecimal.ZERO; // Kiểm tra null
 	}
 
 	public Long getTimes() {
-		return times;
+		return times != null ? times : 0L; // Đảm bảo không trả về null
 	}
 
 	public void setTimes(Long times) {
-		this.times = times;
+		this.times = times != null ? times : 0L;
 	}
 
 	public BigDecimal getAmount() {
-		return amount;
+		return amount != null ? amount : BigDecimal.ZERO; // Đảm bảo không trả về null
 	}
 
 	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
+		this.amount = amount != null ? amount : BigDecimal.ZERO; // Kiểm tra null
 	}
 
 	public LoanTypeEnum getLoanType() {
@@ -166,27 +166,27 @@ public class BorrowingEntity {
 	}
 
 	public BorrowingStatusEnum getStatus() {
-		return status;
+		return status != null ? status : BorrowingStatusEnum.DANG_HOAT_DONG; // Đảm bảo không trả về null
 	}
 
 	public void setStatus(BorrowingStatusEnum status) {
-		this.status = status;
+		this.status = status != null ? status : BorrowingStatusEnum.DANG_HOAT_DONG; // Kiểm tra null
 	}
 
 	public Boolean getAutoCreateTransaction() {
-		return autoCreateTransaction;
+		return autoCreateTransaction != null ? autoCreateTransaction : false; // Đảm bảo không trả về null
 	}
 
 	public void setAutoCreateTransaction(Boolean autoCreateTransaction) {
-		this.autoCreateTransaction = autoCreateTransaction;
+		this.autoCreateTransaction = autoCreateTransaction != null ? autoCreateTransaction : false; // Kiểm tra null
 	}
 
 	public Instant getCreatedAt() {
-		return createdAt;
+		return createdAt != null ? createdAt : Instant.now(); // Đảm bảo không trả về null
 	}
 
 	public void setCreatedAt(Instant createdAt) {
-		this.createdAt = createdAt;
+		this.createdAt = createdAt != null ? createdAt : Instant.now(); // Kiểm tra null
 	}
 
 	public LocalDate getNextDueDate() {

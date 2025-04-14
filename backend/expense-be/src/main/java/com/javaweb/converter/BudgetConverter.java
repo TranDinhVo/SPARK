@@ -66,9 +66,23 @@ public class BudgetConverter {
 		return entity;
 	}
 	public BudgetResponseDTO convertToResponse(BudgetEntity entity) {
-		BudgetResponseDTO response = new BudgetResponseDTO();
-		modelMapper.map(entity,response);
-		response.setBudgetName(entity.getCategoryBudget().getName());
-		return response;
+	    BudgetResponseDTO response = new BudgetResponseDTO();
+	    modelMapper.map(entity, response);
+
+	    //  Kiểm tra null trước khi truy cập
+	    if (entity.getCategoryBudget() != null) {
+	        response.setBudgetName(entity.getCategoryBudget().getName());
+	    } else {
+	        response.setBudgetName("Không xác định"); // hoặc null tùy mục đích
+	    }
+
+	    return response;
 	}
-}
+	public void updateEntityFromRequest(BudgetEntity entity, BudgetRequestDTO request) {
+	    modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+	    modelMapper.map(request, entity);
+	}
+
+		
+	}
+

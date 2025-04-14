@@ -64,14 +64,6 @@ public class CategoryEntity {
 		
 	}
 
-
-
-
-	
-
-
-
-
 	public CategoryEntity(Long id, UserEntity userCategory, List<TransactionEntity> transaction,
 			List<BudgetEntity> budget, CategoryTypeEnum type, String name, String iconUrl, String color,
 			Instant createdAt) {

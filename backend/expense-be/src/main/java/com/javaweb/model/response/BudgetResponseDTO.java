@@ -79,7 +79,4 @@ public class BudgetResponseDTO {
 	public void setCreatedAt(Instant createdAt) {
 		this.createdAt = createdAt;
 	}
-
-	
-	
 }
