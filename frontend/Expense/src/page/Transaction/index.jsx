@@ -12,9 +12,10 @@ function Transaction() {
 
   return (
     <>
-      <MenuTransaction />
+      {/* <MenuTransaction />
       <ActionTransaction onReLoad={onReLoad} />
-      <Outlet context={{ onReLoad, reload }} />
+      <Outlet context={{ onReLoad, reload }} /> */}
+      Transaction
     </>
   );
 }

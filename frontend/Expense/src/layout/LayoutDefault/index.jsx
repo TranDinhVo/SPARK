@@ -10,29 +10,19 @@ import {
 import logo from "../../assets/images/logo.png";
 import "./LayoutDefault.scss";
 import MenuSider from "../../components/MenuSider";
-// import FloatingSettingButton from "../../components/FloatingSettingButton";
-// import ThemeSettingsPanel from "../../components/ThemeSettingsPanel";
-// import { Outlet } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import { useState } from "react";
 import ThemeSettingContainer from "../../components/ThemeSettingContainer";
+import { Menu as MenuIcon } from "lucide-react";
+// import { ReactComponent as Logo } from "../../assets/images/logotest.svg";
 
-import "../../assets/styles/variable.scss";
+// import "../../assets/styles/variable.scss";
+// import Logo from "../../components/Logo";
 
 const { Sider, Content } = Layout;
 
 function LayoutDefault() {
   const [collapse, setCollapse] = useState(false);
-
-  const changeThemeColor = (color) => {
-    document.documentElement.style.setProperty("--primary-color", color);
-    localStorage.setItem("theme-color", color);
-  };
-  useEffect(() => {
-    const savedColor = localStorage.getItem("theme-color");
-    if (savedColor) {
-      // document.documentElement.style.setProperty("--primary-color", savedColor);
-    }
-  }, []);
 
   return (
     <>
@@ -49,8 +39,11 @@ function LayoutDefault() {
             <div className="header__wrap">
               <div className="header__nav--left">
                 <div className="header__collapse">
-                  <UnorderedListOutlined
-                    style={{ fontSize: "28px" }}
+                  <MenuIcon
+                    size={38}
+                    strokeWidth={4}
+                    color="#fff"
+                    style={{ cursor: "pointer" }}
                     onClick={() => {
                       setCollapse(!collapse);
                     }}
@@ -122,16 +115,20 @@ function LayoutDefault() {
         <Layout>
           <Sider
             className="sider"
-            theme="dark"
+            theme="light"
             width={280}
             collapsed={collapse}
           >
             <MenuSider collapse={collapse} />
           </Sider>
           <Content className="content">
-            {/* <Outlet /> */}
+            <Outlet />
             <h6 style={{ color: "var(--primary-color-light)" }}>Tiêu đề</h6>
-            <button onClick={() => changeThemeColor("red")}>Nút</button>
+
+            {/* <Logo /> */}
+            {/* <img src={Logo} />
+             */}
+            {/* <Logo /> */}
 
             <ThemeSettingContainer />
           </Content>

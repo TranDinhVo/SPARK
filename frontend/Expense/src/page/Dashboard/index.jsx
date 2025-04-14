@@ -1,81 +1,56 @@
 import { Row, Col } from "antd";
-import CardItem from "../../components/CardItem";
-import SmallExpence from "../../components/SmallExpence";
+import { GoChevronRight } from "react-icons/go";
+
 import "../../assets/scss/Dashboard.scss";
-import SmallTransaction from "../../components/SmallTransaction";
-import curba from "../../assets/images/currentBalance.png";
-import expenseMoney from "../../assets/images/expenseMoney.png";
-import incomeMoney from "../../assets/images/incomeMoney.png";
-import CardSaving from "../../components/CardSaving";
-import CalendarCustom from "../../components/CalendarCustom";
-import DigitalClock from "../../components/DigitalClock";
+import CategoryDashboard from "../../components/CategoryDashboard";
+import { useNavigate } from "react-router-dom";
+
 function Dashboard() {
+  const navagate = useNavigate();
   return (
     <>
-      <Row gutter={[20, 20]}>
-        <Col xl={16}>
-          <Row gutter={[20, 20]}>
-            <Col xl={8}>
-              <CardItem
-                title={"Current balance"}
-                money={"1,231,500"}
-                image={curba}
-                style={{
-                  height: "120px",
-                  background: "#e3f9bf",
-                  color: "#526c1b",
-                }}
-              ></CardItem>
-            </Col>
-            <Col xl={8}>
-              <CardItem
-                title={"Income"}
-                money={"1,231,500"}
-                image={incomeMoney}
-                style={{
-                  height: "120px",
-                  background: "#f8ccbf",
-                  color: "#983b13",
-                }}
-              ></CardItem>
-            </Col>
-            <Col xl={8}>
-              <CardItem
-                title={"Expense"}
-                money={"1,231,500"}
-                image={expenseMoney}
-                style={{
-                  height: "120px",
-                  background: "#e4beff",
-                  color: "#8510c8",
-                }}
-              ></CardItem>
-            </Col>
+      <Row gutter={[16, 16]} className="dashboard">
+        <Col xl={13} className="dashboard__left">
+          <Row className="dashboard__item">
+            <div className="dashboard__header">
+              <h4 className="dashboard__title">Danh mục</h4>
+              <div className="dashboard__header--view">
+                <span>Xem thêm</span>
+                <GoChevronRight />
+              </div>
+            </div>
+            <div className="dashboard__content--slider">
+              <CategoryDashboard />
+            </div>
           </Row>
-          <Row gutter={[20, 20]} className="mt-20">
-            <Col xl={14}>
-              <SmallExpence />
-            </Col>
-            <Col xl={10}>
-              <DigitalClock />
-            </Col>
+          <Row className="dashboard__item">
+            <div className="dashboard__header">
+              <h4 className="dashboard__title">Thống kê thu chi</h4>
+              <div
+                className="dashboard__header--view"
+                onClick={() => {
+                  navagate("/giao-dich");
+                }}
+              >
+                <span>Xem thêm</span>
+                <GoChevronRight />
+              </div>
+            </div>
+            <div className="dashboard__content">
+              <div className="dashboard__content--expense">expense</div>
+              <div className="dashboard__content--income">income</div>
+            </div>
           </Row>
-          <Row gutter={[20, 20]} className="mt-20">
-            <Col xl={24}>
-              <SmallTransaction />
-            </Col>
+          <Row className="dashboard__item">
+            <div className="dashboard__header">
+              <h4 className="dashboard__title">Dòng tiền</h4>
+            </div>
+            <div className="dashboard__content">
+              <div className="dashboard__content--table">bang</div>
+            </div>
           </Row>
         </Col>
-        <Col xl={8}>
-          <Row gutter={[30, 20]}>
-            <Col xl={21} className="calendar ml-20">
-              <CalendarCustom />
-            </Col>
-            <Col xl={21} className="ml-20">
-              <CardSaving />
-            </Col>
-          </Row>
-        </Col>
+        <Col xl={11} className="dashboard__right"></Col>
       </Row>
     </>
   );
