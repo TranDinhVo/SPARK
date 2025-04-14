@@ -1,0 +1,54 @@
+// /* Import animate.css để có animation */
+// @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css");
+
+// /* Custom popup có đổ bóng lung linh và bo góc */
+// .swal2-popup.super-shadow {
+//   box-shadow: 0 0 25px #66bb6a, 0 0 40px #ffa726;
+//   border-radius: 20px;
+//   animation: bounceIn 0.8s both;
+//   padding: 30px 20px;
+// }
+
+// /* Tùy chỉnh tiêu đề cho hoành tráng hơn */
+// .swal2-title.custom-title {
+//   font-size: 28px;
+//   font-weight: bold;
+//   color: #2e7d32;
+//   text-shadow: 1px 1px 1px #ffffff;
+// }
+
+// /* Tuỳ chỉnh nút nếu có */
+// .swal2-confirm {
+//   background-color: #43a047 !important;
+//   color: white !important;
+//   border-radius: 10px !important;
+//   padding: 10px 25px !important;
+//   font-size: 16px !important;
+//   font-weight: bold;
+//   box-shadow: 0 0 10px #66bb6a;
+//   transition: all 0.3s ease-in-out;
+// }
+
+// .swal2-confirm:hover {
+//   background-color: #388e3c !important;
+//   box-shadow: 0 0 20px #66bb6a;
+//   transform: scale(1.05);
+// }
+
+// /* Nếu dùng alert có ảnh nền GIF thì để responsive */
+// .swal2-popup {
+//   background-size: cover;
+//   background-position: center;
+// }
+
+// /* Hiệu ứng xuất hiện nếu dùng animation riêng */
+// @keyframes boomEffect {
+//   0% {
+//     transform: scale(0.5) rotate(-10deg);
+//     opacity: 0;
+//   }
+//   100% {
+//     transform: scale(1) rotate(0deg);
+//     opacity: 1;
+//   }
+// }

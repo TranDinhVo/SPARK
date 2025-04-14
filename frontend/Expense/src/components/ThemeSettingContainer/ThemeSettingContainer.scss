@@ -10,11 +10,11 @@
 
 .theme-setting__floating-btn {
   position: fixed;
-  top: 20%;
+  top: 25%;
   right: 0;
   transform: translateX(0);
   transition: transform 0.7s ease;
-  background-color: var(--primary-color, #ff69b4);
+  background-color: var(--primary-color);
   color: white;
   border: none;
   border-top-left-radius: 5px;
@@ -51,7 +51,7 @@
   z-index: 1001;
   padding: 20px;
   border-radius: 8px;
-
+  background-color: #ddd;
   &.visible {
     right: 0;
   }
@@ -100,6 +100,17 @@
       width: 20px;
       height: 30px;
       border-top: 5px solid var(--primary-color-light);
+    }
+    &-dark-mode {
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+
+        width: 20px;
+        height: 30px;
+        border-top: 5px solid var(--primary-color-dark-mode);
+      }
     }
   }
 

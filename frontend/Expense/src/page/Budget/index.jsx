@@ -14,25 +14,25 @@ import FilterBudget from "./ActionBudget/FilterBudget";
 import ClearAllBudget from "./ActionBudget/ClearAllBudget";
 
 function Budget() {
-  const [budgets, setBudget] = useState([]);
-  const [isGrid, setIsGrid] = useState(false);
-  const [searchParams] = useSearchParams();
-  const sortOrder = searchParams.get("sort") || "";
-  const fetchApi = async () => {
-    const result = await getBudget();
-    setBudget(result);
-  };
-  useEffect(() => {
-    fetchApi();
-  }, []);
+  // const [budgets, setBudget] = useState([]);
+  // const [isGrid, setIsGrid] = useState(false);
+  // const [searchParams] = useSearchParams();
+  // const sortOrder = searchParams.get("sort") || "";
+  // const fetchApi = async () => {
+  //   const result = await getBudget();
+  //   setBudget(result);
+  // };
+  // useEffect(() => {
+  //   fetchApi();
+  // }, []);
 
-  const onReLoad = () => {
-    console.log("reload");
-    fetchApi();
-  };
+  // const onReLoad = () => {
+  //   console.log("reload");
+  //   fetchApi();
+  // };
   return (
     <>
-      <Row>
+      {/* <Row>
         <Col xl={23}>
           <Row gutter={[20, 20]}>
             <Col xl={12}>
@@ -88,7 +88,8 @@ function Budget() {
             </Col>
           </Row>
         </Col>
-      </Row>
+      </Row> */}
+      budget
     </>
   );
 }

@@ -9,13 +9,20 @@ import Recurring from "../page/Transaction/Recurring/index";
 import { Navigate } from "react-router-dom";
 import GoalsSaving from "../page/GoalsSaving";
 import Statistics from "../page/Statistics";
-import LayoutIntroduce from "../layout/LayoutIntroduce";
-import PrivateLogin from "../components/PrivateLogin";
+import Borrow from "../page/Borrow";
+import Calendars from "../page/Calendars";
+import PrivateRoutes from "../components/PrivateRoutes";
+import Error404 from "../page/Error404/index";
+import Introduce from "../page/Introduce";
+import Logout from "../page/Logout";
 
 export const routes = [
   {
-    path: "",
-    element: <PrivateLogin />,
+    path: "/gioi-thieu",
+    element: <Introduce />,
+  },
+  {
+    element: <PrivateRoutes />,
     children: [
       {
         path: "/",
@@ -26,11 +33,11 @@ export const routes = [
             element: <Dashboard />,
           },
           {
-            path: "budget",
+            path: "ngan-sach",
             element: <Budget />,
           },
           {
-            path: "transaction",
+            path: "giao-dich",
             element: <Transaction />,
             children: [
               {
@@ -42,11 +49,11 @@ export const routes = [
                 element: <Recent />,
               },
               {
-                path: "expense",
+                path: "chi",
                 element: <Expense />,
               },
               {
-                path: "income",
+                path: "thu",
                 element: <Income />,
               },
               {
@@ -56,19 +63,31 @@ export const routes = [
             ],
           },
           {
-            path: "saving",
+            path: "khoan-vay",
+            element: <Borrow />,
+          },
+          {
+            path: "muc-tieu",
             element: <GoalsSaving />,
           },
           {
-            path: "statistics",
+            path: "lich",
+            element: <Calendars />,
+          },
+          {
+            path: "bao-cao",
             element: <Statistics />,
+          },
+          {
+            path: "dang-xuat",
+            element: <Logout />,
           },
         ],
       },
     ],
   },
   {
-    path: "/introduce",
-    element: <LayoutIntroduce />,
+    path: "*",
+    element: <Error404 />,
   },
 ];

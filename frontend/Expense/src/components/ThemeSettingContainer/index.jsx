@@ -3,12 +3,22 @@ import { FaCog, FaTimes } from "react-icons/fa";
 import "./ThemeSettingContainer.scss";
 
 const ThemeSettingContainer = () => {
+  const defaultNone = "#fc8019";
+  const defaultLight = "#ffece1";
+  const defaultDark = "#fc8e32";
   const [visible, setVisible] = useState(false);
+
   const [selectedColor, setSelectedColor] = useState(
-    localStorage.getItem("primary-color")
+    localStorage.getItem("primary-color") || defaultNone
   );
   const [selectedColorLight, setSelectedColorLight] = useState(
-    localStorage.getItem("primary-color-light")
+    localStorage.getItem("primary-color-light") || defaultLight
+  );
+  const [selectedColorDark, setSelectedColorDark] = useState(
+    localStorage.getItem("primary-color-dark") || defaultDark
+  );
+  const [selectedColorDarkMode, setSelectedColorDarkMode] = useState(
+    localStorage.getItem("primary-color-dark-mode") || "#ffffff"
   );
 
   useEffect(() => {
@@ -20,9 +30,25 @@ const ThemeSettingContainer = () => {
       "--primary-color-light",
       selectedColorLight
     );
+    document.documentElement.style.setProperty(
+      "--primary-color-dark",
+      selectedColorDark
+    );
+    document.documentElement.style.setProperty(
+      "--primary-color-dark-mode",
+      selectedColorDarkMode
+    );
+
     localStorage.setItem("primary-color", selectedColor);
-    localStorage.setItem("primary-color", selectedColorLight);
-  }, [selectedColor, selectedColorLight]);
+    localStorage.setItem("primary-color-light", selectedColorLight);
+    localStorage.setItem("primary-color-dark", selectedColorDark);
+    localStorage.setItem("primary-color-dark-mode", selectedColorDarkMode);
+  }, [
+    selectedColor,
+    selectedColorLight,
+    selectedColorDark,
+    selectedColorDarkMode,
+  ]);
 
   const handleToggle = () => {
     setVisible(!visible);
@@ -32,27 +58,28 @@ const ThemeSettingContainer = () => {
     setVisible(false);
   };
 
+  const colorDarkOrLight = [{ color: "#ffffff" }, { color: "#000000" }];
   const colors = [
-    {
-      color: "#fffff", // mặc định không có màu
-      colorLight: "", // nền trắng
-      isDefault: true,
-    },
-    { color: "#F54749", colorLight: "#FEECEC" },
-    { color: "#E8AC00", colorLight: "#F6DE99" },
-    { color: "#51724E", colorLight: "#B9C7B8" },
-    { color: "#FC8019", colorLight: "#FECCA3" },
-    { color: "#1E466A", colorLight: "#A5B5C3" },
-    { color: "#C6164F", colorLight: "#E8A2B9" },
-    { color: "#A1CB46", colorLight: "#D9EAB5" },
-    { color: "#8510C8", colorLight: "#E4BEFF" },
-    { color: "#343A40", colorLight: "#AEB0B3" },
-    { color: "#0265D2", colorLight: "#D4EDF9" },
+    // {
+    //   color: "#fffff", // mặc định không có màu
+    //   colorLight: "", // nền trắng
+    //   isDefault: true,
+    // },
+    { color: "#fc8019", colorDark: "#fc8e32", colorLight: "#ffece1" },
+    { color: "#f54749", colorDark: "#f65f61", colorLight: "#feecec" },
+    { color: "#A1CB46", colorDark: "#abd15a", colorLight: "#f5faec" },
+    { color: "#025d3a", colorDark: "#03764a", colorLight: "#e5eeeb" },
+    { color: "#1e466a", colorDark: "#24537e", colorLight: "#e8ecf0" },
+    { color: "#e8ac00", colorDark: "#eab41a", colorLight: "#fdf7e5" },
   ];
 
   const handleChangPrimary = (item) => {
     setSelectedColor(item.color);
     setSelectedColorLight(item.colorLight);
+    setSelectedColorDark(item.colorDark);
+  };
+  const handleChangeDarkMode = (item) => {
+    setSelectedColorDarkMode(item.color);
   };
   return (
     <>
@@ -76,8 +103,26 @@ const ThemeSettingContainer = () => {
         </div>
 
         <p>Tuỳ chỉnh giao diện tại đây!</p>
+        <div className="Dard-Light">
+          <p>Chế độ</p>
+          {colorDarkOrLight.map((item, index) => (
+            <div
+              key={index}
+              className={`color-wrapper ${
+                item.color === selectedColorDarkMode ? "selected-dark-mod" : ""
+              }`}
+              onClick={() => handleChangeDarkMode(item)}
+            >
+              <div
+                className="color-inner"
+                style={{ backgroundColor: item.color }}
+              ></div>
+            </div>
+          ))}
+        </div>
 
         <div className="color-palette">
+          <p>Màu </p>
           {colors.map((item, index) => (
             <div
               key={index}
