@@ -48,14 +48,39 @@ public class BudgetServiceImpl implements BudgetService {
 
 	@Override
 	public BudgetResponseDTO updatedBudget(BudgetRequestDTO request) {
-		BudgetEntity entity = budgetRepository.findById(request.getId()).get();
-		//Cập nhật dữ liệu từ request về entity
-		entity = budgetConverter.mapToEntity(request);
-		//Chuyển dữ liệu qua response
-		BudgetResponseDTO response = budgetConverter.convertToResponse(entity);
-		//Cập nhật entity ở database
-		budgetRepository.save(budgetConverter.convertToEntity(response));
-		return response;
+	    // Find existing entity
+	    BudgetEntity existingEntity = budgetRepository.findById(request.getId())
+	        .orElseThrow(() -> new EntityNotFoundException("Budget not found with ID: " + request.getId()));
+	    
+	    // Update only the fields that are provided in the request
+	    if (request.getAmountLimit() != null) {
+	        existingEntity.setAmountLimit(request.getAmountLimit());
+	    }
+	    if (request.getStartDate() != null) {
+	        existingEntity.setStartDate(request.getStartDate());
+	    }
+	    if (request.getEndDate() != null) {
+	        existingEntity.setEndDate(request.getEndDate());
+	    }
+	    if (request.getAlertThreshold() != null) {
+	        existingEntity.setAlertThreshold(request.getAlertThreshold());
+	    }
+	    
+	    // Update category only if provided
+	    if (request.getCategoryId() != null) {
+	        CategoryEntity category = categoryRepository.findById(request.getCategoryId())
+	            .orElseThrow(() -> new RuntimeException("Category không tồn tại với ID: " + request.getCategoryId()));
+	        existingEntity.setCategoryBudget(category);
+	    }
+	    
+	    // Save the updated entity
+	    BudgetEntity savedEntity = budgetRepository.save(existingEntity);
+	    
+	    // Convert to response
+	    BudgetResponseDTO response = budgetConverter.convertToResponse(savedEntity);
+	    budgetRepository.getUsedAmount(response);
+	    
+	    return response;
 	}
 
 	@Override

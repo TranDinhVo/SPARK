@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.javaweb.Builder.BudgetSearchBuilder;
 import com.javaweb.Utils.MapUtil;
 import com.javaweb.entity.BudgetEntity;
+import com.javaweb.entity.CategoryEntity;
 import com.javaweb.model.request.BudgetRequestDTO;
 import com.javaweb.model.response.BudgetResponseDTO;
 import com.javaweb.repository.CategoryRepository;
@@ -60,15 +61,33 @@ public class BudgetConverter {
 	    return entity;
 	}
 	public BudgetEntity mapToEntity(BudgetRequestDTO request) {
-		modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
-		BudgetEntity entity = new BudgetEntity();
-		modelMapper.map(request, entity);
-		return entity;
+	    modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+	    BudgetEntity entity = new BudgetEntity();
+	    modelMapper.map(request, entity);
+
+	    // Gán categoryBudget từ categoryId
+	    if (request.getCategoryId() != null) {
+	        CategoryEntity category = categoryRepository.findById(request.getCategoryId())
+	            .orElseThrow(() -> new RuntimeException("Không tìm thấy danh mục với id: " + request.getCategoryId()));
+	        entity.setCategoryBudget(category);
+	    }
+
+	    return entity;
 	}
+
+
 	public BudgetResponseDTO convertToResponse(BudgetEntity entity) {
-		BudgetResponseDTO response = new BudgetResponseDTO();
-		modelMapper.map(entity,response);
-		response.setBudgetName(entity.getCategoryBudget().getName());
-		return response;
+	    BudgetResponseDTO response = new BudgetResponseDTO();
+	    modelMapper.map(entity, response);
+
+	    // Check null trước khi lấy tên category
+	    if (entity.getCategoryBudget() != null) {
+	        response.setBudgetName(entity.getCategoryBudget().getName());
+	    } else {
+	        response.setBudgetName("Không xác định"); // Hoặc null tùy bạn
+	    }
+
+	    return response;
 	}
+
 }
