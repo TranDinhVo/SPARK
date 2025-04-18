@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.javaweb.model.request.BudgetRequestDTO;
 import com.javaweb.model.response.BudgetResponseDTO;
@@ -56,5 +58,12 @@ public class BudgetController {
     @DeleteMapping("/{id}")
     public void deleteBudgetById(@PathVariable Long id) {
     	budgetService.deleteBudgetById(id);
+    }
+    @GetMapping("/date-range")
+    public List<BudgetResponseDTO> getBudgetsByDateRange(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+            @RequestParam(required = false) Long userId) {
+        return budgetService.getBudgetsByDateRange(fromDate, toDate, userId);
     }
 }
