@@ -38,7 +38,7 @@ function CategoryDashboard() {
           speed: 1000,
           gap: "1rem",
           arrows: false,
-          pagination: true,
+          pagination: false,
         }}
       >
         {categoryList.map((category, index) => (

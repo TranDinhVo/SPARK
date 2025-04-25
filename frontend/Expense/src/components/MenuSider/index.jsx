@@ -141,6 +141,7 @@ function MenuSider(props) {
           defaultOpenKeys={["tong-quan"]}
           selectedKeys={[getSelectedKey()]}
           className={"menu--custom " + (collapse && "menu--collapse")}
+
         />
         <div className="menu-sider__footer">
           <p>Saving Money - Quản lí chi tiêu</p>

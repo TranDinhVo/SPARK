@@ -1,0 +1,103 @@
+.expense-chart {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+  
+    .expense-chart__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+  
+      h4 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+  
+      .expense-chart__more {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--primary-color);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+  
+        svg {
+          margin-left: 5px;
+        }
+      }
+    }
+  
+    .expense-chart__report {
+      .expense-chart__report--info {
+        padding: 16px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        margin-bottom: 16px;
+  
+        .expense-chart__report--title {
+          font-size: 16px;
+          font-weight: 600;
+          color: #333;
+          margin-bottom: 8px;
+        }
+  
+        .expense-chart__report--time {
+          font-size: 12px;
+          font-weight: 400;
+          color: #777;
+          margin-bottom: 8px;
+        }
+  
+        .expense-chart__report--amount {
+          font-size: 18px;
+          font-weight: 700;
+          color: #333;
+          
+          span {
+            font-size: 14px;
+            color: #777;
+          }
+  
+          strong {
+            color: var(--primary-color);
+          }
+        }
+  
+        .expense-chart__report--percent {
+          font-size: 14px;
+          font-weight: 500;
+          color: #28a745;
+          
+          .down {
+            color: #dc3545;
+          }
+  
+          .up {
+            color: #28a745;
+          }
+        }
+      }
+  
+      .expense-chart__report--chart {
+        width: 100%;
+        height: 100%;
+        margin-top: 16px;
+  
+        // Thêm border cho phần biểu đồ
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 10px;
+      }
+    }
+  }
+  .expense-chart__no-data {
+    text-align: center;
+    font-size: 16px;
+    color: #888;
+    font-weight: 500;
+    padding: 20px;
+  }
+  

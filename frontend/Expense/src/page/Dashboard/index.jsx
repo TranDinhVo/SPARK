@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import ExpenseDashboard from "./ExpenseDashboard";
 import BudgetDashboard from "./BudgetDashboard";
 import BudgetTransaction from "./BudgetTransaction";
+import IncomeDashboard from "./IncomeDashboard";
+import CashFlowDashboard from "./CashFlowDashboard";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -49,12 +51,15 @@ function Dashboard() {
               <div className="dashboard__content--expense">
                 <ExpenseDashboard />
               </div>
-              <div className="dashboard__content--income">income</div>
+              <div className="dashboard__content--income">
+                <IncomeDashboard/>
+              </div>
             </div>
           </Row>
           <Row className="dashboard__item">
             <div className="dashboard__header">
-              <h4 className="dashboard__title">Dòng tiền</h4>
+              {/* <h4 className="dashboard__title">Dòng tiền</h4> */}
+              <CashFlowDashboard/>
             </div>
             <div className="dashboard__content">
               <div className="dashboard__content--table">bang</div>

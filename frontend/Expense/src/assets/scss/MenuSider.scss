@@ -1,7 +1,9 @@
 .menu-sider {
   background-color: var(--primary-color);
+  overflow-y: auto;
   .menu--custom {
     border-top-left-radius: 32px;
+    width: 320px;
   }
   .ant-menu-item-group {
     margin: 0;
@@ -9,14 +11,16 @@
     margin-top: 10px;
     &-title {
       color: var(--primary-color);
-      margin-left: 8px;
+      margin-left: 20px;
+      font-weight: 600;
+      margin-bottom: 25px;
     }
   }
   .ant-menu {
     padding-top: 20px;
   }
   .ant-menu-item {
-    padding: 30px 15px !important;
+    padding: 27px 15px !important;
     width: 259px;
     height: 40px;
     margin-left: 10px;
@@ -24,16 +28,20 @@
     margin-top: 10px;
     display: flex;
     align-items: center;
+    margin-left: auto;
+    margin-right: auto;
     // transition: none !important;
+    border-radius: 12px;
     .lucide {
-      width: 36px;
-      height: 36px;
-      stroke-width: 1.5;
+      width: 24px;
+      height: 24px;
+      stroke-width: 1.8;
       stroke: #737373;
       // transition: all 0.3s ease-out !important;
+      margin-left: 4px;
     }
     span {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       color: #737373;
       a {

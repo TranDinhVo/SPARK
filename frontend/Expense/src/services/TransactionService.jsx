@@ -11,7 +11,7 @@ export const getTransaction = async () => {
 };
 
 export const getTransactionByUser = async (id) => {
-  const result = await get(`/transactions/user/${id}`);
+  const result = await get(`transactions/user/${id}`);
   return result;
 };
 export const createTransaction = async (option) => {

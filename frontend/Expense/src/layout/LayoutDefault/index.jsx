@@ -112,12 +112,13 @@ function LayoutDefault() {
             </div>
           </div>
         </header>
-        <Layout>
+        <Layout className="layout-body">
           <Sider
             className="sider"
             theme="light"
-            width={280}
+            width={320}
             collapsed={collapse}
+            collapsedWidth={100}
           >
             <MenuSider collapse={collapse} />
           </Sider>
