@@ -1,10 +1,14 @@
 import { get, post, del, patch } from "../utils/request";
 
 export const getBudget = async () => {
-  const result = await get("budgets");
+  const result = await get("budget");
   return result;
 };
 
+export const getBudgetByUser = async (id) => {
+  const result = await get(`budget/user/${id}`);
+  return result;
+};
 export const createBudget = async (option) => {
   const result = await post("budgets", option);
   return result;

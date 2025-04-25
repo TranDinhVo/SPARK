@@ -1,0 +1,36 @@
+.transaction-dashboard {
+  // overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--primary-color-light) !important;
+  height: 500px;
+  padding: 20px !important;
+  gap: 20px;
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    &--title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+    }
+    &--navigate {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: "Alata", sans-serif !important;
+      font-size: 14px;
+      color: #ffffff;
+      background-color: var(--primary-color-dark);
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      svg {
+        font-size: 18px;
+        margin-left: 2px;
+      }
+    }
+  }
+}

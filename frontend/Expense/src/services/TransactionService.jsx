@@ -9,6 +9,11 @@ export const getTransaction = async () => {
   const result = await get("/transactions");
   return result;
 };
+
+export const getTransactionByUser = async (id) => {
+  const result = await get(`/transactions/user/${id}`);
+  return result;
+};
 export const createTransaction = async (option) => {
   const result = await post("transactions", option);
 
