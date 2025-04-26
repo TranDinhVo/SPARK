@@ -16,6 +16,7 @@ import com.javaweb.model.response.BudgetResponseDTO;
 import com.javaweb.repository.BudgetRepository;
 import com.javaweb.repository.CategoryRepository;
 import com.javaweb.service.BudgetService;
+import java.time.LocalDate;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -127,5 +128,20 @@ public class BudgetServiceImpl implements BudgetService {
 			return response;
 		}).collect(Collectors.toList());
 		return responseList;
+	}
+	@Override
+	public List<BudgetResponseDTO> getBudgetsByDateRange(LocalDate fromDate, LocalDate toDate, Long userId) {
+	    // Kiểm tra fromDate và toDate không null
+	    if (fromDate == null || toDate == null) {
+	        throw new IllegalArgumentException("Ngày bắt đầu và ngày kết thúc không được để trống");
+	    }
+	    
+	    // Đảm bảo fromDate <= toDate
+	    if (fromDate.isAfter(toDate)) {
+	        throw new IllegalArgumentException("Ngày bắt đầu phải trước hoặc bằng ngày kết thúc");
+	    }
+	    
+	    // Gọi phương thức repository
+	    return budgetRepository.getBudgetsByDateRange(fromDate, toDate, userId);
 	}
 }

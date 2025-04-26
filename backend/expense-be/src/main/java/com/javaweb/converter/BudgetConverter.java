@@ -41,19 +41,7 @@ public class BudgetConverter {
 				.build();
 		return builder;
 	}
-	public BudgetResponseDTO mapToGoalResponseDTO(Object[] row) {
-		Long id = (row.length > 0 && row[0] != null) ? ((Number) row[0]).longValue() : null;
-		Long userId = (row.length > 1 && row[1] != null) ? ((Number) row[1]).longValue() : null;
-		Float alertThreshold = (row.length > 2 && row[2] != null) ? ((Float) row[2]).floatValue() : null;
-		BigDecimal amountLimit = (row.length > 3 && row[3] != null) ? (BigDecimal) row[3] : BigDecimal.ZERO; 
-		LocalDate endDate = (row.length > 4 && row[4] != null) ? ((java.sql.Date) row[4]).toLocalDate() : null;
-		LocalDate startDate = (row.length > 5 && row[5] != null) ? ((java.sql.Date) row[5]).toLocalDate() : null;
-		Long categoryId = (row.length > 6 && row[6] != null) ? ((Number) row[6]).longValue() : null;
-		Instant createAt = (row.length > 7 && row[7] != null) ? ((Timestamp) row[7]).toInstant() : null;
-		String nameBudget = (row.length > 8 && row[8] != null) ? (String) row[8] : "";
-		BigDecimal usedAmount = (row.length > 9 && row[9] != null) ? (BigDecimal) row[9] : BigDecimal.ZERO;  
-	    return new BudgetResponseDTO(id, nameBudget, amountLimit, usedAmount, startDate, endDate, alertThreshold,  createAt);
-	}
+
 	public BudgetEntity convertToEntity(BudgetResponseDTO response) {
 		modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
 		BudgetEntity entity = new BudgetEntity();
@@ -80,14 +68,30 @@ public class BudgetConverter {
 	    BudgetResponseDTO response = new BudgetResponseDTO();
 	    modelMapper.map(entity, response);
 
-	    // Check null trước khi lấy tên category
+	    // Check null trước khi lấy thông tin category
 	    if (entity.getCategoryBudget() != null) {
 	        response.setBudgetName(entity.getCategoryBudget().getName());
+	        response.setIconUrl(entity.getCategoryBudget().getIconUrl()); // Thêm dòng này
 	    } else {
-	        response.setBudgetName("Không xác định"); // Hoặc null tùy bạn
+	        response.setBudgetName("Không xác định");
+	        response.setIconUrl(""); // Giá trị mặc định nếu không có category
 	    }
 
 	    return response;
+	}
+	public BudgetResponseDTO mapToGoalResponseDTO(Object[] row) {
+	    Long id = (row.length > 0 && row[0] != null) ? ((Number) row[0]).longValue() : null;
+	    Long userId = (row.length > 1 && row[1] != null) ? ((Number) row[1]).longValue() : null;
+	    Float alertThreshold = (row.length > 2 && row[2] != null) ? ((Float) row[2]).floatValue() : null;
+	    BigDecimal amountLimit = (row.length > 3 && row[3] != null) ? (BigDecimal) row[3] : BigDecimal.ZERO; 
+	    LocalDate endDate = (row.length > 4 && row[4] != null) ? ((java.sql.Date) row[4]).toLocalDate() : null;
+	    LocalDate startDate = (row.length > 5 && row[5] != null) ? ((java.sql.Date) row[5]).toLocalDate() : null;
+	    Long categoryId = (row.length > 6 && row[6] != null) ? ((Number) row[6]).longValue() : null;
+	    Instant createAt = (row.length > 7 && row[7] != null) ? ((Timestamp) row[7]).toInstant() : null;
+	    String nameBudget = (row.length > 8 && row[8] != null) ? (String) row[8] : "";
+	    String iconUrl = (row.length > 9 && row[9] != null) ? (String) row[9] : ""; // Thêm trường icon_url
+	    BigDecimal usedAmount = (row.length > 10 && row[10] != null) ? (BigDecimal) row[10] : BigDecimal.ZERO;  
+	    return new BudgetResponseDTO(id, nameBudget, iconUrl, amountLimit, usedAmount, startDate, endDate, alertThreshold, createAt);
 	}
 
 }
