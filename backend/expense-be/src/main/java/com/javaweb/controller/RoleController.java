@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.javaweb.ControllerAdvice.CustomException.ResourceNotFoundException;
 import com.javaweb.model.request.RoleRequestDTO;
@@ -55,7 +59,10 @@ public class RoleController {
 
     // Xóa một vai trò
     @DeleteMapping("/{id}")
-    public void deleteRole(@PathVariable Long id) {
+    public ResponseEntity<Map<String, String>> deleteRole(@PathVariable Long id) {
         roleService.deleteRole(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Đã xóa vai trò với id: " + id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.javaweb.model.request.GoalRequestDTO;
 import com.javaweb.model.response.GoalResponseDTO;
@@ -53,7 +57,10 @@ public class GoalsAPI {
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deleteById(@PathVariable Long id) {
-		goalService.deleteById(id);
+	public ResponseEntity<Map<String, String>> deleteById(@PathVariable Long id) {
+	    boolean deleted = goalService.deleteById(id);
+	    Map<String, String> response = new HashMap<>();
+	    response.put("message", "Đã xóa mục tiêu với id: " + id);
+	    return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }

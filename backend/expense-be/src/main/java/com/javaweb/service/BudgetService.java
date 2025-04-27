@@ -9,7 +9,7 @@ public interface BudgetService {
     List<BudgetResponseDTO> getAllBudgets(Map<String,Object> params);
     BudgetResponseDTO updatedBudget(BudgetRequestDTO request);
     BudgetResponseDTO createNewBudget(BudgetRequestDTO request);
-    void deleteBudgetById(Long id);
+    boolean deleteBudgetById(Long id);
     BudgetResponseDTO getById(Long id);
     List<BudgetResponseDTO> getByUserId(Long id);
     

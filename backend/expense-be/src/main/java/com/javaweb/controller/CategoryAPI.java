@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.javaweb.model.request.CategoryRequestDTO;
 import com.javaweb.model.response.CategoryResponseDTO;
@@ -55,11 +57,13 @@ public class CategoryAPI {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
-		boolean deleted = categoryService.deleteCategory(id);
-		if (deleted) {
-			return ResponseEntity.noContent().build();
-		}
-		return ResponseEntity.notFound().build();
+	public ResponseEntity<Map<String, String>> deleteCategory(@PathVariable Long id) {
+	    boolean deleted = categoryService.deleteCategory(id);
+	    if (deleted) {
+	        Map<String, String> response = new HashMap<>();
+	        response.put("message", "Đã xóa danh mục với id: " + id);
+	        return new ResponseEntity<>(response, HttpStatus.OK);
+	    }
+	    return ResponseEntity.notFound().build();
 	}
 }

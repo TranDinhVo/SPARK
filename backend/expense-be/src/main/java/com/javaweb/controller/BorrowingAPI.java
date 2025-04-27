@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.javaweb.model.request.BorrowingRequestDTO;
 import com.javaweb.model.response.BorrowingResponseDTO;
@@ -35,9 +39,12 @@ public class BorrowingAPI {
 	
 //	Xóa theo id
 	@DeleteMapping("/{id}")
-	public void deleteById(@PathVariable Long id) {
-		borrowingService.deleteById(id);
-	    }
+	public ResponseEntity<Map<String, String>> deleteById(@PathVariable Long id) {
+	    boolean deleted = borrowingService.deleteById(id);
+	    Map<String, String> response = new HashMap<>();
+	    response.put("message", "Đã xóa khoản vay với id: " + id);
+	    return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 	
 	//Tìm kiếm nhiều thông tin/ Lấy ra thông tin
 	@GetMapping

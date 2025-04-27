@@ -88,11 +88,12 @@ public class GoalServiceImpl implements GoalService{
 	}
 
 	@Override
-	public void deleteById(Long id) {
+	public boolean deleteById(Long id) {
 		if (!goalRepository.existsById(id)) {
 	        throw new EntityNotFoundException("Không tìm thấy khoản tiết kiệm với ID: " + id);
 	    }
 	    goalRepository.deleteById(id);
+		return false;
 	}
 
 	@Override

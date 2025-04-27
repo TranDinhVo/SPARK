@@ -104,11 +104,12 @@ public class BudgetServiceImpl implements BudgetService {
 	}
 
 	@Override
-	public void deleteBudgetById(Long id) {
+	public boolean deleteBudgetById(Long id) {
 		if (!budgetRepository.existsById(id)) {
 	        throw new EntityNotFoundException("Không tìm thấy khoản tiết kiệm với ID: " + id);
 	    }
 	    budgetRepository.deleteById(id);
+		return false;
 	}
 
 	@Override
