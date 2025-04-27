@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.javaweb.model.request.BudgetRequestDTO;
 import com.javaweb.model.response.BudgetResponseDTO;
@@ -56,8 +60,11 @@ public class BudgetController {
     }
     
     @DeleteMapping("/{id}")
-    public void deleteBudgetById(@PathVariable Long id) {
-    	budgetService.deleteBudgetById(id);
+    public ResponseEntity<Map<String, String>> deleteBudgetById(@PathVariable Long id) {
+        boolean deleted = budgetService.deleteBudgetById(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Đã xóa ngân sách với id: " + id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/date-range")
     public List<BudgetResponseDTO> getBudgetsByDateRange(

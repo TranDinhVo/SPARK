@@ -8,7 +8,7 @@ import com.javaweb.model.response.BorrowingResponseDTO;
 
 public interface BorrowingService {
 	List<BorrowingResponseDTO> searchBorrowings(Map<String,Object> params);
-	void deleteById(Long id);
+	boolean deleteById(Long id);
 	BorrowingResponseDTO updateBorrowing(BorrowingRequestDTO borrowingRequestDTO);
 	BorrowingResponseDTO createNewBorrowing(BorrowingRequestDTO borrowingRequestDTO);
 	BorrowingResponseDTO getById(Long id);

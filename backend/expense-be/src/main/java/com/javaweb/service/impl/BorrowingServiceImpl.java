@@ -41,11 +41,12 @@ public class BorrowingServiceImpl implements BorrowingService{
 	}
 
 	@Override
-	public void deleteById(Long id) {
+	public boolean deleteById(Long id) {
 		if (!borrowingRepository.existsById(id)) {
 	        throw new EntityNotFoundException("Không tìm thấy khoản mượn với ID: " + id);
 	    }
 	    borrowingRepository.deleteById(id);
+		return false;
 	}
 
 	@Override

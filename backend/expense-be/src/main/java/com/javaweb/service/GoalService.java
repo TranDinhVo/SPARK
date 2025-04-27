@@ -10,7 +10,7 @@ public interface GoalService {
 	List<GoalResponseDTO> getAllGoal(Map<String,Object> params);
 	GoalResponseDTO updateGoal(GoalRequestDTO request);
 	GoalResponseDTO createNewGoal(GoalRequestDTO request);
-	void deleteById(Long id);
+	boolean deleteById(Long id);
 	GoalResponseDTO getGoal(Long id);
 	List<GoalResponseDTO> getByUserId(Long userId);
 }
