@@ -153,7 +153,7 @@ function BudgetFormModal(props) {
                   amountLimit === 0 ? "" : amountLimit.toLocaleString("vi-VN")
                 }
                 onChange={(e) => {
-                  const value = e.target.value.replace(/\D/g, ""); // Chỉ giữ lại số, bỏ hết chữ
+                  const value = e.target.value.replace(/\D/g, "");
                   if (value.length > 0) {
                     setAmountLimit(Number(value));
                   } else {

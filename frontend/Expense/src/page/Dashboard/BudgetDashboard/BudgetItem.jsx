@@ -3,7 +3,7 @@ import { Progress } from "antd";
 import useInViewAnimation from "../../../hooks/useInViewAnimation";
 
 function BudgetItem(props) {
-    const { item, index } = props;
+  const { item, index } = props;
   const [ref, animationClass] = useInViewAnimation("animate__fadeInUp");
 
   const formatDate = (dateStr) => {
@@ -26,9 +26,12 @@ function BudgetItem(props) {
       <div className="budget-dashboard__content--name">{item.budgetName}</div>
 
       <div className="budget-dashboard__content--row">
-        <div className="budget-dashboard__content--image">
-          <img />
-        </div>
+        <div
+          className="budget-dashboard__content--image"
+          dangerouslySetInnerHTML={{
+            __html: item.iconUrl,
+          }}
+        ></div>
 
         <div className="budget-dashboard__content--progress">
           <div className="budget-dashboard__content--top">

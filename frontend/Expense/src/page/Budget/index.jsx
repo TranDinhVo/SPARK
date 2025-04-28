@@ -195,6 +195,7 @@ function Budget() {
   const onReload = () => {
     fetchApi();
   };
+  console.log(selectedBudget);
   return (
     <>
       <Row gutter={[20, 20]} className="budget__row">
@@ -291,8 +292,13 @@ function Budget() {
                             </div>
                           </div>
                           <div className="budget__center">
-                            <div className="budget__center--image">
-                              <img />
+                            <div
+                              className="budget__center--image"
+                              dangerouslySetInnerHTML={{
+                                __html: budget.iconUrl,
+                              }}
+                            >
+                              {/* <img /> */}
                             </div>
                             <div className="budget__amount">
                               <p className="budget__amount--used">
@@ -385,9 +391,13 @@ function Budget() {
                     {formatDateTime(currentTime)}
                   </p>
                 </div>
-                <div className="budget__detail--image">
-                  <img />
-                </div>
+
+                <div
+                  className="budget__detail--image"
+                  dangerouslySetInnerHTML={{
+                    __html: selectedBudget.iconUrl,
+                  }}
+                ></div>
               </div>
 
               <div className="budget__detail--box">
@@ -458,29 +468,35 @@ function Budget() {
                 {loadingTransaction ? (
                   <Spin tip="Đang tải giao dịch..." />
                 ) : transactions.length > 0 ? (
-                  transactions.map((tran, index) => (
-                    <div key={index} className="transaction__item">
-                      <div className="transaction__left">
-                        <div className="transaction__icon">
-                          <img />
+                  <div className="transaction__list">
+                    {transactions.map((tran, index) => (
+                      <div key={index} className="transaction__item">
+                        <div className="transaction__left">
+                          <div
+                            className="transaction__icon"
+                            dangerouslySetInnerHTML={{
+                              __html: selectedBudget.iconUrl,
+                            }}
+                          />
+
+                          <div className="transaction__info">
+                            <p className="transaction__name">{tran.name}</p>
+                            <p className="transaction__date">
+                              {formatDate(tran.createdAt)}
+                            </p>
+                          </div>
                         </div>
-                        <div className="transaction__info">
-                          <p className="transaction__name">{tran.name}</p>
-                          <p className="transaction__date">
-                            {formatDate(tran.createdAt)}
-                          </p>
+                        <div className="transaction__right">
+                          <div className="transaction__amount">
+                            - {formatCurrency(tran.amount)}
+                          </div>
+                          <div className="transaction__note">
+                            {tran.description}
+                          </div>
                         </div>
                       </div>
-                      <div className="transaction__right">
-                        <div className="transaction__amount">
-                          - {formatCurrency(tran.amount)}
-                        </div>
-                        <div className="transaction__note">
-                          {tran.description}
-                        </div>
-                      </div>
-                    </div>
-                  ))
+                    ))}
+                  </div>
                 ) : (
                   <p>Không có giao dịch nào.</p>
                 )}

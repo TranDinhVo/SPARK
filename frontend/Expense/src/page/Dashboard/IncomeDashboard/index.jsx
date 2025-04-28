@@ -33,36 +33,28 @@ function IncomeDashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // const result = await getTransactionByUser(userId);
-      const result = [
-        { type: "Thu", amount: 50000, createdAt: "2025-04-22T08:30:00Z" },
-        { type: "Thu", amount: 70000, createdAt: "2025-04-23T10:00:00Z" },
-        { type: "Thu", amount: 30000, createdAt: "2025-04-24T09:45:00Z" },
-        { type: "Thu", amount: 60000, createdAt: "2025-04-25T14:15:00Z" },
-        { type: "Thu", amount: 45000, createdAt: "2025-04-26T11:00:00Z" },
-        { type: "Thu", amount: 55000, createdAt: "2025-04-27T16:30:00Z" },
-        { type: "Thu", amount: 65000, createdAt: "2025-04-21T12:00:00Z" },
-        { type: "Chi", amount: 20000, createdAt: "2025-04-22T10:00:00Z" },
-      ];
+      const result = await getTransactionByUser(userId);
 
       const thuTransactions = result.filter((t) => t.type === "Thu");
 
       const now = new Date();
-      const current = new Date(now);
+      const currentDay = now.getDay(); // Chủ nhật = 0
+      const diffToMonday = currentDay === 0 ? -6 : 1 - currentDay;
 
-      // Tính tuần này
-      const startOfThisWeek = new Date(current);
-      const day =
-        startOfThisWeek.getDay() === 0 ? 6 : startOfThisWeek.getDay() - 1;
-      startOfThisWeek.setDate(startOfThisWeek.getDate() - day);
+      const startOfThisWeek = new Date(now);
+      startOfThisWeek.setDate(now.getDate() + diffToMonday);
+      startOfThisWeek.setHours(0, 0, 0, 0);
+
       const endOfThisWeek = new Date(startOfThisWeek);
       endOfThisWeek.setDate(startOfThisWeek.getDate() + 6);
+      endOfThisWeek.setHours(23, 59, 59, 999);
 
-      // Tính tuần trước
       const startOfLastWeek = new Date(startOfThisWeek);
       startOfLastWeek.setDate(startOfThisWeek.getDate() - 7);
+
       const endOfLastWeek = new Date(startOfThisWeek);
       endOfLastWeek.setDate(startOfThisWeek.getDate() - 1);
+      endOfLastWeek.setHours(23, 59, 59, 999);
 
       let totalThisWeekAmount = 0;
       let totalLastWeekAmount = 0;
@@ -70,12 +62,17 @@ function IncomeDashboard() {
 
       thuTransactions.forEach((t) => {
         const date = new Date(t.createdAt);
+        const dateOnly = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate()
+        );
 
-        if (date >= startOfThisWeek && date <= endOfThisWeek) {
-          const dayIndex = date.getDay() === 0 ? 6 : date.getDay() - 1;
+        if (dateOnly >= startOfThisWeek && dateOnly <= endOfThisWeek) {
+          const dayIndex = dateOnly.getDay() === 0 ? 6 : dateOnly.getDay() - 1;
           weeklyData[dayIndex] += t.amount;
           totalThisWeekAmount += t.amount;
-        } else if (date >= startOfLastWeek && date <= endOfLastWeek) {
+        } else if (dateOnly >= startOfLastWeek && dateOnly <= endOfLastWeek) {
           totalLastWeekAmount += t.amount;
         }
       });
@@ -88,7 +85,6 @@ function IncomeDashboard() {
       setChartData(formatted);
       setTotalThisWeek(totalThisWeekAmount);
 
-      // Tính % thay đổi
       if (totalLastWeekAmount === 0) {
         setPercentChange(0);
       } else {
@@ -119,7 +115,7 @@ function IncomeDashboard() {
             </span>
           </p>
           <p className="income-chart__report--percent">
-            <span className="expense-chart__report--icon">
+            <span className="income-chart__report--icon">
               {percentChange >= 0 ? (
                 <BiSolidUpArrow size={16} />
               ) : (

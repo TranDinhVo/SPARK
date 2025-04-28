@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { BiSolidUpArrow, BiSolidDownArrow } from "react-icons/bi";
-
 import { Row, Col } from "antd";
 import {
   BarChart,
@@ -24,6 +23,7 @@ function ExpenseDashboard() {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   const userId = getCookie("id");
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
@@ -31,53 +31,49 @@ function ExpenseDashboard() {
 
     return () => clearInterval(timer);
   }, []);
+
   useEffect(() => {
     const fetchData = async () => {
-      // const result = await getTransactionByUser(userId);
-      const result = [
-        { type: "Chi", amount: 40000, createdAt: "2025-04-21T10:00:00Z" }, // Thứ 2
-        { type: "Chi", amount: 15000, createdAt: "2025-04-22T12:00:00Z" }, // Thứ 3
-        { type: "Chi", amount: 10000, createdAt: "2025-04-23T09:00:00Z" }, // Thứ 4
-        { type: "Chi", amount: 20000, createdAt: "2025-04-24T14:00:00Z" }, // Thứ 5
-        { type: "Chi", amount: 10000, createdAt: "2025-04-25T08:00:00Z" }, // Thứ 6
-        { type: "Chi", amount: 25000, createdAt: "2025-04-26T11:00:00Z" }, // Thứ 7
-        { type: "Chi", amount: 30000, createdAt: "2025-04-20T15:00:00Z" }, // Chủ nhật
-        { type: "Thu", amount: 100000, createdAt: "2025-04-16T10:00:00Z" },
-      ];
-
+      const result = await getTransactionByUser(userId);
       const chiTransactions = result.filter((t) => t.type === "Chi");
 
+      // Xử lý ngày
       const now = new Date();
-      const current = new Date(now);
+      const currentDay = now.getDay(); // Chủ nhật = 0
+      const diffToMonday = currentDay === 0 ? -6 : 1 - currentDay;
 
-      // Tính ngày đầu tuần này
-      const startOfThisWeek = new Date(current);
-      const day =
-        startOfThisWeek.getDay() === 0 ? 6 : startOfThisWeek.getDay() - 1;
-      startOfThisWeek.setDate(startOfThisWeek.getDate() - day);
+      const startOfThisWeek = new Date(now);
+      startOfThisWeek.setDate(now.getDate() + diffToMonday);
+      startOfThisWeek.setHours(0, 0, 0, 0);
+
       const endOfThisWeek = new Date(startOfThisWeek);
       endOfThisWeek.setDate(startOfThisWeek.getDate() + 6);
+      endOfThisWeek.setHours(23, 59, 59, 999);
 
-      // Tính ngày đầu tuần trước
       const startOfLastWeek = new Date(startOfThisWeek);
       startOfLastWeek.setDate(startOfThisWeek.getDate() - 7);
+
       const endOfLastWeek = new Date(startOfThisWeek);
       endOfLastWeek.setDate(startOfThisWeek.getDate() - 1);
+      endOfLastWeek.setHours(23, 59, 59, 999);
 
-      // Tính tổng tiền tuần này và tuần trước
       let totalThisWeekAmount = 0;
       let totalLastWeekAmount = 0;
-
       const weeklyData = new Array(7).fill(0);
 
       chiTransactions.forEach((t) => {
         const date = new Date(t.createdAt);
+        const dateOnly = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate()
+        );
 
-        if (date >= startOfThisWeek && date <= endOfThisWeek) {
-          const dayIndex = date.getDay() === 0 ? 6 : date.getDay() - 1;
+        if (dateOnly >= startOfThisWeek && dateOnly <= endOfThisWeek) {
+          const dayIndex = dateOnly.getDay() === 0 ? 6 : dateOnly.getDay() - 1;
           weeklyData[dayIndex] += t.amount;
           totalThisWeekAmount += t.amount;
-        } else if (date >= startOfLastWeek && date <= endOfLastWeek) {
+        } else if (dateOnly >= startOfLastWeek && dateOnly <= endOfLastWeek) {
           totalLastWeekAmount += t.amount;
         }
       });
@@ -87,10 +83,9 @@ function ExpenseDashboard() {
         value,
       }));
 
-      const total = weeklyData.reduce((sum, d) => sum + d, 0);
-      setTotalThisWeek(total);
-      // setPercentChange(15);
       setChartData(formatted);
+      setTotalThisWeek(totalThisWeekAmount);
+
       if (totalLastWeekAmount === 0) {
         setPercentChange(0);
       } else {
@@ -159,11 +154,6 @@ function ExpenseDashboard() {
                   dataKey="value"
                   radius={[12, 12, 0, 0]}
                   fill="var(--primary-color)"
-                  // activeBar={{
-                  //   fill: "#69c0ff",
-                  //   stroke: "#40a9ff",
-                  //   strokeWidth: 2,
-                  // }}
                 />
               </BarChart>
             </ResponsiveContainer>

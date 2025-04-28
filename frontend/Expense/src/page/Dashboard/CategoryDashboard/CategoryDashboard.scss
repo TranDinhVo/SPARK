@@ -63,12 +63,14 @@
       justify-content: center;
       border: 2px solid var(--primary-color-light);
       background-color: var(--primary-color-light);
-
-      img {
-        width: 44px;
-        height: 44px;
-        object-fit: contain;
+      svg {
+        transform: scale(1.2);
       }
+      // img {
+      //   width: 44px;
+      //   height: 44px;
+      //   object-fit: contain;
+      // }
     }
 
     &--name {

@@ -10,7 +10,8 @@ function CategoryListInBudget({ selectedCategory, onSelectCategory }) {
   useEffect(() => {
     const fetchApi = async () => {
       const result = await getCategoryByUser(userId);
-      setCategories(result);
+      const filter = result.filter((item) => item.type === "Chi");
+      setCategories(filter);
     };
     fetchApi();
   }, []);
@@ -25,10 +26,12 @@ function CategoryListInBudget({ selectedCategory, onSelectCategory }) {
           }`}
           onClick={() => onSelectCategory(cat)}
         >
-          <div className="category-icon">
-            {/* Nếu sau này có icon thì đổi lại <img src={cat.iconUrl} /> */}
-            {cat.iconUrl || "+"}
-          </div>
+          <div
+            className="category-icon"
+            dangerouslySetInnerHTML={{
+              __html: cat.iconUrl,
+            }}
+          ></div>
           <p className="category-name">{cat.name}</p>
         </div>
       ))}
