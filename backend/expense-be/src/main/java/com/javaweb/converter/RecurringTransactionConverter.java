@@ -32,7 +32,10 @@ public class RecurringTransactionConverter {
     }
     // Chuyển từ RequestDTO sang Entity
     public RecurringTransactionEntity convertToEntity(RecurringTransactionRequestDTO requestDTO) {
-        return modelMapper.map(requestDTO, RecurringTransactionEntity.class);
+        RecurringTransactionEntity entity = modelMapper.map(requestDTO, RecurringTransactionEntity.class);
+        // Đảm bảo entity không có ID khi đang tạo mới
+        entity.setId(null); // Thêm dòng này để đảm bảo ID là null khi tạo mới
+        return entity;
     }
     // Cập nhật từ RequestDTO vào Entity khi cần
     public RecurringTransactionEntity updateEntityFromRequest(RecurringTransactionEntity existingEntity, RecurringTransactionRequestDTO requestDTO) {

@@ -24,7 +24,10 @@ import com.javaweb.repository.TransactionRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.TransactionService;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
@@ -49,26 +52,63 @@ public class TransactionServiceImpl implements TransactionService {
     private UserRepository userRepository;
 
     @Override
+    @Transactional  // Thêm annotation ở cấp phương thức để đảm bảo
     public TransactionResponseDTO createTransaction(TransactionRequestDTO transactionRequest) {
-        UserEntity user = userRepository.findById(transactionRequest.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        
-        CategoryEntity category = categoryRepository.findById(transactionRequest.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+        try {
+            // Tìm user theo userId
+            UserEntity user = userRepository.findById(transactionRequest.getUserId())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            
+            // Tìm category theo categoryId
+            CategoryEntity category = categoryRepository.findById(transactionRequest.getCategoryId())
+                    .orElseThrow(() -> new RuntimeException("Category not found"));
 
-        RecurringTransactionEntity recurrence = recurringTransactionRepository.findById(transactionRequest.getRecurrenceId())
-                .orElse(null); // Nếu không có thì để null luôn
+            // Xử lý recurrenceId đã được cải thiện
+            RecurringTransactionEntity recurrence = null;
+            if (transactionRequest.getRecurrenceId() != null) {
+                recurrence = recurringTransactionRepository.findById(transactionRequest.getRecurrenceId())
+                        .orElse(null);
+            }
 
-        TransactionEntity transactionEntity = new TransactionEntity();
-        transactionEntity.setUserTransaction(user);
-        transactionEntity.setAmount(transactionRequest.getAmount());
-        transactionEntity.setCategoryTransaction(category);
-        transactionEntity.setDescription(transactionRequest.getDescription());
-        transactionEntity.setRecurringTransaction(recurrence);
+            // Tạo entity mới
+            TransactionEntity transactionEntity = new TransactionEntity();
+            transactionEntity.setUserTransaction(user);
+            transactionEntity.setAmount(transactionRequest.getAmount());
+            transactionEntity.setCategoryTransaction(category);
+            transactionEntity.setDescription(transactionRequest.getDescription());
+            transactionEntity.setRecurringTransaction(recurrence);
+            
+            // Xử lý goalId nếu có
+            if (transactionRequest.getGoalId() != null) {
+                GoalEntity goal = goalRepository.findById(transactionRequest.getGoalId())
+                        .orElse(null);
+                transactionEntity.setGoalTransaction(goal);
+            }
+            
+            // Xử lý borrowId nếu có
+            if (transactionRequest.getBorrowId() != null) {
+                BorrowingEntity borrowing = borrowingRepository.findById(transactionRequest.getBorrowId())
+                        .orElse(null);
+                transactionEntity.setBorrowingTransaction(borrowing);
+            }
 
-        TransactionEntity savedTransaction = transactionRepository.save(transactionEntity);
+            // Thêm log để debug
+            System.out.println("Saving transaction for userId: " + user.getId());
+            
+            // Lưu và lấy kết quả
+            TransactionEntity savedTransaction = transactionRepository.save(transactionEntity);
+            
+            // Log kết quả để debug
+            System.out.println("Transaction saved with ID: " + savedTransaction.getId());
 
-        return transactionConverter.convertToDTO(savedTransaction);
+            // Convert và trả về response
+            return transactionConverter.convertToDTO(savedTransaction);
+        } catch (Exception e) {
+            // Log lỗi để debug
+            System.err.println("Error creating transaction: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Override

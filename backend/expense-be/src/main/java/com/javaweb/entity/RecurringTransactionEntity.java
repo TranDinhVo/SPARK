@@ -52,6 +52,17 @@ public class RecurringTransactionEntity {
     
     @Column(name = "created_at", nullable = false)
     private Instant createAt = Instant.now();
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+    
+    // Getter và setter
+    public Long getUserId() {
+        return userId;
+    }
+    
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
     
 	
 
