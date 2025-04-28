@@ -10,6 +10,7 @@ public class RecurringTransactionRequestDTO {
     private String recurrenceType;
     private RecurringStatusEnum status = RecurringStatusEnum.ACTIVE;
     private LocalDate nextDueDate;
+    private Long userId; // Thêm trường này
     public RecurringTransactionRequestDTO() {
     }
     public RecurringTransactionRequestDTO(String name, Instant createAt, String recurrenceType,
@@ -20,6 +21,13 @@ public class RecurringTransactionRequestDTO {
         this.recurrenceType = recurrenceType;
         this.status = status;
         this.nextDueDate = nextDueDate;
+    }
+    public Long getUserId() {
+        return userId;
+    }
+    
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
     public String getRecurrenceType() {
         return recurrenceType;

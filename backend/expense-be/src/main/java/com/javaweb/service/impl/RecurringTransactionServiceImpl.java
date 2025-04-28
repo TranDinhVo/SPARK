@@ -36,14 +36,15 @@ public class RecurringTransactionServiceImpl implements RecurringTransactionServ
     }
 
     @Override
-    public RecurringTransactionResponseDTO createRecurringTransaction(RecurringTransactionRequestDTO recurringTransactionRequestDTO) {
-        // Chuyển RequestDTO thành Entity
-        RecurringTransactionEntity entity = recurringTransactionConverter.convertToEntity(recurringTransactionRequestDTO);
-
+    public RecurringTransactionResponseDTO createRecurringTransaction(RecurringTransactionRequestDTO dto) {
+        // Đảm bảo bạn không set ID nào khi tạo mới entity
+        RecurringTransactionEntity entity = recurringTransactionConverter.convertToEntity(dto);
+        entity.setId(null); // Đảm bảo ID là null khi tạo mới
+        
         // Lưu entity vào DB
         RecurringTransactionEntity savedEntity = recurringTransactionRepository.save(entity);
-
-        // Trả về ResponseDTO cho FE
+        
+        // Trả về ResponseDTO
         return recurringTransactionConverter.convertToResponse(savedEntity);
     }
 
