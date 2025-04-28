@@ -14,6 +14,7 @@ import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import ThemeSettingContainer from "../../components/ThemeSettingContainer";
 import { Menu as MenuIcon } from "lucide-react";
+import Footer from "../../page/Footer";
 // import { ReactComponent as Logo } from "../../assets/images/logotest.svg";
 
 // import "../../assets/styles/variable.scss";
@@ -116,7 +117,7 @@ function LayoutDefault() {
           <Sider
             className="sider"
             theme="light"
-            width={320}
+            width={"20%"}
             collapsed={collapse}
             collapsedWidth={100}
           >
@@ -124,14 +125,9 @@ function LayoutDefault() {
           </Sider>
           <Content className="content">
             <Outlet />
-            <h6 style={{ color: "var(--primary-color-light)" }}>Tiêu đề</h6>
-
-            {/* <Logo /> */}
-            {/* <img src={Logo} />
-             */}
-            {/* <Logo /> */}
 
             <ThemeSettingContainer />
+            <Footer />
           </Content>
         </Layout>
         {/* <Footer>Copy right @</Footer> */}

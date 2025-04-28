@@ -22,7 +22,7 @@
     "antd-style": "^3.7.1",
     "aos": "^2.3.4",
     "dayjs": "^1.11.13",
-    "framer-motion": "^12.5.0",
+    "framer-motion": "^12.9.2",
     "lucide-react": "^0.487.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

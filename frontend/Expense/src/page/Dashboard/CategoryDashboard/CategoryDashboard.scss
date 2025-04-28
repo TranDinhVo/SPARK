@@ -1,9 +1,8 @@
-
 .category-dashboard {
   width: 100%;
   padding: 16px 10px;
   padding-bottom: 40px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 
   .splide__pagination {
     display: flex;
@@ -54,8 +53,6 @@
     gap: 16px;
     transition: box-shadow 0.3s, transform 0.3s;
 
-    
-
     &--image {
       width: 72px;
       height: 72px;
@@ -65,7 +62,7 @@
       align-items: center;
       justify-content: center;
       border: 2px solid var(--primary-color-light);
-      background-color: var(--primary-color-light );
+      background-color: var(--primary-color-light);
 
       img {
         width: 44px;
@@ -85,9 +82,9 @@
     }
     &:hover {
       transform: translateY(-6px);
+      box-shadow: 0 6px 18px var(--primary-color);
 
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-      border: 2px solid var(--primary-color-dark);
+      border: 2px solid var(--primary-color-light);
       span {
         color: var(--primary-color-dark);
       }

@@ -1,0 +1,156 @@
+.budget-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.budget-modal {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 500px;
+  padding: 24px;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+.budget-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.budget-modal-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #374151;
+}
+
+.budget-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.budget-modal-close:hover {
+  color: #f97316;
+}
+
+.budget-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.budget-modal-body label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.budget-modal-body input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.budget-modal-body input:focus {
+  border-color: var(--primary-color);
+}
+
+.budget-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.budget-modal-footer button {
+  padding: 10px 18px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.budget-modal-footer .reset-btn {
+  background: #f3f4f6;
+  border: none;
+  color: #374151;
+}
+
+.budget-modal-footer .reset-btn:hover {
+  background: #e5e7eb;
+}
+
+.budget-modal-footer .save-btn {
+  background: var(--primary-color);
+  border: none;
+  color: white;
+}
+
+.budget-modal-footer .save-btn:hover {
+  background: #fb923c;
+}
+.budget-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+
+  .btn-reset,
+  .btn-save {
+    padding: 10px 18px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s;
+    border: none;
+  }
+
+  .btn-reset {
+    background: #f3f4f6;
+    color: #374151;
+
+    &:hover {
+      background: #e5e7eb;
+    }
+  }
+
+  .btn-save {
+    background: var(--primary-color);
+    color: white;
+
+    &:hover {
+      background: #fb923c;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

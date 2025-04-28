@@ -1,0 +1,23 @@
+.footer {
+  margin-top: 25px;
+  padding: 24px 0;
+  text-align: center;
+  background: #fff;
+  font-size: 16px;
+  color: #888;
+  &__divider {
+    width: 110%;
+    height: 2px;
+    margin-left: -5%;
+    background-color: #ccc;
+    margin-bottom: 24px;
+  }
+
+  &__text {
+    margin: 0;
+    .highlight {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+  }
+}

@@ -1,103 +1,94 @@
 .expense-chart {
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 24px;
-  
-    .expense-chart__header {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px var(--primary-color-light);
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 24px 48px var(--primary-color);
+  }
+
+  &__report {
+    display: flex;
+    align-items: center;
+
+    &--info {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-  
-      h4 {
-        font-size: 18px;
-        font-weight: bold;
-        color: #333;
-      }
-  
-      .expense-chart__more {
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+    &--title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 0;
+    }
+
+    &--time {
+      font-size: 14px;
+      color: #888;
+    }
+
+    &--amount {
+      font-size: 18px;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      span {
         font-size: 14px;
-        font-weight: 500;
-        color: var(--primary-color);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-  
-        svg {
-          margin-left: 5px;
-        }
+        color: #888;
+      }
+
+      strong {
+        font-size: 24px;
+        font-weight: bold;
+        margin-left: 6px;
+        color: #000;
       }
     }
-  
-    .expense-chart__report {
-      .expense-chart__report--info {
-        padding: 16px;
-        background-color: #f9f9f9;
-        border-radius: 8px;
-        margin-bottom: 16px;
-  
-        .expense-chart__report--title {
-          font-size: 16px;
-          font-weight: 600;
-          color: #333;
-          margin-bottom: 8px;
-        }
-  
-        .expense-chart__report--time {
-          font-size: 12px;
-          font-weight: 400;
-          color: #777;
-          margin-bottom: 8px;
-        }
-  
-        .expense-chart__report--amount {
-          font-size: 18px;
-          font-weight: 700;
-          color: #333;
-          
-          span {
-            font-size: 14px;
-            color: #777;
-          }
-  
-          strong {
-            color: var(--primary-color);
-          }
-        }
-  
-        .expense-chart__report--percent {
-          font-size: 14px;
-          font-weight: 500;
-          color: #28a745;
-          
-          .down {
-            color: #dc3545;
-          }
-  
-          .up {
-            color: #28a745;
-          }
-        }
+    &--percent {
+      font-size: 20px;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      .up {
+        color: #52c41a;
+        font-weight: 600;
       }
-  
-      .expense-chart__report--chart {
-        width: 100%;
-        height: 100%;
-        margin-top: 16px;
-  
-        // Thêm border cho phần biểu đồ
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 10px;
+
+      .down {
+        color: #ff4d4f;
+        font-weight: 600;
+      }
+    }
+    &--icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #52c41a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      margin-right: 10px;
+    }
+    &--chart {
+      width: 100%;
+      .recharts-wrapper {
+        margin-top: 20px;
       }
     }
   }
-  .expense-chart__no-data {
+
+  &__no-data {
     text-align: center;
-    font-size: 16px;
-    color: #888;
-    font-weight: 500;
-    padding: 20px;
+    color: #999;
+    font-style: italic;
+    margin-top: 30px;
   }
-  
+}

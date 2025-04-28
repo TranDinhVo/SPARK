@@ -1,102 +1,92 @@
 .income-chart {
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 24px;
-  
-    .income-chart__header {
+  margin-top: 50px;
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px var(--primary-color-light);
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 24px 48px var(--primary-color);
+  }
+
+  &__report {
+    display: flex;
+    align-items: center;
+
+    &--info {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-  
-      h4 {
-        font-size: 18px;
-        font-weight: bold;
-        color: #333;
-      }
-  
-      .income-chart__more {
-        font-size: 14px;
-        font-weight: 500;
-        color: var(--primary-color);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-  
-        svg {
-          margin-left: 5px;
-        }
-      }
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
     }
-  
-    .income-chart__report {
-      .income-chart__report--info {
-        padding: 16px;
-        background-color: #f9f9f9;
-        border-radius: 8px;
-        margin-bottom: 16px;
-  
-        .income-chart__report--title {
-          font-size: 16px;
-          font-weight: 600;
-          color: #333;
-          margin-bottom: 8px;
-        }
-  
-        .income-chart__report--time {
-          font-size: 12px;
-          font-weight: 400;
-          color: #777;
-          margin-bottom: 8px;
-        }
-  
-        .income-chart__report--amount {
-          font-size: 18px;
-          font-weight: 700;
-          color: #333;
-  
-          span {
-            font-size: 14px;
-            color: #777;
-          }
-  
-          strong {
-            color: var(--primary-color);
-          }
-        }
-  
-        .income-chart__report--percent {
-          font-size: 14px;
-          font-weight: 500;
-          color: #28a745;
-  
-          .down {
-            color: #dc3545;
-          }
-  
-          .up {
-            color: #28a745;
-          }
-        }
-      }
-  
-      .income-chart__report--chart {
-        width: 100%;
-        height: 100%;
-        margin-top: 16px;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 10px;
-      }
+    &--title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 0;
     }
-  
-    .income-chart__no-data {
-      text-align: center;
-      font-size: 16px;
+
+    &--time {
+      font-size: 14px;
       color: #888;
-      font-weight: 500;
-      padding: 20px;
+    }
+
+    &--amount {
+      font-size: 18px;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      span {
+        font-size: 14px;
+        color: #888;
+      }
+
+      strong {
+        font-size: 24px;
+        font-weight: bold;
+        margin-left: 6px;
+        color: #000;
+      }
+    }
+    &--percent {
+      font-size: 20px;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      .up {
+        color: #52c41a;
+        font-weight: 600;
+      }
+
+      .down {
+        color: #ff4d4f;
+        font-weight: 600;
+      }
+    }
+    &--icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #52c41a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: white;
+      margin-right: 10px;
+    }
+    &--chart {
+      width: 100%;
+      .recharts-wrapper {
+        margin-top: 20px;
+      }
     }
   }
-  
+
+  &__no-data {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    margin-top: 30px;
+  }
+}
