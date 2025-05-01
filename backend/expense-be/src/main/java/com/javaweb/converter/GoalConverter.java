@@ -1,21 +1,18 @@
 package com.javaweb.converter;
-
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Map;
-
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.javaweb.Builder.GoalSearchBuilder;
 import com.javaweb.Utils.MapUtil;
 import com.javaweb.entity.GoalEntity;
+import com.javaweb.enums.GoalStatusEnum;
 import com.javaweb.model.request.GoalRequestDTO;
 import com.javaweb.model.response.GoalResponseDTO;
-
 @Component
 public class GoalConverter {
 	@Autowired
@@ -35,17 +32,40 @@ public class GoalConverter {
 		return builder;
 	}
 	
-	public GoalResponseDTO mapToGoalResponseDTO(Object[]row) {
-		Long id = (row.length > 0 && row[0] != null) ? ((Number) row[0]).longValue() : null;
-		Long userId = (row.length > 1 && row[1] != null) ? ((Number) row[1]).longValue() : null;
-		BigDecimal targetAmount = (row.length > 2 && row[2] != null) ? ((BigDecimal) row[2]) : BigDecimal.ZERO;
-		Instant createAt = (row.length > 3 && row[3] != null) ? ((Timestamp) row[3]).toInstant() : null;
-		Instant deadline = (row.length > 4 && row[4] != null) ? ((Timestamp) row[4]).toInstant() : null;
-		String nameGoal = (row.length > 5 && row[5] != null) ? (String) row[5] : "";
-		String status = (row.length > 6 && row[6] != null) ? (String) row[6] : "";
-		 BigDecimal currentAmount = (row.length > 7 && row[7] != null) ? (BigDecimal) row[7] : BigDecimal.ZERO;  
-	    return new GoalResponseDTO(id, nameGoal, targetAmount, deadline, status, createAt, currentAmount);
+	public GoalResponseDTO mapToGoalResponseDTO(Object[] row) {
+	    try {
+	        Long id = (row[0] != null) ? ((Number) row[0]).longValue() : null;
+	        Long userId = (row[1] != null) ? ((Number) row[1]).longValue() : null;
+	        BigDecimal targetAmount = (row[2] != null) ? ((BigDecimal) row[2]) : BigDecimal.ZERO;
+	        Instant createAt = (row[3] != null) ? ((Timestamp) row[3]).toInstant() : null;
+	        Instant deadline = (row[4] != null) ? ((Timestamp) row[4]).toInstant() : null;
+	        String nameGoal = (row[5] != null) ? (String) row[5] : "";
+	        String status = (row[6] != null) ? (String) row[6] : "";
+	        BigDecimal currentAmount = (row[7] != null) ? (BigDecimal) row[7] : BigDecimal.ZERO;
+	        String iconUrl = (row.length > 8 && row[8] != null) ? (String) row[8] : null;
+	        
+	        // In ra log để kiểm tra giá trị
+	        System.out.println("Row data: id=" + id + ", name=" + nameGoal + ", amount=" + targetAmount);
+	        
+	        // Tạo DTO
+	        GoalResponseDTO dto = new GoalResponseDTO();
+	        dto.setId(id);
+	        dto.setGoalName(nameGoal);
+	        dto.setTargetAmount(targetAmount);
+	        dto.setDeadline(deadline);
+	        dto.setStatus(status != null && !status.isEmpty() ? GoalStatusEnum.valueOf(status) : GoalStatusEnum.DANG_THUC_HIEN);
+	        dto.setCreatedAt(createAt);
+	        dto.setCurrentAmount(currentAmount);
+	        dto.setIconUrl(iconUrl);
+	        
+	        return dto;
+	    } catch (Exception e) {
+	        System.err.println("Error mapping row to DTO: " + e.getMessage());
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
+	
 	public GoalEntity convertToEntity(GoalResponseDTO response) {
 		modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
 		GoalEntity entity = new GoalEntity();
@@ -61,7 +81,11 @@ public class GoalConverter {
 	
 	public GoalResponseDTO convertToResponse(GoalEntity entity) {
 		GoalResponseDTO response = new GoalResponseDTO();
-		modelMapper.map(entity,response);
+		modelMapper.map(entity, response);
+		// Manually map iconUrl if the entity has a category
+		if (entity.getCategory() != null) {
+			response.setIconUrl(entity.getCategory().getIconUrl());
+		}
 		return response;
 	}
 	

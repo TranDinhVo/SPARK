@@ -1,11 +1,10 @@
 package com.javaweb.model.request;
-
 import java.math.BigDecimal;
 import java.time.Instant;
-
 public class GoalRequestDTO {
 	private Long id;
 	private Long userId;
+	private Long categoryId;
     private String goalName;
     private BigDecimal targetAmount;
 //    private Instant createdAt;
@@ -21,6 +20,12 @@ public class GoalRequestDTO {
 	}
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+	public Long getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
 	public String getGoalName() {
 		return goalName;
