@@ -1,0 +1,120 @@
+.goal-detail-card {
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  margin-top: 16px;
+  .goal-detail__left {
+    border: 2px solid red !important;
+  }
+  .goal-detail__title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .goal-detail__date {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 16px;
+  }
+
+  .goal-detail__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+
+    .stat {
+      width: calc(50% - 6px);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .label {
+        font-size: 13px;
+        color: #666;
+      }
+
+      .value {
+        font-weight: 600;
+        color: #000;
+        &.orange {
+          color: #f97316;
+        }
+      }
+    }
+  }
+
+  .transaction-list {
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 8px;
+    margin-top: 12px;
+    list-style: none;
+
+    .transaction-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      gap: 12px;
+
+      .icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #fff5e6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .info {
+        flex-grow: 1;
+        .name {
+          font-weight: 600;
+          color: #333;
+        }
+        .note {
+          font-size: 12px;
+          color: #888;
+        }
+      }
+
+      .amount {
+        font-weight: bold;
+        color: #f97316;
+      }
+    }
+  }
+
+  .goal-detail__buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 16px;
+
+    .edit-btn {
+      background-color: #f5f5f5;
+      border: none;
+      color: #333;
+      &:hover {
+        background-color: #eaeaea;
+      }
+    }
+
+    .ant-btn-primary {
+      background-color: var(--primary-color);
+      border: none;
+      &:hover {
+        background-color: var(--primary-color);
+      }
+    }
+  }
+}

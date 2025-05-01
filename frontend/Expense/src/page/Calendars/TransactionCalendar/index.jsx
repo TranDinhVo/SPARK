@@ -34,7 +34,6 @@ function TransactionCalendar(props) {
     return acc;
   }, {});
 
-  // Sort theo ngày giảm dần
   const sortedDates = Object.keys(groupedTransactions).sort((a, b) => {
     const [dayA, monthA, yearA] = a.split(" ")[0].split("/").map(Number);
     const [dayB, monthB, yearB] = b.split(" ")[0].split("/").map(Number);
@@ -74,7 +73,7 @@ function TransactionCalendar(props) {
                     dangerouslySetInnerHTML={{ __html: tran.iconUrl }}
                   ></div>
                   <div className="transaction-info">
-                    <p className="transaction-name">{tran.categoryName}</p>
+                    <p className="transaction-name">{tran.name}</p>
                     <p className="transaction-note">{tran.description}</p>
                   </div>
                 </div>

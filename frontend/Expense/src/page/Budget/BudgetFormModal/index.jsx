@@ -6,29 +6,12 @@ import { createBudget, getBudgetByUser } from "../../../services/BudgetService";
 import Swal from "sweetalert2";
 
 function BudgetFormModal(props) {
-  const { open, onCancel, onSave, onReload } = props;
+  const { open, onCancel, onSave, onReload, budgets } = props;
   const [amountLimit, setAmountLimit] = useState(0);
   const [alertThreshold, setAlertThreshold] = useState(0.8);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [existingBudgets, setExistingBudgets] = useState([]);
 
   const userId = getCookie("id");
-
-  const fetchBudgets = async () => {
-    try {
-      const budgets = await getBudgetByUser(userId);
-      setExistingBudgets(budgets);
-    } catch (error) {
-      console.error("Lỗi khi fetch budgets:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (open && userId) {
-      fetchBudgets();
-    }
-  }, [open, userId]);
-
   if (!open) return null;
 
   const handleSave = async () => {
@@ -57,7 +40,7 @@ function BudgetFormModal(props) {
       return;
     }
 
-    const isDuplicate = existingBudgets.some(
+    const isDuplicate = budgets.some(
       (b) =>
         b.budgetName?.toLowerCase().trim() ===
         selectedCategory.name.trim().toLowerCase()

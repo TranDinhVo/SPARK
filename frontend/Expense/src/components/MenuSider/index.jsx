@@ -27,7 +27,7 @@ function MenuSider(props) {
     const path = location.pathname;
     if (path.startsWith("/giao-dich")) return "/giao-dich";
     if (path.startsWith("/ngan-sach")) return "/ngan-sach";
-    if (path.startsWith("/muc-tieu")) return "/muc-tieu";
+    if (path.startsWith("/tiet-kiem")) return "/tiet-kiem";
     if (path.startsWith("/khoan-vay")) return "/khoan-vay";
     if (path.startsWith("/lich")) return "/lich";
     if (path.startsWith("/bao-cao")) return "/bao-cao";
@@ -71,17 +71,18 @@ function MenuSider(props) {
           //   },
           // ],
         },
+
+        {
+          key: "/tiet-kiem",
+          icon: <PiggyBank />,
+          label: <Link to="/tiet-kiem">Tiết kiệm</Link>,
+        },
         {
           key: "/khoan-vay",
           icon: <HandCoins />,
           label: <Link to="/khoan-vay">Các khoản vay</Link>,
         },
 
-        {
-          key: "/muc-tieu",
-          icon: <PiggyBank />,
-          label: <Link to="/muc-tieu">Mục tiêu</Link>,
-        },
         {
           key: "/lich",
           icon: <CalendarDays />,
@@ -141,7 +142,6 @@ function MenuSider(props) {
           defaultOpenKeys={["tong-quan"]}
           selectedKeys={[getSelectedKey()]}
           className={"menu--custom " + (collapse && "menu--collapse")}
-
         />
         <div className="menu-sider__footer">
           <p>Saving Money - Quản lí chi tiêu</p>

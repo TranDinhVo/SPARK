@@ -4,7 +4,7 @@ import { GoChevronRight } from "react-icons/go";
 import { getCookie } from "../../../helpers/cookie";
 import { useEffect, useState } from "react";
 import { getTransactionByUser } from "../../../services/TransactionService";
-import {formatDate} from "../../../helpers/formatDate";
+import { formatDate } from "../../../helpers/formatDate";
 import useInViewAnimation from "../../../hooks/useInViewAnimation";
 import TransactionItem from "./TransactionItem";
 
@@ -14,10 +14,9 @@ function TransactionDashboard() {
   const userId = getCookie("id");
   const [headerRef, headerClass] = useInViewAnimation("animate__fadeInDown");
 
-
   useEffect(() => {
     let isMounted = true;
-    
+
     const fetchApi = async () => {
       try {
         const result = await getTransactionByUser(userId);
@@ -42,7 +41,7 @@ function TransactionDashboard() {
           setDataTransaction(sorted);
         }
       } catch (error) {
-        console.error('Lỗi khi lấy dữ liệu giao dịch:', error);
+        console.error("Lỗi khi lấy dữ liệu giao dịch:", error);
       }
     };
 
@@ -52,20 +51,19 @@ function TransactionDashboard() {
       isMounted = false;
     };
   }, [userId]);
-  
 
   console.log(dataTransaction);
   return (
     <>
       <div className="transaction-dashboard">
-      <div
-  ref={headerRef}
-  className={`transaction-dashboard__header ${headerClass}`}
-  style={{
-    animationDuration: "0.8s",
-    animationDelay: "100ms",
-  }}
->
+        <div
+          ref={headerRef}
+          className={`transaction-dashboard__header ${headerClass}`}
+          style={{
+            animationDuration: "0.8s",
+            animationDelay: "100ms",
+          }}
+        >
           <h4 className="transaction-dashboard__header--title">Giao dịch</h4>
           <div
             className="transaction-dashboard__header--navigate"
@@ -75,18 +73,17 @@ function TransactionDashboard() {
             <GoChevronRight />
           </div>
         </div>
-          <ul className="transaction-dashboard__content">
+        <ul className="transaction-dashboard__content">
           {dataTransaction.length > 0 ? (
-  <ul className="transaction-dashboard__content">
-    {dataTransaction.map((item, index) => (
-      <TransactionItem key={item.id} item={item} index={index} />
-    ))}
-  </ul>
-) : (
-  <p>Không có dữ liệu</p>
-)}
-
-          </ul>
+            <ul className="transaction-dashboard__content">
+              {dataTransaction.map((item, index) => (
+                <TransactionItem key={item.id} item={item} index={index} />
+              ))}
+            </ul>
+          ) : (
+            <p>Không có dữ liệu</p>
+          )}
+        </ul>
       </div>
     </>
   );

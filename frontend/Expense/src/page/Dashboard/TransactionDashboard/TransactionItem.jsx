@@ -9,13 +9,16 @@ function TransactionItem({ item, index }) {
       ref={ref}
       className={`transaction-dashboard__content--item ${animationClass}`}
       style={{
-        animationDelay: `${index * 100}ms`,
-        animationDuration: "0.8s",
+        animationDelay: `${index * 50}ms`,
+        animationDuration: "0.3s",
       }}
     >
-      <div className="transaction-dashboard__content--image">
-        <img />
-      </div>
+      <div
+        className="transaction-dashboard__content--image"
+        dangerouslySetInnerHTML={{
+          __html: item.iconUrl,
+        }}
+      ></div>
       <div className="transaction-dashboard__content--nameAndType">
         <div className="transaction-dashboard__content--name">{item.name}</div>
         <div className="transaction-dashboard__content--type">{item.type}</div>

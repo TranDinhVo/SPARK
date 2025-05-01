@@ -1,5 +1,15 @@
 .transaction-list {
-  margin-top: 30px;
+  margin-top: 50px;
+  position: relative;
+  &::after {
+    content: "";
+    height: 2px;
+    width: 100%;
+    display: block;
+    position: absolute;
+    background-color: #ddd;
+    top: -25px;
+  }
 
   .transaction-day {
     margin-bottom: 24px;
@@ -12,7 +22,7 @@
       display: flex;
       justify-content: space-between;
       background: var(--primary-color-light);
-      padding: 12px 20px;
+      padding: 20px;
       font-weight: 600;
       color: #333;
     }

@@ -15,6 +15,7 @@ import PrivateRoutes from "../components/PrivateRoutes";
 import Error404 from "../page/Error404/index";
 import Introduce from "../page/Introduce";
 import Logout from "../page/Logout";
+import GoalDetail from "../page/GoalsSaving/GoalDetail";
 
 export const routes = [
   {
@@ -39,37 +40,42 @@ export const routes = [
           {
             path: "giao-dich",
             element: <Transaction />,
-            children: [
-              {
-                index: true,
-                element: <Navigate to="recent" replace />,
-              },
-              {
-                path: "recent",
-                element: <Recent />,
-              },
-              {
-                path: "chi",
-                element: <Expense />,
-              },
-              {
-                path: "thu",
-                element: <Income />,
-              },
-              {
-                path: "recurring",
-                element: <Recurring />,
-              },
-            ],
+            // children: [
+            //   {
+            //     index: true,
+            //     element: <Navigate to="recent" replace />,
+            //   },
+            //   {
+            //     path: "recent",
+            //     element: <Recent />,
+            //   },
+            //   {
+            //     path: "chi",
+            //     element: <Expense />,
+            //   },
+            //   {
+            //     path: "thu",
+            //     element: <Income />,
+            //   },
+            //   {
+            //     path: "recurring",
+            //     element: <Recurring />,
+            //   },
+            // ],
+          },
+          {
+            path: "tiet-kiem",
+            element: <GoalsSaving />,
+          },
+          {
+            path: "tiet-kiem/:id",
+            element: <GoalDetail />,
           },
           {
             path: "khoan-vay",
             element: <Borrow />,
           },
-          {
-            path: "muc-tieu",
-            element: <GoalsSaving />,
-          },
+
           {
             path: "lich",
             element: <Calendars />,

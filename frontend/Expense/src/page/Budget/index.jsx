@@ -56,7 +56,6 @@ function Budget() {
           date.getFullYear() === currentYear
         );
       });
-
       setBudgets(filteredByMonth);
       setFilteredBudgets(filteredByMonth);
     } catch (error) {
@@ -228,6 +227,7 @@ function Budget() {
               setOpenModal(false);
             }}
             onReload={onReload}
+            budgets={budgets}
           />
         </Col>
       </Row>
@@ -241,28 +241,27 @@ function Budget() {
                 <Spin tip="Đang tải dữ liệu..." size="large" />
               </div>
             )}
-
+            <div className="budget__tab">
+              <div
+                className={`budget__tab--item ${
+                  activeTab === "hoatdong" ? "active" : ""
+                }`}
+                onClick={() => setActiveTab("hoatdong")}
+              >
+                Hoạt động
+              </div>
+              <div
+                className={`budget__tab--item ${
+                  activeTab === "canhbao" ? "active" : ""
+                }`}
+                onClick={() => setActiveTab("canhbao")}
+              >
+                Cảnh báo
+              </div>
+            </div>
             {!loading &&
               (filteredBudgets.length > 0 ? (
                 <>
-                  <div className="budget__tab">
-                    <div
-                      className={`budget__tab--item ${
-                        activeTab === "hoatdong" ? "active" : ""
-                      }`}
-                      onClick={() => setActiveTab("hoatdong")}
-                    >
-                      Hoạt động
-                    </div>
-                    <div
-                      className={`budget__tab--item ${
-                        activeTab === "canhbao" ? "active" : ""
-                      }`}
-                      onClick={() => setActiveTab("canhbao")}
-                    >
-                      Cảnh báo
-                    </div>
-                  </div>
                   {filteredBudgets
                     .slice((currentPage - 1) * pageSize, currentPage * pageSize)
                     .map((budget, index) => (

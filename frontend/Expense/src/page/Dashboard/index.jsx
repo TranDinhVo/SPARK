@@ -17,18 +17,17 @@ function Dashboard() {
   };
 
   const fadeInUpVariant = {
-    hidden: { opacity: 0, y: 80 },
-    show: {
+    hidden: { opacity: 0, y: 60 },
+    show: (i = 0) => ({
       opacity: 1,
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 50,
-        damping: 12,
-        mass: 0.8,
-        duration: 0.8,
+        stiffness: 70,
+        damping: 14,
+        delay: i * 0.12,
       },
-    },
+    }),
   };
 
   return (
@@ -37,9 +36,10 @@ function Dashboard() {
         {/* Danh mục */}
         <motion.div
           variants={fadeInUpVariant}
+          custom={0}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.3 }}
         >
           <Row className="dashboard__item">
             <div className="dashboard__header">
@@ -61,10 +61,10 @@ function Dashboard() {
         {/* Thống kê thu chi */}
         <motion.div
           variants={fadeInUpVariant}
+          custom={1}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ delay: 0.1 }}
+          viewport={{ once: true, amount: 0.3 }}
         >
           <Row className="dashboard__item">
             <div className="dashboard__header">
@@ -91,10 +91,10 @@ function Dashboard() {
         {/* Dòng tiền */}
         <motion.div
           variants={fadeInUpVariant}
+          custom={2}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ delay: 0.2 }}
+          viewport={{ once: true, amount: 0.3 }}
         >
           <Row className="dashboard__item">
             <div className="dashboard__content">
@@ -108,10 +108,10 @@ function Dashboard() {
       <Col xl={10} lg={10} className="dashboard__right">
         <motion.div
           variants={fadeInUpVariant}
+          custom={3}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ delay: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
         >
           <Row>
             <Col xl={24}>
