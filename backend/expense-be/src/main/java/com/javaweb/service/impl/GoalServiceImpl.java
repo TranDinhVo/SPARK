@@ -11,11 +11,15 @@ import org.springframework.stereotype.Service;
 import com.javaweb.Builder.GoalSearchBuilder;
 import com.javaweb.converter.GoalConverter;
 import com.javaweb.entity.BudgetEntity;
+import com.javaweb.entity.CategoryEntity;
 import com.javaweb.entity.GoalEntity;
+import com.javaweb.entity.UserEntity;
 import com.javaweb.model.request.GoalRequestDTO;
 import com.javaweb.model.response.BudgetResponseDTO;
 import com.javaweb.model.response.GoalResponseDTO;
+import com.javaweb.repository.CategoryRepository;
 import com.javaweb.repository.GoalRepository;
+import com.javaweb.repository.UserRepository;
 import com.javaweb.service.GoalService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -25,28 +29,35 @@ public class GoalServiceImpl implements GoalService{
 	@Autowired
 	GoalRepository goalRepository;
 	
+	@Autowired
+	CategoryRepository categoryRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 	
 	@Autowired
 	GoalConverter goalConverter; 
 	
 	@Override
 	public List<GoalResponseDTO> getAllGoal(Map<String, Object> params) {
-		//Chuyển đổi dữ liệu qua GoalSearchBuilder
-		GoalSearchBuilder builder = goalConverter.toGoalSearchBuilder(params);
-		//Lấy dữ liệu từ repository
-		List<GoalResponseDTO> result = goalRepository.getAllGoals(builder);
-		List<GoalEntity> updatedEntities = result.stream()
-		        .map(item -> {
-		        	GoalEntity updateEntity = goalRepository.findById(item.getId()).get();
-		            GoalResponseDTO updatedItem = goalRepository.updateStatus(item); // Cập nhật status
-		            updateEntity = goalConverter.convertToEntity(updatedItem,updateEntity);
-		            return updateEntity;
-		        })
-		        .collect(Collectors.toList());
-
-		    // Lưu tất cả entity đã cập nhật
-		    goalRepository.saveAll(updatedEntities); // Sử dụng saveAll thay vì save từng entity
-		return result;
+	    // Log params để kiểm tra
+	    System.out.println("Params: " + params);
+	    
+	    // Chuyển đổi dữ liệu qua GoalSearchBuilder
+	    GoalSearchBuilder builder = goalConverter.toGoalSearchBuilder(params);
+	    
+	    // Lấy dữ liệu từ repository
+	    List<GoalResponseDTO> result = goalRepository.getAllGoals(builder);
+	    
+	    // Log kết quả để kiểm tra
+	    System.out.println("Result size: " + (result != null ? result.size() : "null"));
+	    if (result != null && !result.isEmpty()) {
+	        System.out.println("First item: " + result.get(0).getGoalName());
+	    } else {
+	        System.out.println("No results found");
+	    }
+	    
+	    return result;
 	}
 
 	@Override
@@ -56,6 +67,13 @@ public class GoalServiceImpl implements GoalService{
 		
 		//Cập nhật dữ liệu từ request về entity
 		entity = goalConverter.mapToEntity(request,entity);
+		
+		// Set category if provided
+		if (request.getCategoryId() != null) {
+			CategoryEntity category = categoryRepository.findById(request.getCategoryId())
+				.orElseThrow(() -> new EntityNotFoundException("Không tìm thấy danh mục với ID: " + request.getCategoryId()));
+			entity.setCategory(category);
+		}
 		
 		//Chuyển dữ liệu qua response
 		GoalResponseDTO response = goalConverter.convertToResponse(entity);
@@ -77,6 +95,18 @@ public class GoalServiceImpl implements GoalService{
 		
 		//Chuyển request sang entity
 		GoalEntity entity = goalConverter.mapToEntity(request, new GoalEntity());
+		
+		// Set user
+		UserEntity user = userRepository.findById(request.getUserId())
+			.orElseThrow(() -> new EntityNotFoundException("Không tìm thấy người dùng với ID: " + request.getUserId()));
+		entity.setUserGoal(user);
+		
+		// Set category if provided
+		if (request.getCategoryId() != null) {
+			CategoryEntity category = categoryRepository.findById(request.getCategoryId())
+				.orElseThrow(() -> new EntityNotFoundException("Không tìm thấy danh mục với ID: " + request.getCategoryId()));
+			entity.setCategory(category);
+		}
 		
 		//Lưu vào database
 		goalRepository.save(entity);
@@ -118,6 +148,4 @@ public class GoalServiceImpl implements GoalService{
 		}).collect(Collectors.toList());
 		return responseList;
 	}
-	
-	
 }

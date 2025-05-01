@@ -78,29 +78,56 @@ public class GoalRepositoryCustomImpl implements GoalRepositoryCustom{
 
 	@Override
 	public List<GoalResponseDTO> getAllGoals(GoalSearchBuilder builder) {
-		//Tạo lệnh SQL với điều kiện lọc
-		StringBuilder sql = new StringBuilder("SELECT g.*, COALESCE(SUM(t.amount), 0) AS currentAmount FROM goal AS g "
-				+ "LEFT JOIN transaction AS t ON g.id = t.goal_id");
+		// Tạo lệnh SQL với điều kiện lọc
+		// Dùng tên column đúng từ entity (category_id)
+		// Sửa câu truy vấn trong GoalRepositoryCustomImpl
+		StringBuilder sql = new StringBuilder(
+		    "SELECT g.id, g.user_id, g.target_amount, g.created_at, g.deadline, g.goal_name, g.status, " +
+		    "COALESCE(SUM(t.amount), 0) AS currentAmount, c.icon_url " +
+		    "FROM goal AS g " +
+		    "LEFT JOIN transaction AS t ON g.id = t.goal_id " +
+		    "LEFT JOIN category AS c ON g.category_id = c.id");
 		StringBuilder where = new StringBuilder(" WHERE 1=1 ");
 		normalQuery(builder,where);
 		specialQuery(builder,where);
 		sql.append(where).append(" GROUP BY g.id;");
 		
-		Query query = entityManager.createNativeQuery(sql.toString());
-	     List<Object[]> results = query.getResultList();
-	     List<GoalResponseDTO> responseList =  results.stream().map(row -> {
-	    	    try {
-	    	    	 GoalResponseDTO dto = goalConverter
-	    	    			 .mapToGoalResponseDTO(row);
-	                return dto;
-	    	     }catch (Exception e) {
-	                    e.printStackTrace();
-	                    return null;
-	    	     }
-	    	})
-	    	.filter(dto -> dto != null)
-	    	.toList();
-		return responseList;
+		// Log SQL query for debugging
+		System.out.println("Executing SQL query: " + sql.toString());
+		
+		try {
+			Query query = entityManager.createNativeQuery(sql.toString());
+			List<Object[]> results = query.getResultList();
+			List<GoalResponseDTO> responseList = results.stream().map(row -> {
+				try {
+					GoalResponseDTO dto = goalConverter.mapToGoalResponseDTO(row);
+					return dto;
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
+			})
+			.filter(dto -> dto != null)
+			.toList();
+			return responseList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("SQL Error: " + e.getMessage());
+			
+			// Kiểm tra cấu trúc bảng goal
+			try {
+				Query descQuery = entityManager.createNativeQuery("DESC goal");
+				List<Object[]> columns = descQuery.getResultList();
+				System.out.println("Goal table structure:");
+				for (Object[] col : columns) {
+					System.out.println(col[0] + " - " + col[1]);
+				}
+			} catch(Exception ex) {
+				System.err.println("Could not get table structure: " + ex.getMessage());
+			}
+			
+			return List.of();
+		}
 	}
 
 	@Override
@@ -120,12 +147,38 @@ public class GoalRepositoryCustomImpl implements GoalRepositoryCustom{
 	
 	@Override
 	public void getCurrentAmount(GoalResponseDTO response) {
-		StringBuilder sql = new StringBuilder("SELECT COALESCE(SUM(t.amount), 0) AS currentAmount FROM goal AS g "
-				+ " LEFT JOIN transaction AS t ON g.id = t.goal_id ");
-		StringBuilder where = new StringBuilder(" WHERE 1=1 AND g.id = ").append(response.getId()).append(" ");
-		sql.append(where).append(" GROUP BY g.id;");
-		Query query = entityManager.createNativeQuery(sql.toString());
-		response.setCurrentAmount((BigDecimal) query.getSingleResult());
+		try {
+			// Truy vấn SQL đơn giản hơn để lấy thông tin hiện tại
+			StringBuilder sql = new StringBuilder(
+					"SELECT COALESCE(SUM(t.amount), 0) AS currentAmount " +
+					"FROM goal AS g " +
+					"LEFT JOIN transaction AS t ON g.id = t.goal_id " +
+					"WHERE g.id = " + response.getId() + " " +
+					"GROUP BY g.id");
+			
+			System.out.println("Executing getCurrentAmount SQL query: " + sql.toString());
+			
+			Query query = entityManager.createNativeQuery(sql.toString());
+			BigDecimal currentAmount = (BigDecimal) query.getSingleResult();
+			response.setCurrentAmount(currentAmount != null ? currentAmount : BigDecimal.ZERO);
+			
+			// Truy vấn riêng để lấy icon URL từ category liên kết
+			String iconQuery = "SELECT c.icon_url FROM goal g " +
+								"LEFT JOIN category c ON g.category_id = c.id " +
+								"WHERE g.id = " + response.getId();
+			
+			System.out.println("Executing iconUrl query: " + iconQuery);
+			
+			Query iconUrlQuery = entityManager.createNativeQuery(iconQuery);
+			Object iconResult = iconUrlQuery.getSingleResult();
+			if (iconResult != null) {
+				response.setIconUrl((String) iconResult);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("SQL Error in getCurrentAmount: " + e.getMessage());
+			response.setCurrentAmount(BigDecimal.ZERO);
+		}
 	}
 	 
 }
