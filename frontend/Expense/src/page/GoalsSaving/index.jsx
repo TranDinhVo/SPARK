@@ -96,7 +96,7 @@ function GoalsSaving() {
   };
 
   const handleEdit = (record) => {
-    console.log("Chỉnh sửa:", record);
+    navigate(`/tiet-kiem/${record.id}`);
   };
 
   const handleDelete = async (record) => {

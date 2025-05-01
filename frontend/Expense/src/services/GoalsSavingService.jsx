@@ -1,4 +1,4 @@
-import { get, post, del } from "../utils/request";
+import { get, post, del, patch } from "../utils/request";
 
 export const getGoal = async () => {
   const result = await get("goal");
@@ -20,5 +20,9 @@ export const createGoal = async (option) => {
 
 export const deleteGoal = async (id) => {
   const result = await del(`goal/${id}`);
+  return result;
+};
+export const updateGoal = async (id, options) => {
+  const result = await patch(`goal/${id}`, options);
   return result;
 };

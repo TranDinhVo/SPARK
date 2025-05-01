@@ -7,6 +7,17 @@ function GoalsList(props) {
   const { goals, viewMode, onView, onEdit, onDelete } = props;
   const columns = [
     {
+      title: "Ảnh",
+      dataIndex: "iconUrl",
+      key: "iconUrl",
+      render: (iconHtml) => (
+        <div
+          className="iconUrl"
+          dangerouslySetInnerHTML={{ __html: iconHtml }}
+        />
+      ),
+    },
+    {
       title: "Tên tiết kiệm",
       dataIndex: "goalName",
       key: "goalName",

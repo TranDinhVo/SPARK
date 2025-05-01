@@ -67,8 +67,18 @@
         padding: 16px 24px;
         font-size: 18px;
         border-radius: 8px;
-        border: 1px solid #ddd;
+        border: 1px solid var(--primary-color-dark);
+        color: var(--primary-color);
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
 
+        .nav-button {
+          border: 0;
+          background: var(--primary-color-light);
+          font-size: 16px;
+        }
         .nav-arrow {
           cursor: pointer;
           color: var(--primary-color-dark);
@@ -78,7 +88,9 @@
             color: var(--primary-color);
           }
         }
-
+        .ant-picker {
+          margin-left: 50px;
+        }
         .selected-date {
           flex: 1;
           text-align: center;
@@ -119,7 +131,7 @@
     background: #fff;
     padding: 32px 48px;
     border-radius: 12px;
-    border: 2px solid #000;
+    border: 1px solid var(--primary-color-dark);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
     .goal__recent-header {
