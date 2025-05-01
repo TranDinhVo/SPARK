@@ -1,18 +1,22 @@
 package com.javaweb.converter;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Map;
+
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.javaweb.Builder.GoalSearchBuilder;
 import com.javaweb.Utils.MapUtil;
 import com.javaweb.entity.GoalEntity;
 import com.javaweb.enums.GoalStatusEnum;
 import com.javaweb.model.request.GoalRequestDTO;
 import com.javaweb.model.response.GoalResponseDTO;
+
 @Component
 public class GoalConverter {
 	@Autowired
@@ -42,10 +46,11 @@ public class GoalConverter {
 	        String nameGoal = (row[5] != null) ? (String) row[5] : "";
 	        String status = (row[6] != null) ? (String) row[6] : "";
 	        BigDecimal currentAmount = (row[7] != null) ? (BigDecimal) row[7] : BigDecimal.ZERO;
+	        // Now directly getting iconUrl from the goal table instead of joining with category
 	        String iconUrl = (row.length > 8 && row[8] != null) ? (String) row[8] : null;
 	        
 	        // In ra log để kiểm tra giá trị
-	        System.out.println("Row data: id=" + id + ", name=" + nameGoal + ", amount=" + targetAmount);
+	        System.out.println("Row data: id=" + id + ", name=" + nameGoal + ", amount=" + targetAmount + ", iconUrl=" + iconUrl);
 	        
 	        // Tạo DTO
 	        GoalResponseDTO dto = new GoalResponseDTO();
@@ -82,10 +87,10 @@ public class GoalConverter {
 	public GoalResponseDTO convertToResponse(GoalEntity entity) {
 		GoalResponseDTO response = new GoalResponseDTO();
 		modelMapper.map(entity, response);
-		// Manually map iconUrl if the entity has a category
-		if (entity.getCategory() != null) {
-			response.setIconUrl(entity.getCategory().getIconUrl());
-		}
+		
+		// Now directly get the iconUrl from the entity instead of from category
+		response.setIconUrl(entity.getIconUrl());
+		
 		return response;
 	}
 	
