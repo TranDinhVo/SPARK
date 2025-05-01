@@ -12,7 +12,7 @@ import com.javaweb.model.request.RecurringStatusRequestDTO;
 import com.javaweb.model.request.RecurringTransactionRequestDTO;
 import com.javaweb.model.response.RecurringTransactionResponseDTO;
 import com.javaweb.service.RecurringTransactionService;
-
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/recurring-transactions")
 public class RecurringTransactionController {

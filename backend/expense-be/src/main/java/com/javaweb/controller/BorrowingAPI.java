@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,7 +23,7 @@ import com.javaweb.model.request.BorrowingRequestDTO;
 import com.javaweb.model.response.BorrowingResponseDTO;
 import com.javaweb.model.response.GoalResponseDTO;
 import com.javaweb.service.BorrowingService;
-
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/borrowings")
 public class BorrowingAPI {
