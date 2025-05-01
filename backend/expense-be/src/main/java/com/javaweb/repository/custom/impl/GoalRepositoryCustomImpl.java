@@ -78,15 +78,13 @@ public class GoalRepositoryCustomImpl implements GoalRepositoryCustom{
 
 	@Override
 	public List<GoalResponseDTO> getAllGoals(GoalSearchBuilder builder) {
-		// Tạo lệnh SQL với điều kiện lọc
-		// Dùng tên column đúng từ entity (category_id)
-		// Sửa câu truy vấn trong GoalRepositoryCustomImpl
+		// Modified SQL to get icon_url directly from goal table instead of joining with category
 		StringBuilder sql = new StringBuilder(
 		    "SELECT g.id, g.user_id, g.target_amount, g.created_at, g.deadline, g.goal_name, g.status, " +
-		    "COALESCE(SUM(t.amount), 0) AS currentAmount, c.icon_url " +
+		    "COALESCE(SUM(t.amount), 0) AS currentAmount, g.icon_url " +
 		    "FROM goal AS g " +
-		    "LEFT JOIN transaction AS t ON g.id = t.goal_id " +
-		    "LEFT JOIN category AS c ON g.category_id = c.id");
+		    "LEFT JOIN transaction AS t ON g.id = t.goal_id ");
+		
 		StringBuilder where = new StringBuilder(" WHERE 1=1 ");
 		normalQuery(builder,where);
 		specialQuery(builder,where);
@@ -148,37 +146,37 @@ public class GoalRepositoryCustomImpl implements GoalRepositoryCustom{
 	@Override
 	public void getCurrentAmount(GoalResponseDTO response) {
 		try {
-			// Truy vấn SQL đơn giản hơn để lấy thông tin hiện tại
+			// Simplified query that doesn't need to get iconUrl since it's directly on the goal entity
 			StringBuilder sql = new StringBuilder(
-					"SELECT COALESCE(SUM(t.amount), 0) AS currentAmount " +
+					"SELECT COALESCE(SUM(t.amount), 0) AS currentAmount, g.icon_url " +
 					"FROM goal AS g " +
 					"LEFT JOIN transaction AS t ON g.id = t.goal_id " +
 					"WHERE g.id = " + response.getId() + " " +
-					"GROUP BY g.id");
+					"GROUP BY g.id, g.icon_url");
 			
 			System.out.println("Executing getCurrentAmount SQL query: " + sql.toString());
 			
 			Query query = entityManager.createNativeQuery(sql.toString());
-			BigDecimal currentAmount = (BigDecimal) query.getSingleResult();
-			response.setCurrentAmount(currentAmount != null ? currentAmount : BigDecimal.ZERO);
+			List<Object[]> result = query.getResultList();
 			
-			// Truy vấn riêng để lấy icon URL từ category liên kết
-			String iconQuery = "SELECT c.icon_url FROM goal g " +
-								"LEFT JOIN category c ON g.category_id = c.id " +
-								"WHERE g.id = " + response.getId();
-			
-			System.out.println("Executing iconUrl query: " + iconQuery);
-			
-			Query iconUrlQuery = entityManager.createNativeQuery(iconQuery);
-			Object iconResult = iconUrlQuery.getSingleResult();
-			if (iconResult != null) {
-				response.setIconUrl((String) iconResult);
+			if (!result.isEmpty()) {
+				Object[] row = result.get(0);
+				BigDecimal currentAmount = (BigDecimal) row[0];
+				String iconUrl = (String) row[1];
+				
+				response.setCurrentAmount(currentAmount != null ? currentAmount : BigDecimal.ZERO);
+				
+				// Only set iconUrl if it's not already set
+				if (response.getIconUrl() == null && iconUrl != null) {
+					response.setIconUrl(iconUrl);
+				}
+			} else {
+				response.setCurrentAmount(BigDecimal.ZERO);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("SQL Error in getCurrentAmount: " + e.getMessage());
 			response.setCurrentAmount(BigDecimal.ZERO);
 		}
-	}
-	 
+	}	 
 }

@@ -66,13 +66,23 @@ public class GoalServiceImpl implements GoalService{
 		GoalEntity entity = goalRepository.findById(request.getId()).get();
 		
 		//Cập nhật dữ liệu từ request về entity
-		entity = goalConverter.mapToEntity(request,entity);
+		entity = goalConverter.mapToEntity(request, entity);
 		
-		// Set category if provided
+		// Instead of setting category, directly set iconUrl if it's provided
+		if (request.getIconUrl() != null) {
+			entity.setIconUrl(request.getIconUrl());
+		}
+		
+		// You can still fetch and use category data for other purposes if needed
 		if (request.getCategoryId() != null) {
+			// This can be used for future logic if category is still needed for something else
 			CategoryEntity category = categoryRepository.findById(request.getCategoryId())
 				.orElseThrow(() -> new EntityNotFoundException("Không tìm thấy danh mục với ID: " + request.getCategoryId()));
-			entity.setCategory(category);
+			
+			// You might want to set a default icon from category if none was provided
+			if (request.getIconUrl() == null && entity.getIconUrl() == null) {
+				entity.setIconUrl(category.getIconUrl());
+			}
 		}
 		
 		//Chuyển dữ liệu qua response
@@ -101,11 +111,16 @@ public class GoalServiceImpl implements GoalService{
 			.orElseThrow(() -> new EntityNotFoundException("Không tìm thấy người dùng với ID: " + request.getUserId()));
 		entity.setUserGoal(user);
 		
-		// Set category if provided
-		if (request.getCategoryId() != null) {
+		// Directly set iconUrl from request
+		if (request.getIconUrl() != null) {
+			entity.setIconUrl(request.getIconUrl());
+		}
+		
+		// Optional: You can still use category for getting icon if none provided
+		if (entity.getIconUrl() == null && request.getCategoryId() != null) {
 			CategoryEntity category = categoryRepository.findById(request.getCategoryId())
 				.orElseThrow(() -> new EntityNotFoundException("Không tìm thấy danh mục với ID: " + request.getCategoryId()));
-			entity.setCategory(category);
+			entity.setIconUrl(category.getIconUrl());
 		}
 		
 		//Lưu vào database

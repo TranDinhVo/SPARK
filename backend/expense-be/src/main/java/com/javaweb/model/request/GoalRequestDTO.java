@@ -1,14 +1,19 @@
 package com.javaweb.model.request;
+
 import java.math.BigDecimal;
 import java.time.Instant;
+
 public class GoalRequestDTO {
 	private Long id;
 	private Long userId;
+	// We can keep categoryId for other purposes if needed
 	private Long categoryId;
     private String goalName;
     private BigDecimal targetAmount;
-//    private Instant createdAt;
     private Instant deadline;
+    // Add iconUrl field to directly store the icon URL
+    private String iconUrl;
+    
 	public Long getId() {
 		return id;
 	}
@@ -45,6 +50,13 @@ public class GoalRequestDTO {
 	public void setDeadline(Instant deadline) {
 		this.deadline = deadline;
 	}
+	public String getIconUrl() {
+		return iconUrl;
+	}
+	public void setIconUrl(String iconUrl) {
+		this.iconUrl = iconUrl;
+	}
+	
 	public void validate() {
         if (targetAmount == null) {
             throw new IllegalArgumentException("Mục tiêu tiền cần đạt chưa được nhập");
