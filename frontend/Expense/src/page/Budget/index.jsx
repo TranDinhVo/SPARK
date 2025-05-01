@@ -112,37 +112,33 @@ function Budget() {
       try {
         const allTransactions = await getTransactionByUser(userId);
 
-        const startDate = new Date(selectedBudget.startDate);
-        const endDate = new Date(selectedBudget.endDate);
+        const start = new Date(selectedBudget.startDate);
+        const end = new Date(selectedBudget.endDate);
 
-        const filteredTransactions = allTransactions.filter((tran) => {
+        start.setHours(0, 0, 0, 0);
+        end.setHours(23, 59, 59, 999);
+
+        const filtered = allTransactions.filter((tran) => {
           if (tran.type !== "Chi") return false;
-          if (!tran.createdAt) return false;
 
-          const tranDateUTC = new Date(tran.createdAt);
-          const tranDateOnly = new Date(
-            tranDateUTC.getFullYear(),
-            tranDateUTC.getMonth(),
-            tranDateUTC.getDate()
-          );
-
+          const tranDate = new Date(tran.createdAt);
           return (
-            tranDateOnly >= startDate &&
-            tranDateOnly <= endDate &&
+            tranDate >= start &&
+            tranDate <= end &&
             tran.name === selectedBudget.budgetName
           );
         });
 
-        setTransactions(filteredTransactions);
+        setTransactions(filtered);
       } catch (error) {
-        console.error("Lỗi:", error);
+        console.error("Lỗi khi lọc giao dịch:", error);
       } finally {
         setLoadingTransaction(false);
       }
     };
 
     fetchTransactions();
-  }, [selectedBudget]);
+  }, [selectedBudget, userId]);
 
   const handleDeleteBudget = async (budget) => {
     const confirm = await Swal.fire({
@@ -194,7 +190,6 @@ function Budget() {
   const onReload = () => {
     fetchApi();
   };
-  console.log(selectedBudget);
   return (
     <>
       <Row gutter={[20, 20]} className="budget__row">

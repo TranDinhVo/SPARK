@@ -154,8 +154,8 @@ function EditTransaction(props) {
           timer: 2000,
         });
 
-        onReLoad(); 
-        setIsModalOpen(false); 
+        onReLoad();
+        setIsModalOpen(false);
       } else {
         Swal.fire({
           icon: "error",

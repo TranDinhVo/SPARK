@@ -52,7 +52,6 @@ function GoalsSaving() {
       const result = await createGoal(goalData);
 
       if (result) {
-        // Đợi 0.5s rồi hiện success để nhìn mượt hơn
         setTimeout(() => {
           Swal.fire({
             icon: "success",
@@ -70,8 +69,6 @@ function GoalsSaving() {
               popup: "animate__animated animate__fadeOutUp",
             },
           });
-
-          // Làm mới danh sách
           fetchSavingGoals();
         }, 500);
       } else {

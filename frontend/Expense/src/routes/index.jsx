@@ -16,6 +16,7 @@ import Error404 from "../page/Error404/index";
 import Introduce from "../page/Introduce";
 import Logout from "../page/Logout";
 import GoalDetail from "../page/GoalsSaving/GoalDetail";
+import TransactionNew from "../page/TransactionNew";
 
 export const routes = [
   {
@@ -39,7 +40,7 @@ export const routes = [
           },
           {
             path: "giao-dich",
-            element: <Transaction />,
+            element: <TransactionNew />,
             // children: [
             //   {
             //     index: true,

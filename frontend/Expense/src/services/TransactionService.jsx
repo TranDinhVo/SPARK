@@ -17,37 +17,37 @@ export const getTransactionByUser = async (id) => {
 export const createTransaction = async (option) => {
   const result = await post("transactions", option);
 
-  if (option.recurrence) {
-    const nextDueDate = calculateNextDueDate(
-      option.date,
-      option.recurrence.type
-    );
+  // if (option.recurrence) {
+  //   const nextDueDate = calculateNextDueDate(
+  //     option.date,
+  //     option.recurrence.type
+  //   );
 
-    const recurringTransaction = {
-      transactionId: result.id,
-      recurringType: option.recurrence.type,
-      nextDueDate: nextDueDate,
-      status: option.recurrence.status
-        ? ["DA_HUY", "TAM_DUNG", "DANG_HOAT_DONG"][
-            option.recurrence.status.code + 1
-          ]
-        : "DANG_HOAT_DONG",
-    };
+  //   const recurringTransaction = {
+  //     transactionId: result.id,
+  //     recurringType: option.recurrence.type,
+  //     nextDueDate: nextDueDate,
+  //     status: option.recurrence.status
+  //       ? ["DA_HUY", "TAM_DUNG", "DANG_HOAT_DONG"][
+  //           option.recurrence.status.code + 1
+  //         ]
+  //       : "DANG_HOAT_DONG",
+  //   };
 
-    await createRecurringTransaction(recurringTransaction);
-  }
+  //   await createRecurringTransaction(recurringTransaction);
+  // }
 
   return result;
 };
 export const deleteTransaction = async (id) => {
   const recurringTransactions = await getRecurringTransaction();
 
-  const recurring = recurringTransactions.find((rt) => rt.transactionId === id);
+  // const recurring = recurringTransactions.find((rt) => rt.transactionId === id);
 
-  if (recurring) {
-    await deleteRecurringTransaction(recurring.id);
-  }
-  const result = await del(`transactions/${id}`);
+  // if (recurring) {
+  //   await deleteRecurringTransaction(recurring.id);
+  // }
+  // const result = await del(`transactions/${id}`);
   return result;
 };
 

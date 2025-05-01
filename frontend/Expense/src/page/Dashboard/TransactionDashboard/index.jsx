@@ -23,18 +23,15 @@ function TransactionDashboard() {
         const now = new Date();
         const currentMonth = now.getMonth();
         const currentYear = now.getFullYear();
-        // const filtered = result.filter((item) => {
-        //   const date = new Date(item.createdAt);
-        //   return (
-        //     date.getMonth() === currentMonth &&
-        //     date.getFullYear() === currentYear
-        //   );
-        // });
+        const filtered = result.filter((item) => {
+          const date = new Date(item.createdAt);
+          return (
+            date.getMonth() === currentMonth &&
+            date.getFullYear() === currentYear
+          );
+        });
 
-        // const sorted = filtered.sort(
-        //   (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        // );
-        const sorted = result.sort(
+        const sorted = filtered.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
         if (isMounted) {

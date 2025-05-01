@@ -95,8 +95,8 @@ function BudgetFormModal(props) {
         } else {
           Swal.fire({
             icon: "error",
-            title: "Thất bạibại",
-            text: "Ngân sách mới chưa được thêm thành côngcông!",
+            title: "Thất bại",
+            text: "Ngân sách mới chưa được thêm thành công!",
           });
         }
       };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import DateNavigator from "../DateNavigator";
+import DateNavigator from "../../../components/DateNavigator";
 import Swal from "sweetalert2";
 
 function GoalForm({ userId, onSave }) {
@@ -12,10 +12,6 @@ function GoalForm({ userId, onSave }) {
   const handleAmountChange = (e) => {
     const raw = e.target.value.replace(/\D/g, "");
     setSavingAmountInput(raw);
-  };
-
-  const formatNumberWithDots = (value) => {
-    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   };
 
   const validateForm = () => {
@@ -116,7 +112,7 @@ function GoalForm({ userId, onSave }) {
           <span className="label">Khoản tiền để ra</span>
           <div className="amount-input-container">
             <Input
-              value={formatNumberWithDots(savingAmountInput)}
+              value={Number(savingAmountInput).toLocaleString("vi-VN")}
               onChange={handleAmountChange}
               placeholder="0"
             />

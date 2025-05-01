@@ -13,13 +13,7 @@ function CashFlowDashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // const result = await getTransactionByUser(userId);
-      const result = [
-        { type: "Thu", amount: 1500000, createdAt: "2025-04-01T08:00:00Z" },
-        { type: "Chi", amount: 1456000, createdAt: "2025-04-02T10:00:00Z" },
-        { type: "Thu", amount: 500000, createdAt: "2025-03-10T08:00:00Z" },
-        { type: "Chi", amount: 200000, createdAt: "2025-03-11T10:00:00Z" },
-      ]; // Dữ liệu demo
+      const result = await getTransactionByUser(userId);
 
       const thuTransactions = result.filter((t) => t.type === "Thu");
       const chiTransactions = result.filter((t) => t.type === "Chi");
