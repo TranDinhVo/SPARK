@@ -19,7 +19,7 @@ function GoalsSaving() {
   const [loading, setLoading] = useState(false);
   const [viewMode, setViewMode] = useState("grid");
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [filtered, setFiltered] = useState([]);
   const navigate = useNavigate();
   const userId = getCookie("id");
 
@@ -166,9 +166,18 @@ function GoalsSaving() {
     }
   };
 
-  const filteredGoals = savingList.filter((goal) =>
-    goal.goalName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    setLoading(true);
+    const delayDebounce = setTimeout(() => {
+      const filteredGoals = savingList.filter((goal) =>
+        goal.goalName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFiltered(filteredGoals);
+      setLoading(false);
+    }, 500);
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchTerm, savingList]);
 
   return (
     <div className="goals-saving">
@@ -189,7 +198,7 @@ function GoalsSaving() {
           </div>
         ) : (
           <GoalsList
-            goals={filteredGoals}
+            goals={filtered}
             viewMode={viewMode}
             onView={handleView}
             onEdit={handleEdit}

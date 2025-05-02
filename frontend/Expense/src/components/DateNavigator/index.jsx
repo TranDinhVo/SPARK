@@ -11,6 +11,7 @@ function DateNavigator({ date, onChange }) {
     const newDate = new Date(date);
     newDate.setDate(newDate.getDate() - 1);
     onChange(newDate);
+    console.log(newDate);
   };
 
   const handleNextDate = () => {

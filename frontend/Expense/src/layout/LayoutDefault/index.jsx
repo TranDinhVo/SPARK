@@ -15,6 +15,7 @@ import { useState } from "react";
 import ThemeSettingContainer from "../../components/ThemeSettingContainer";
 import { Menu as MenuIcon } from "lucide-react";
 import Footer from "../../page/Footer";
+import { getCookie } from "../../helpers/cookie";
 // import { ReactComponent as Logo } from "../../assets/images/logotest.svg";
 
 // import "../../assets/styles/variable.scss";
@@ -24,7 +25,7 @@ const { Sider, Content } = Layout;
 
 function LayoutDefault() {
   const [collapse, setCollapse] = useState(false);
-
+  const name = getCookie("fullname");
   return (
     <>
       <Layout className="layout-default">
@@ -107,7 +108,7 @@ function LayoutDefault() {
                       fontSize: "20px",
                     }}
                   />
-                  Name
+                  {name}
                 </Button>
               </div>
             </div>

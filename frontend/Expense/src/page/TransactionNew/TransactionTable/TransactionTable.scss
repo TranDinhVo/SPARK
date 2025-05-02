@@ -1,27 +1,46 @@
+.transaction-table-container {
+  padding: 0 50px;
+}
+
 .transaction-table {
   .ant-table {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+    border: none;
+  }
+  .ant-table-cell {
+    border-right: none !important;
   }
 
+  .ant-table-thead > tr > th {
+    border-right: none !important;
+  }
+
+  .ant-table-tbody > tr > td {
+    border-right: none !important;
+  }
   .ant-table-thead > tr > th {
     background-color: #fff;
     font-weight: 600;
     font-size: 14px;
     color: #1f2937;
     text-align: center;
-    padding: 14px;
-    border-bottom: 1px solid #e5e7eb;
+    padding: 12px;
+    border-bottom: none;
+  }
+
+  .ant-table-tbody > tr:hover > td {
+    background-color: #f0f7ff;
   }
 
   .ant-table-tbody > tr > td {
     vertical-align: middle;
     text-align: center;
     font-size: 14px;
-    padding: 12px 8px;
+    padding: 10px;
     color: #333;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: none;
   }
 
   .ant-input-affix-wrapper {
@@ -37,6 +56,7 @@
     font-weight: 500;
     padding: 4px 12px;
     border-radius: 16px;
+
     &.ant-tag-orange {
       background-color: #fff7ed;
       color: #f97316;
@@ -66,9 +86,12 @@
   .ant-pagination {
     justify-content: center;
     margin-top: 16px;
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding: 10px 0;
   }
 
-  // Custom icon button
   .ant-btn > span {
     font-size: 18px;
     display: flex;
@@ -76,12 +99,6 @@
     justify-content: center;
   }
 
-  // Hover effect for row
-  .ant-table-tbody > tr:hover > td {
-    background-color: #fafafa;
-  }
-
-  // Highlight amount colors
   .ant-table-tbody .ant-table-cell {
     .amount {
       font-weight: 600;
@@ -98,6 +115,7 @@
 .transaction-search {
   position: relative;
   width: 30%;
+  margin-bottom: 20px;
 
   &__icon {
     position: absolute;

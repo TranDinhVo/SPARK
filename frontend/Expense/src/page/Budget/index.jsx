@@ -109,9 +109,8 @@ function Budget() {
       if (!selectedBudget) return;
 
       setLoadingTransaction(true);
-      try {
-        const allTransactions = await getTransactionByUser(userId);
-
+      const allTransactions = await getTransactionByUser(userId);
+      setTimeout(() => {
         const start = new Date(selectedBudget.startDate);
         const end = new Date(selectedBudget.endDate);
 
@@ -130,11 +129,9 @@ function Budget() {
         });
 
         setTransactions(filtered);
-      } catch (error) {
-        console.error("Lỗi khi lọc giao dịch:", error);
-      } finally {
+
         setLoadingTransaction(false);
-      }
+      }, 800);
     };
 
     fetchTransactions();
@@ -374,6 +371,11 @@ function Budget() {
         {/* Cột chi tiết */}
         <Col span={15} className="budget__detail">
           <h2 className="budget__detail-title">Chi tiết ngân sách</h2>
+          {loading && (
+            <div className="budget__loading">
+              <Spin tip="Đang tải dữ liệu..." size="large" />
+            </div>
+          )}
           {selectedBudget ? (
             <div className="budget__detail--list">
               <div className="budget__detail--header">

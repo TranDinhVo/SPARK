@@ -1,14 +1,18 @@
-import { Table, Tag, Input, Button } from "antd";
+import { useEffect, useState } from "react";
+import { Table, Tag, Input, Button, Dropdown, Menu, Space } from "antd";
 import { FiSearch } from "react-icons/fi";
 import { formatDateTime } from "../../../helpers/formatDateTime";
-import { useState, useEffect } from "react";
+import { MoreOutlined } from "@ant-design/icons";
 import "./TransactionTable.scss";
+import EditTransaction from "../EditTransaction";
+import DeleteTransaction from "../DeleteTransaction";
+import DetailTransaction from "../DetailTransaction";
 
-function TransactionTable(props) {
-  const { transactions = [], onView } = props;
+function TransactionTable({ transactions = [], onReload }) {
   const [search, setSearch] = useState("");
   const [filtered, setFiltered] = useState(transactions);
   const [loading, setLoading] = useState(false);
+  const [expandedRowKeys, setExpandedRowKeys] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -56,21 +60,21 @@ function TransactionTable(props) {
       ),
     },
     {
-      title: "Chi tiết",
+      title: "hành động",
+      width: "70px",
       key: "action",
       render: (_, record) => (
-        <Button
-          type="text"
-          shape="circle"
-          icon={<span style={{ fontSize: 18 }}>›</span>}
-          onClick={() => onView(record)}
-        />
+        <Space>
+          <DeleteTransaction record={record} onReLoad={onReload} />
+          <EditTransaction record={record} onReLoad={onReload} />
+          <DetailTransaction record={record} />
+        </Space>
       ),
     },
   ];
 
   return (
-    <>
+    <div className="transaction-table-container">
       <div className="transaction-search">
         <FiSearch className="transaction-search__icon" />
         <Input
@@ -82,16 +86,16 @@ function TransactionTable(props) {
           allowClear
         />
       </div>
-      <div className="transaction-table">
-        <Table
-          columns={columns}
-          dataSource={filtered.map((t) => ({ ...t, key: t.id }))}
-          pagination={{ pageSize: 8 }}
-          bordered
-          loading={loading}
-        />
-      </div>
-    </>
+      <Table
+        columns={columns}
+        dataSource={filtered.map((t) => ({ ...t, key: t.id }))}
+        // pagination={{ pageSize: 8 }}
+        pagination={false}
+        bordered
+        loading={loading}
+        // scroll={{ y: 400 }} // chiều cao cố định
+      />
+    </div>
   );
 }
 

@@ -34,12 +34,8 @@ function TransactionNew() {
   return (
     <>
       <div className="transaction">
-        <TransactionForm />
-        <TransactionTable
-          transactions={transactions}
-          onView={(tran) => console.log("Xem:", tran)}
-          onReload={onReload}
-        />
+        <TransactionForm onReload={onReload} />
+        <TransactionTable transactions={transactions} onReload={onReload} />
       </div>
     </>
   );

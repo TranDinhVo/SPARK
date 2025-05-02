@@ -7,7 +7,8 @@ import Swal from "sweetalert2";
 import { getCookie } from "../../../helpers/cookie";
 import { createTransaction } from "../../../services/TransactionService";
 
-function TransactionForm() {
+function TransactionForm(props) {
+  const { onReload } = props;
   const [isExpense, setIsExpense] = useState(false);
   const [isRecurring, setIsRecurring] = useState(false);
   const [description, setDescription] = useState("");
@@ -106,6 +107,7 @@ function TransactionForm() {
         });
       }, 500);
       handleReset();
+      onReload();
     }
   };
   return (

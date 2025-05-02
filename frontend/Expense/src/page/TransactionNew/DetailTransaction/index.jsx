@@ -18,7 +18,10 @@ import "../../../assets/scss/DetailTransaction.scss";
 function DetailTransaction({ record }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const showModal = () => setIsModalOpen(true);
+  const showModal = () => {
+    console.log("chi tiet");
+    setIsModalOpen(true);
+  };
   const handleCancel = () => setIsModalOpen(false);
 
   return (
@@ -31,7 +34,7 @@ function DetailTransaction({ record }) {
         style={{ backgroundColor: "#1890ff", borderColor: "#1890ff" }}
       />
 
-      <Modal
+      {/* <Modal
         open={isModalOpen}
         onCancel={handleCancel}
         footer={null}
@@ -120,7 +123,7 @@ function DetailTransaction({ record }) {
             </div>
           </div>
         </Card>
-      </Modal>
+      </Modal> */}
     </>
   );
 }
