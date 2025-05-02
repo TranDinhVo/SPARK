@@ -52,7 +52,7 @@ public class TransactionServiceImpl implements TransactionService {
     private UserRepository userRepository;
 
     @Override
-    @Transactional  // Thêm annotation ở cấp phương thức để đảm bảo
+    @Transactional
     public TransactionResponseDTO createTransaction(TransactionRequestDTO transactionRequest) {
         try {
             // Tìm user theo userId
@@ -63,7 +63,7 @@ public class TransactionServiceImpl implements TransactionService {
             CategoryEntity category = categoryRepository.findById(transactionRequest.getCategoryId())
                     .orElseThrow(() -> new RuntimeException("Category not found"));
 
-            // Xử lý recurrenceId đã được cải thiện
+            // Xử lý recurrenceId
             RecurringTransactionEntity recurrence = null;
             if (transactionRequest.getRecurrenceId() != null) {
                 recurrence = recurringTransactionRepository.findById(transactionRequest.getRecurrenceId())
@@ -77,6 +77,13 @@ public class TransactionServiceImpl implements TransactionService {
             transactionEntity.setCategoryTransaction(category);
             transactionEntity.setDescription(transactionRequest.getDescription());
             transactionEntity.setRecurringTransaction(recurrence);
+            
+            // Xử lý createdAt - thiết lập giá trị mặc định nếu không được cung cấp
+            if (transactionRequest.getCreatedAt() != null) {
+                transactionEntity.setCreatedAt(transactionRequest.getCreatedAt());
+            } else {
+                transactionEntity.setCreatedAt(Instant.now());  // Thiết lập mặc định tại đây
+            }
             
             // Xử lý goalId nếu có
             if (transactionRequest.getGoalId() != null) {
@@ -92,19 +99,12 @@ public class TransactionServiceImpl implements TransactionService {
                 transactionEntity.setBorrowingTransaction(borrowing);
             }
 
-            // Thêm log để debug
-            System.out.println("Saving transaction for userId: " + user.getId());
-            
             // Lưu và lấy kết quả
             TransactionEntity savedTransaction = transactionRepository.save(transactionEntity);
-            
-            // Log kết quả để debug
-            System.out.println("Transaction saved with ID: " + savedTransaction.getId());
 
             // Convert và trả về response
             return transactionConverter.convertToDTO(savedTransaction);
         } catch (Exception e) {
-            // Log lỗi để debug
             System.err.println("Error creating transaction: " + e.getMessage());
             e.printStackTrace();
             throw e;
@@ -136,11 +136,14 @@ public class TransactionServiceImpl implements TransactionService {
     public TransactionResponseDTO updateTransaction(Long id, TransactionRequestDTO transactionRequest) {
         return transactionRepository.findById(id)
                 .map(transaction -> {
-                    if (transactionRequest.getAmount() != null) {
+                	if (transactionRequest.getAmount() != null) {
                         transaction.setAmount(transactionRequest.getAmount());
                     }
                     if (transactionRequest.getDescription() != null) {
                         transaction.setDescription(transactionRequest.getDescription());
+                    }
+                    if (transactionRequest.getCreatedAt() != null) {
+                        transaction.setCreatedAt(transactionRequest.getCreatedAt());
                     }
                     if (transactionRequest.getGoalId() != null) {
                         GoalEntity goal = goalRepository.findById(transactionRequest.getGoalId())
