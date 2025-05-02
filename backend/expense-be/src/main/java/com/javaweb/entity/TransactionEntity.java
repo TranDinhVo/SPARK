@@ -51,8 +51,8 @@ public class TransactionEntity {
     @Column(name = "status")
     private Boolean status = true;
 
-    @Column(name = "created_at", updatable = false)
-    private Instant createdAt = Instant.now();
+    @Column(name = "created_at")  
+    private Instant createdAt;
 	public TransactionEntity() {}
 	public TransactionEntity(Long id, UserEntity userTransaction, GoalEntity goalTransaction,
 			BorrowingEntity borrowingTransaction, CategoryEntity categoryTransaction,

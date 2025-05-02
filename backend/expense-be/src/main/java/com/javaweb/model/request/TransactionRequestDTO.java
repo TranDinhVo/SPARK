@@ -1,6 +1,7 @@
 package com.javaweb.model.request;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 public class TransactionRequestDTO {
 	private Long userId; 
@@ -10,13 +11,15 @@ public class TransactionRequestDTO {
     private Long recurrenceId;
     private BigDecimal amount;
     private String description;
-    
-    
+    private Instant createdAt;
+
+
+
 	public TransactionRequestDTO() {}
 
 
 	public TransactionRequestDTO(Long userId, Long borrowId, Long goalId, Long categoryId, Long recurrenceId,
-			BigDecimal amount, String description) {
+			BigDecimal amount, String description, Instant createAt) {
 		super();
 		this.userId = userId;
 		this.borrowId = borrowId;
@@ -25,6 +28,8 @@ public class TransactionRequestDTO {
 		this.recurrenceId = recurrenceId;
 		this.amount = amount;
 		this.description = description;
+		this.createdAt=createAt;
+		
 	}
 
 
@@ -96,5 +101,14 @@ public class TransactionRequestDTO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+    
+    
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+
+
+	public void setCreatedAt(Instant createdAt) {
+		this.createdAt = createdAt;
+	}
 }
