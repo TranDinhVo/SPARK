@@ -17,13 +17,13 @@ import {
   TagOutlined,
   FileTextOutlined,
 } from "@ant-design/icons";
-import Swal from "sweetalert2/dist/sweetalert2.js";
-import "sweetalert2/src/sweetalert2.scss";
+// import Swal from "sweetalert2/dist/sweetalert2.js";
+// import "sweetalert2/src/sweetalert2.scss";
 import dayjs from "dayjs";
 import "dayjs/locale/vi";
-import "../../../assets/scss/AddTransaction.scss";
+// import "../../../assets/scss/AddTransaction.scss";
 import { get } from "../../../utils/request";
-import CategoryForm from "../../../components/CategoryForm";
+// import CategoryForm from "../../../components/CategoryForm";
 import { updateTransaction } from "../../../services/TransactionService";
 dayjs.locale("vi");
 
@@ -40,138 +40,139 @@ function EditTransaction(props) {
   const [categoryTypes, setCategoryTypes] = useState([]);
   const showModal = () => setIsModalOpen(true);
   const handleCancel = () => setIsModalOpen(false);
-  const getStatusLabel = (code) => {
-    switch (code) {
-      case 1:
-        return "Đang hoạt động";
-      case 0:
-        return "Tạm dừng";
-      case -1:
-        return "Đã hủy";
-      default:
-        return "";
-    }
-  };
-  const fetchApi = async (api) => {
-    const result = await get(api);
-    return result;
-  };
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [walletsData, categoriesData, categoryTypesData] =
-          await Promise.all([
-            fetchApi("wallets"),
-            fetchApi("categories"),
-            fetchApi("categoryTypes"),
-          ]);
+  // const getStatusLabel = (code) => {
+  //   switch (code) {
+  //     case 1:
+  //       return "Đang hoạt động";
+  //     case 0:
+  //       return "Tạm dừng";
+  //     case -1:
+  //       return "Đã hủy";
+  //     default:
+  //       return "";
+  //   }
+  // };
+  // const fetchApi = async (api) => {
+  //   const result = await get(api);
+  //   return result;
+  // };
+  // useEffect(() => {
+  // const fetchData = async () => {
+  //   try {
+  //     const [walletsData, categoriesData, categoryTypesData] =
+  //       await Promise.all([
+  //         fetchApi("wallets"),
+  //         fetchApi("categories"),
+  //         fetchApi("categoryTypes"),
+  //       ]);
 
-        setWallets(walletsData);
-        setCategories(categoriesData);
-        setCategoryTypes(categoryTypesData);
-      } catch (error) {
-        console.error("Lỗi khi fetch API:", error);
-      }
-    };
+  //     setWallets(walletsData);
+  //     setCategories(categoriesData);
+  //     setCategoryTypes(categoryTypesData);
+  //   } catch (error) {
+  //     console.error("Lỗi khi fetch API:", error);
+  //   }
+  // };
 
-    fetchData();
-  }, []);
-  const handleOnChange = (name, value) => {
-    setFormData({ ...formData, [name]: value });
-    console.log(formData);
-  };
+  // fetchData();
+  // }, []);
+  // const handleOnChange = (name, value) => {
+  //   setFormData({ ...formData, [name]: value });
+  //   console.log(formData);
+  // };
   const handleSubmit = async () => {
-    try {
-      const values = await form.validateFields();
+    console.log("suax");
+    // try {
+    //   const values = await form.validateFields();
 
-      const updatedTransaction = {};
+    //   const updatedTransaction = {};
 
-      if (values.amount !== record.amount) {
-        updatedTransaction.amount = values.amount;
-      }
+    //   if (values.amount !== record.amount) {
+    //     updatedTransaction.amount = values.amount;
+    //   }
 
-      if (values.note !== record.note) {
-        updatedTransaction.note = values.note;
-      }
+    //   if (values.note !== record.note) {
+    //     updatedTransaction.note = values.note;
+    //   }
 
-      if (values.date) {
-        const dateObj =
-          values.date instanceof dayjs
-            ? values.date.toDate()
-            : new Date(values.date);
-        const recordDate = record.date
-          ? new Date(record.date).toISOString()
-          : null;
-        const newDateISO = dateObj.toISOString();
+    //   if (values.date) {
+    //     const dateObj =
+    //       values.date instanceof dayjs
+    //         ? values.date.toDate()
+    //         : new Date(values.date);
+    //     const recordDate = record.date
+    //       ? new Date(record.date).toISOString()
+    //       : null;
+    //     const newDateISO = dateObj.toISOString();
 
-        if (!isNaN(dateObj) && newDateISO !== recordDate) {
-          updatedTransaction.date = newDateISO;
-        }
-      }
+    //     if (!isNaN(dateObj) && newDateISO !== recordDate) {
+    //       updatedTransaction.date = newDateISO;
+    //     }
+    //   }
 
-      if (values.category !== record.category) {
-        updatedTransaction.category = values.category;
-      }
+    //   if (values.category !== record.category) {
+    //     updatedTransaction.category = values.category;
+    //   }
 
-      if (values.paymentMethod !== record.paymentMethod) {
-        updatedTransaction.paymentMethod = values.paymentMethod;
-      }
+    //   if (values.paymentMethod !== record.paymentMethod) {
+    //     updatedTransaction.paymentMethod = values.paymentMethod;
+    //   }
 
-      if (isRecurring) {
-        if (!record.recurrence) {
-          updatedTransaction.recurrence = { ...formData.recurrence };
-        } else {
-          updatedTransaction.recurrence = {
-            type: formData.recurrence?.type || record.recurrence.type,
-            next_date:
-              formData.recurrence?.next_date || record.recurrence.next_date,
-            status: formData.recurrence?.status || record.recurrence.status,
-          };
-        }
-      } else if (record.recurrence) {
-        updatedTransaction.recurrence = null;
-      }
+    //   if (isRecurring) {
+    //     if (!record.recurrence) {
+    //       updatedTransaction.recurrence = { ...formData.recurrence };
+    //     } else {
+    //       updatedTransaction.recurrence = {
+    //         type: formData.recurrence?.type || record.recurrence.type,
+    //         next_date:
+    //           formData.recurrence?.next_date || record.recurrence.next_date,
+    //         status: formData.recurrence?.status || record.recurrence.status,
+    //       };
+    //     }
+    //   } else if (record.recurrence) {
+    //     updatedTransaction.recurrence = null;
+    //   }
 
-      // Kiểm tra nếu không có thay đổi nào
-      if (Object.keys(updatedTransaction).length === 0) {
-        Swal.fire({
-          icon: "info",
-          title: "Không có thay đổi nào!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        return;
-      }
+    //   // Kiểm tra nếu không có thay đổi nào
+    //   if (Object.keys(updatedTransaction).length === 0) {
+    //     Swal.fire({
+    //       icon: "info",
+    //       title: "Không có thay đổi nào!",
+    //       showConfirmButton: false,
+    //       timer: 1500,
+    //     });
+    //     return;
+    //   }
 
-      console.log("🚀 Dữ liệu gửi đi:", updatedTransaction);
+    //   console.log("🚀 Dữ liệu gửi đi:", updatedTransaction);
 
-      const result = await updateTransaction(record.id, updatedTransaction);
-      if (result) {
-        Swal.fire({
-          icon: "success",
-          title: "Cập nhật giao dịch thành công!",
-          showConfirmButton: false,
-          timer: 2000,
-        });
+    //   const result = await updateTransaction(record.id, updatedTransaction);
+    //   if (result) {
+    //     Swal.fire({
+    //       icon: "success",
+    //       title: "Cập nhật giao dịch thành công!",
+    //       showConfirmButton: false,
+    //       timer: 2000,
+    //     });
 
-        onReLoad(); 
-        setIsModalOpen(false); 
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Cập nhật giao dịch thất bại!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    } catch (error) {
-      console.error("❌ Lỗi khi cập nhật giao dịch:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Lỗi!",
-        text: error.message || "Không thể cập nhật giao dịch!",
-      });
-    }
+    //     onReLoad();
+    //     setIsModalOpen(false);
+    //   } else {
+    //     Swal.fire({
+    //       icon: "error",
+    //       title: "Cập nhật giao dịch thất bại!",
+    //       showConfirmButton: false,
+    //       timer: 1500,
+    //     });
+    //   }
+    // } catch (error) {
+    //   console.error("❌ Lỗi khi cập nhật giao dịch:", error);
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Lỗi!",
+    //     text: error.message || "Không thể cập nhật giao dịch!",
+    //   });
+    // }
   };
 
   return (
@@ -184,7 +185,7 @@ function EditTransaction(props) {
         style={{ backgroundColor: "#52c41a", borderColor: "#52c41a" }}
       ></Button>
 
-      <Modal
+      {/* <Modal
         title="Thêm giao dịch mới"
         open={isModalOpen}
         onCancel={handleCancel}
@@ -402,7 +403,7 @@ function EditTransaction(props) {
             </Button>
           </Form.Item>
         </Form>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

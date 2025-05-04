@@ -9,6 +9,9 @@ body,
   padding: 0;
   margin: 0;
 }
+body {
+  overflow-y: hidden;
+}
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

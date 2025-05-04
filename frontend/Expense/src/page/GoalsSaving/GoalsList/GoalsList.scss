@@ -1,0 +1,124 @@
+// GoalsList.scss
+
+// Variables
+$success-color: #52c41a;
+$warning-color: #faad14;
+$error-color: #f5222d;
+
+.saving-table {
+  .ant-table {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    .iconUrl {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ant-table-thead > tr > th {
+      background-color: #f5f7fa;
+      font-weight: 600;
+      padding: 12px 16px;
+    }
+
+    .ant-table-tbody > tr:hover > td {
+      background-color: #f0f7ff;
+    }
+
+    .goal-name {
+      color: #333;
+    }
+
+    .goal-target-amount {
+      color: var(--primary-color-dark);
+      font-weight: 600;
+    }
+
+    .goal-deadline {
+      color: #666;
+    }
+  }
+}
+
+.goals-grid {
+  .ant-col {
+    margin-bottom: 16px;
+
+    &:hover {
+      transform: translateY(-3px);
+      transition: transform 0.3s;
+    }
+  }
+
+  .ant-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    height: 100%;
+
+    .ant-card-head {
+      background-color: #f5f7fa;
+      border-bottom: 1px solid #eee;
+    }
+  }
+}
+
+.goal-status {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+
+  &.completed {
+    background-color: rgba($success-color, 0.1);
+    color: $success-color;
+  }
+
+  &.in-progress {
+    background-color: rgba(var(--primary-color-dark), 0.1);
+    color: var(--primary-color-dark);
+  }
+
+  &.at-risk {
+    background-color: rgba($warning-color, 0.1);
+    color: $warning-color;
+  }
+
+  &.failed {
+    background-color: rgba($error-color, 0.1);
+    color: $error-color;
+  }
+}
+.goal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+
+  .ant-btn {
+    &.view-btn {
+      color: var(--primary-color-dark);
+    }
+
+    &.edit-btn {
+      color: $warning-color;
+    }
+
+    &.delete-btn {
+      color: $error-color;
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .saving-table {
+    .ant-table {
+      .ant-table-thead > tr > th,
+      .ant-table-tbody > tr > td {
+        padding: 10px 8px;
+      }
+    }
+  }
+}

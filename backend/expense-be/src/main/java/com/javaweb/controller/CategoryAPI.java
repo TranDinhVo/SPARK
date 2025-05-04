@@ -12,7 +12,7 @@ import java.util.Map;
 import com.javaweb.model.request.CategoryRequestDTO;
 import com.javaweb.model.response.CategoryResponseDTO;
 import com.javaweb.service.CategoryService;
-
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryAPI {

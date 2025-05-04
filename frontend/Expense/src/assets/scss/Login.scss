@@ -11,7 +11,7 @@
 .auth-modal {
   .ant-modal-content {
     padding: 0;
-    border-radius: 30px !important; // Thêm border-radius ở đây
+    border-radius: 30px !important;
     overflow: hidden;
   }
   .ant-modal-body {
@@ -24,7 +24,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(90deg, #e2e2e2, #c9d6ff);
 }
 
 .container {
@@ -288,7 +287,10 @@ form {
 }
 
 .open-modal-btn {
-  padding: 25px;
-  font-size: 20px;
+  padding: 20px 25px;
+  font-size: 16px;
   font-weight: 600;
+  background: linear-gradient(90deg, #ff4f3e, #ff772b);
+  border-radius: 12px;
+  color: #fff;
 }

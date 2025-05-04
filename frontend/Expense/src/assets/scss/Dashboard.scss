@@ -1,4 +1,5 @@
 .dashboard {
+  // overflow-y: hidden;
   &__left {
     display: flex;
     flex-direction: column;
@@ -14,6 +15,10 @@
     border-radius: 10px;
     background-color: #fff;
     margin-bottom: 16px;
+    // border: 1px solid var(--primary-color);
+  }
+  &--right {
+    overflow-y: hidden;
   }
 
   &__header {

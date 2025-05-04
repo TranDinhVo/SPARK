@@ -14,6 +14,8 @@ import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import ThemeSettingContainer from "../../components/ThemeSettingContainer";
 import { Menu as MenuIcon } from "lucide-react";
+import Footer from "../../page/Footer";
+import { getCookie } from "../../helpers/cookie";
 // import { ReactComponent as Logo } from "../../assets/images/logotest.svg";
 
 // import "../../assets/styles/variable.scss";
@@ -23,7 +25,7 @@ const { Sider, Content } = Layout;
 
 function LayoutDefault() {
   const [collapse, setCollapse] = useState(false);
-
+  const name = getCookie("fullname");
   return (
     <>
       <Layout className="layout-default">
@@ -106,31 +108,27 @@ function LayoutDefault() {
                       fontSize: "20px",
                     }}
                   />
-                  Name
+                  {name}
                 </Button>
               </div>
             </div>
           </div>
         </header>
-        <Layout>
+        <Layout className="layout-body">
           <Sider
             className="sider"
             theme="light"
-            width={280}
+            width={"20%"}
             collapsed={collapse}
+            collapsedWidth={100}
           >
             <MenuSider collapse={collapse} />
           </Sider>
           <Content className="content">
             <Outlet />
-            <h6 style={{ color: "var(--primary-color-light)" }}>Tiêu đề</h6>
-
-            {/* <Logo /> */}
-            {/* <img src={Logo} />
-             */}
-            {/* <Logo /> */}
 
             <ThemeSettingContainer />
+            <Footer />
           </Content>
         </Layout>
         {/* <Footer>Copy right @</Footer> */}

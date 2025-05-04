@@ -1,0 +1,141 @@
+.transaction-table-container {
+  padding: 0 50px;
+}
+
+.transaction-table {
+  .ant-table {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    border: none;
+  }
+  .ant-table-cell {
+    border-right: none !important;
+  }
+
+  .ant-table-thead > tr > th {
+    border-right: none !important;
+  }
+
+  .ant-table-tbody > tr > td {
+    border-right: none !important;
+  }
+  .ant-table-thead > tr > th {
+    background-color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    color: #1f2937;
+    text-align: center;
+    padding: 12px;
+    border-bottom: none;
+  }
+
+  .ant-table-tbody > tr:hover > td {
+    background-color: #f0f7ff;
+  }
+
+  .ant-table-tbody > tr > td {
+    vertical-align: middle;
+    text-align: center;
+    font-size: 14px;
+    padding: 10px;
+    color: #333;
+    border-bottom: none;
+  }
+
+  .ant-input-affix-wrapper {
+    border-radius: 20px;
+    height: 36px;
+    padding: 0 12px;
+    background-color: #f9fafb;
+    border-color: #e5e7eb;
+  }
+
+  .ant-tag {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 16px;
+
+    &.ant-tag-orange {
+      background-color: #fff7ed;
+      color: #f97316;
+      border: 1px solid #f97316;
+    }
+    &.ant-tag-gold {
+      background-color: #fffbe6;
+      color: #facc15;
+      border: 1px solid #facc15;
+    }
+  }
+
+  .ant-btn {
+    background-color: #f9fafb;
+    color: #333;
+    transition: all 0.3s ease;
+    &:hover {
+      background-color: #f3f4f6;
+      color: var(--primary-color-dark);
+    }
+  }
+
+  .ant-spin-nested-loading {
+    padding: 20px 0;
+  }
+
+  .ant-pagination {
+    justify-content: center;
+    margin-top: 16px;
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding: 10px 0;
+  }
+
+  .ant-btn > span {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ant-table-tbody .ant-table-cell {
+    .amount {
+      font-weight: 600;
+      &.positive {
+        color: #22c55e;
+      }
+      &.negative {
+        color: #ef4444;
+      }
+    }
+  }
+}
+
+.transaction-search {
+  position: relative;
+  width: 30%;
+  margin-bottom: 20px;
+
+  &__icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #f97316;
+    font-size: 24px;
+  }
+
+  &__input {
+    padding: 15px 23px;
+    padding-left: 60px;
+    box-shadow: 0 0 0 2px #d1d5db;
+    border-radius: 8px;
+    height: 50px;
+    font-size: 18px;
+
+    &:focus {
+      box-shadow: 0 0 0 2px #a855f7;
+    }
+  }
+}

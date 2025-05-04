@@ -19,14 +19,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "category")
 public class CategoryEntity {
-
-   
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -56,21 +52,8 @@ public class CategoryEntity {
     
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
-
     
-    
-    
-	public CategoryEntity() {
-		
-	}
-
-
-
-
-	
-
-
-
+	public CategoryEntity() {}
 
 	public CategoryEntity(Long id, UserEntity userCategory, List<TransactionEntity> transaction,
 			List<BudgetEntity> budget, CategoryTypeEnum type, String name, String iconUrl, String color,
@@ -86,137 +69,76 @@ public class CategoryEntity {
 		this.color = color;
 		this.createdAt = createdAt;
 	}
-
-
-
-
-
-
-
-
-
+	
 	public Long getId() {
 		return id;
 	}
-
-
-
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
-
-
 	public UserEntity getUserCategory() {
 		return userCategory;
 	}
-
-
-
 
 	public void setUserCategory(UserEntity userCategory) {
 		this.userCategory = userCategory;
 	}
 
-
-
-
 	public List<TransactionEntity> getTransaction() {
 		return transaction;
 	}
-
-
-
 
 	public void setTransaction(List<TransactionEntity> transaction) {
 		this.transaction = transaction;
 	}
 
-
-
-
 	public List<BudgetEntity> getBudget() {
 		return budget;
 	}
-
-
-
 
 	public void setBudget(List<BudgetEntity> budget) {
 		this.budget = budget;
 	}
 
-
-
-
 	public CategoryTypeEnum getType() {
 		return type;
 	}
-
-
-
 
 	public void setType(CategoryTypeEnum type) {
 		this.type = type;
 	}
 
-
-
-
 	public String getName() {
 		return name;
 	}
-
-
-
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
-
-
 	public String getIconUrl() {
 		return iconUrl;
 	}
 
-
-
-
 	public void setIconUrl(String iconUrl) {
 		this.iconUrl = iconUrl;
 	}
-
-
-
-
 	public String getColor() {
 		return color;
 	}
-
-
-
 
 	public void setColor(String color) {
 		this.color = color;
 	}
 
-
-
-
 	public Instant getCreatedAt() {
 		return createdAt;
 	}
-
-
-
 
 	public void setCreatedAt(Instant createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	
 }

@@ -9,13 +9,17 @@ export const getBudgetByUser = async (id) => {
   const result = await get(`budget/user/${id}`);
   return result;
 };
+export const getBudgetById = async (id) => {
+  const result = await get(`budget/${id}`);
+  return result;
+};
 export const createBudget = async (option) => {
-  const result = await post("budgets", option);
+  const result = await post("budget", option);
   return result;
 };
 
 export const deleteBudget = async (id) => {
-  const result = await del(`budgets/${id}`);
+  const result = await del(`budget/${id}`);
   return result;
 };
 export const updateBudget = async (id, options) => {
