@@ -81,10 +81,15 @@ public class RecurringTransactionServiceImpl implements RecurringTransactionServ
     }
 
     @Override
-    public void deleteRecurringTransaction(Long id) {
-        if (!recurringTransactionRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy giao dịch định kì có id : " + id);
+    public boolean deleteRecurringTransaction(Long id) {
+        try {
+            if (!recurringTransactionRepository.existsById(id)) {
+                return false; // Trả về false nếu không tìm thấy giao dịch với id
+            }
+            recurringTransactionRepository.deleteById(id);
+            return true; // Trả về true nếu xóa thành công
+        } catch (Exception e) {
+            return false; // Trả về false nếu có lỗi xảy ra
         }
-        recurringTransactionRepository.deleteById(id);
     }
 }

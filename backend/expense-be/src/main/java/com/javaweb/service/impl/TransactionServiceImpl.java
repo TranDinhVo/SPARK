@@ -1,7 +1,9 @@
 package com.javaweb.service.impl;
 
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,12 +80,12 @@ public class TransactionServiceImpl implements TransactionService {
             transactionEntity.setDescription(transactionRequest.getDescription());
             transactionEntity.setRecurringTransaction(recurrence);
             
-            // Xử lý createdAt - thiết lập giá trị mặc định nếu không được cung cấp
-            if (transactionRequest.getCreatedAt() != null) {
-                transactionEntity.setCreatedAt(transactionRequest.getCreatedAt());
-            } else {
-                transactionEntity.setCreatedAt(Instant.now());  // Thiết lập mặc định tại đây
+            // Xử lý createdAt
+            Instant createdTime = transactionRequest.getCreatedAt();
+            if (createdTime == null) {
+                createdTime = Instant.now();  // Thiết lập mặc định
             }
+            transactionEntity.setCreatedAt(createdTime);
             
             // Xử lý goalId nếu có
             if (transactionRequest.getGoalId() != null) {
@@ -136,7 +138,7 @@ public class TransactionServiceImpl implements TransactionService {
     public TransactionResponseDTO updateTransaction(Long id, TransactionRequestDTO transactionRequest) {
         return transactionRepository.findById(id)
                 .map(transaction -> {
-                	if (transactionRequest.getAmount() != null) {
+                    if (transactionRequest.getAmount() != null) {
                         transaction.setAmount(transactionRequest.getAmount());
                     }
                     if (transactionRequest.getDescription() != null) {
@@ -173,12 +175,20 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public boolean deleteTransaction(Long id) {
+    public Map<String, Object> deleteTransaction(Long id) {
+        Map<String, Object> response = new HashMap<>();
+        
         if (transactionRepository.existsById(id)) {
             transactionRepository.deleteById(id);
-            return true;
+            
+            response.put("success", true);
+            response.put("message", "Đã xóa giao dịch có ID: " + id + " thành công!");
+            return response;
+        } else {
+            response.put("success", false);
+            response.put("message", "Không tìm thấy giao dịch có ID: " + id);
+            return response;
         }
-        return false;
     }
 
     @Override

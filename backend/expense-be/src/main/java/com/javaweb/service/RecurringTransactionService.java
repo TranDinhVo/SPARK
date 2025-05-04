@@ -18,5 +18,5 @@ public interface RecurringTransactionService {
     RecurringTransactionResponseDTO updateRecurringTransactionStatus(Long id, RecurringStatusEnum recurringStatus);
     
     
-    void deleteRecurringTransaction(Long id);
+    boolean deleteRecurringTransaction(Long id);
 }

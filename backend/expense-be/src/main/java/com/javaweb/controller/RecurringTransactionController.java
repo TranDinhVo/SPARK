@@ -1,6 +1,8 @@
 package com.javaweb.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,8 +61,19 @@ public class RecurringTransactionController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRecurringTransaction(@PathVariable Long id) {
-        recurringTransactionService.deleteRecurringTransaction(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Map<String, Object>> deleteRecurringTransaction(@PathVariable Long id) {
+        boolean isDeleted = recurringTransactionService.deleteRecurringTransaction(id);
+        
+        Map<String, Object> response = new HashMap<>();
+        
+        if (isDeleted) {
+            response.put("success", true);
+            response.put("message", "Xóa thành công giao dịch định kì có id: " + id);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            response.put("success", false);
+            response.put("message", "Không tìm thấy giao dịch định kì có id: " + id);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
     }
 }
