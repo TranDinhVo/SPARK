@@ -2,7 +2,6 @@ package com.javaweb.controller;
 
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +32,7 @@ public class TransactionController {
 
     @PostMapping
     public ResponseEntity<TransactionResponseDTO> createTransaction(@RequestBody TransactionRequestDTO transactionRequest) {
+        // Xử lý createdAt nếu không được cung cấp
         if (transactionRequest.getCreatedAt() == null) {
             transactionRequest.setCreatedAt(Instant.now());
         }
@@ -70,6 +70,7 @@ public class TransactionController {
         }
     }
 
+    // Thêm phương thức PATCH
     @PatchMapping("/{id}")
     public ResponseEntity<TransactionResponseDTO> patchTransaction(@PathVariable Long id, @RequestBody TransactionRequestDTO transactionRequest) {
         TransactionResponseDTO updatedTransaction = transactionService.updateTransaction(id, transactionRequest);
@@ -81,17 +82,12 @@ public class TransactionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> deleteTransaction(@PathVariable Long id) {
-        boolean isDeleted = transactionService.deleteTransaction(id);
-        if (isDeleted) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Xóa giao dịch thành công");
-            response.put("id", id);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<?> deleteTransaction(@PathVariable Long id) {
+        Map<String, Object> result = transactionService.deleteTransaction(id);
+        if ((boolean) result.get("success")) {
+            return ResponseEntity.ok(result);
         } else {
-            Map<String, Object> error = new HashMap<>();
-            error.put("message", "Không tìm thấy giao dịch");
-            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
         }
     }
 
@@ -100,9 +96,11 @@ public class TransactionController {
             @RequestParam Long userId,
             @RequestParam String startDate,
             @RequestParam String endDate) {
+        
         try {
             Instant start = Instant.parse(startDate);
             Instant end = Instant.parse(endDate);
+            
             List<TransactionResponseDTO> transactions = transactionService.getTransactionsByDateRange(userId, start, end);
             return ResponseEntity.ok(transactions);
         } catch (DateTimeParseException e) {
