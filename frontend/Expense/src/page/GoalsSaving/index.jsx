@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { Spin } from "antd";
 import {
   getGoalByUser,
@@ -13,6 +14,7 @@ import SearchBar from "./SearchBar";
 import ViewToggle from "./ViewToggle";
 import Swal from "sweetalert2";
 import "./GoalsSaving.scss";
+import GoalsSavingAdd from "./GoalsSavingAdd";
 
 function GoalsSaving() {
   const [savingList, setSavingList] = useState([]);
@@ -27,6 +29,9 @@ function GoalsSaving() {
     fetchSavingGoals();
   }, [userId]);
 
+  const onReload = () => {
+    fetchSavingGoals();
+  };
   const fetchSavingGoals = async () => {
     setLoading(true);
     try {
@@ -181,7 +186,11 @@ function GoalsSaving() {
 
   return (
     <div className="goals-saving">
-      <GoalForm userId={userId} onSave={handleCreateGoal} />
+      <GoalForm
+        userId={userId}
+        onSave={handleCreateGoal}
+        savingList={savingList}
+      />
 
       <div className="goal__recent">
         <div className="goal__recent-header">
@@ -189,6 +198,7 @@ function GoalsSaving() {
           <div className="header-actions">
             <SearchBar value={searchTerm} onChange={setSearchTerm} />
             <ViewToggle viewMode={viewMode} onToggle={setViewMode} />
+            <GoalsSavingAdd savingList={savingList} onReload={onReload} />
           </div>
         </div>
 

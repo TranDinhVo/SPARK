@@ -11,8 +11,8 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import { Button, Modal, Card, Typography, Tag, Tooltip } from "antd";
+import { formatCurrency } from "../../../helpers/formatCurrency";
 const { Text } = Typography;
-
 import "../../../assets/scss/DetailTransaction.scss";
 
 function DetailTransaction({ record }) {
@@ -34,12 +34,12 @@ function DetailTransaction({ record }) {
         style={{ backgroundColor: "#1890ff", borderColor: "#1890ff" }}
       />
 
-      {/* <Modal
+      <Modal
         open={isModalOpen}
         onCancel={handleCancel}
         footer={null}
         centered
-        width="400px"
+        width="500px"
         className="custom-modal"
         closeIcon={<CloseOutlined />}
       >
@@ -47,19 +47,21 @@ function DetailTransaction({ record }) {
           <div className="transaction-section">
             <div className="detail-item">
               <TagOutlined />
-              <Text>{record.category}</Text>
+              <Text>{record.name}</Text>
             </div>
             <div className="detail-item">
               <DollarCircleOutlined />
-              <Text>{record.amount.toLocaleString("vi-VN")} VND</Text>
+              <Text>{formatCurrency(record.amount)}</Text>
             </div>
             <div className="detail-item">
               <FileTextOutlined />
-              <Text>{record.note}</Text>
+              <Text>{record.description}</Text>
             </div>
             <div className="detail-item">
               <ClockCircleOutlined />
-              <Text>{new Date(record.date).toLocaleTimeString("vi-VN")}</Text>
+              <Text>
+                {new Date(record.createdAt).toLocaleTimeString("vi-VN")}
+              </Text>
             </div>
             <div className="detail-item">
               <CalendarOutlined />
@@ -69,7 +71,7 @@ function DetailTransaction({ record }) {
                   day: "2-digit",
                   month: "long",
                   year: "numeric",
-                }).format(new Date(record.date))}
+                }).format(new Date(record.createdAt))}
               </Text>
             </div>
           </div>
@@ -77,8 +79,8 @@ function DetailTransaction({ record }) {
           {record.recurrence && (
             <>
               <h4 class="recurring">
-                Giao dịch định kì:
-                <Tooltip
+                Giao dịch định kì
+                {/* <Tooltip
                   title={record.recurrence.status.label}
                   color={
                     record.recurrence.status.code === 1
@@ -93,37 +95,35 @@ function DetailTransaction({ record }) {
                   <span
                     className={`status-dot status-${record.recurrence.status.code}`}
                   ></span>
-                </Tooltip>
+                </Tooltip> */}
               </h4>
 
               <div className="transaction-section">
                 <div className="detail-item">
                   <SyncOutlined />
-                  <Text>{record.recurrence.type}</Text>
+                  <div className="detail-item-content">
+                    <Text>Chu kì: </Text>
+                    <Text> Hằng {record.recurrence.type}</Text>
+                  </div>
                 </div>
                 <div className="detail-item">
                   <CalendarOutlined />
-                  <Text>
-                    {record.recurrence.next_date
-                      ? new Date(
-                          record.recurrence.next_date
-                        ).toLocaleDateString("vi-VN")
-                      : "Chưa xác định"}
-                  </Text>
+                  <div className="detail-item-content">
+                    <Text>Ngày giao dịch tiếp theo: </Text>
+                    <Text>
+                      {record.recurrence.nextDate
+                        ? new Date(
+                            record.recurrence.nextDate
+                          ).toLocaleDateString("vi-VN")
+                        : "Chưa xác định"}
+                    </Text>
+                  </div>
                 </div>
               </div>
             </>
           )}
-
-          <h4 className="payment">Phương thức thanh toán: </h4>
-          <div className="transaction-section">
-            <div className="detail-item">
-              <CreditCardOutlined />
-              <Text>{record.paymentMethod}</Text>
-            </div>
-          </div>
         </Card>
-      </Modal> */}
+      </Modal>
     </>
   );
 }

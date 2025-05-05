@@ -37,7 +37,7 @@ function DateNavigator({ date, onChange }) {
   };
 
   return (
-    <div className="date-navigator relative">
+    <div className="date-navigator relative flex-1">
       <button className="nav-button" onClick={handlePrevDate}>
         <LeftOutlined className="nav-arrow" />
       </button>

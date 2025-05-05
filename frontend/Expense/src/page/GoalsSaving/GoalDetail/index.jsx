@@ -28,6 +28,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import Swal from "sweetalert2";
 import "./GoalDetail.scss";
+import GoalsSavingAdd from "../GoalsSavingAdd";
 
 function GoalDetail() {
   const { id } = useParams();
@@ -70,6 +71,9 @@ function GoalDetail() {
     fetchDetail();
   }, [id, form]);
 
+  const onReload = () => {
+    fetchDetail();
+  };
   const handleEdit = () => {
     setIsEditing(true);
   };
@@ -158,7 +162,6 @@ function GoalDetail() {
   }
 
   const percent = (goal.currentAmount / goal.targetAmount) * 100;
-
   return (
     <Card className="goal-detail-card">
       <Button onClick={handleBack} style={{ marginBottom: 8 }}>
@@ -254,7 +257,11 @@ function GoalDetail() {
         </Col>
 
         <Col md={14} xs={24} className="goal-detail__right">
-          <h4>Danh sách giao dịch</h4>
+          <div className="goal-detail__right--list">
+            <h4>Danh sách giao dịch</h4>
+            <GoalsSavingAdd savingList={goal} onReload={onReload} />
+          </div>
+
           <ul className="transaction-list">
             {transactions.length > 0 ? (
               transactions.map((t, i) => (

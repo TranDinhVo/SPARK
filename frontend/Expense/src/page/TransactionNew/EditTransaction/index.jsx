@@ -9,23 +9,44 @@ import {
   Select,
   Switch,
   Card,
+  Typography,
+  Tooltip,
+  message,
 } from "antd";
 import {
   EditOutlined,
   CalendarOutlined,
-  DollarOutlined,
+  ClockCircleOutlined,
+  DollarCircleOutlined,
   TagOutlined,
   FileTextOutlined,
+  CloseOutlined,
+  SyncOutlined,
 } from "@ant-design/icons";
-// import Swal from "sweetalert2/dist/sweetalert2.js";
-// import "sweetalert2/src/sweetalert2.scss";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 import dayjs from "dayjs";
 import "dayjs/locale/vi";
-// import "../../../assets/scss/AddTransaction.scss";
-import { get } from "../../../utils/request";
-// import CategoryForm from "../../../components/CategoryForm";
+import { getCookie } from "../../../helpers/cookie";
+import { getCategoryByUser } from "../../../services/CategoryService";
 import { updateTransaction } from "../../../services/TransactionService";
+import CategoryForm from "../../../components/CategoryForm";
+import "../../../assets/scss/EditTransaction.scss";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
+
+const { Text } = Typography;
 dayjs.locale("vi");
+export const formatCurrency = (amount) => {
+  if (amount === undefined || amount === null) return "0 VNĐ";
+
+  if (amount >= 1_000_000_000) {
+    const ty = (amount / 1_000_000_000).toFixed(1);
+    return `${ty} tỷ VNĐ`;
+  } else {
+    return amount.toLocaleString("vi-VN") + " VNĐ";
+  }
+};
 
 function EditTransaction(props) {
   const { record, onReLoad } = props;
@@ -34,145 +55,139 @@ function EditTransaction(props) {
   const [isRecurring, setIsRecurring] = useState(
     record.recurrence === null ? false : true
   );
+  const isInitiallyRecurring = record.recurrence !== null;
   const [formData, setFormData] = useState(record);
-  const [wallets, setWallets] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [categoryTypes, setCategoryTypes] = useState([]);
+  const userId = getCookie("id");
+
   const showModal = () => setIsModalOpen(true);
-  const handleCancel = () => setIsModalOpen(false);
-  // const getStatusLabel = (code) => {
-  //   switch (code) {
-  //     case 1:
-  //       return "Đang hoạt động";
-  //     case 0:
-  //       return "Tạm dừng";
-  //     case -1:
-  //       return "Đã hủy";
-  //     default:
-  //       return "";
-  //   }
-  // };
-  // const fetchApi = async (api) => {
-  //   const result = await get(api);
-  //   return result;
-  // };
-  // useEffect(() => {
-  // const fetchData = async () => {
-  //   try {
-  //     const [walletsData, categoriesData, categoryTypesData] =
-  //       await Promise.all([
-  //         fetchApi("wallets"),
-  //         fetchApi("categories"),
-  //         fetchApi("categoryTypes"),
-  //       ]);
+  const handleCancel = () => {
+    onReLoad();
+    setIsModalOpen(false);
+  };
 
-  //     setWallets(walletsData);
-  //     setCategories(categoriesData);
-  //     setCategoryTypes(categoryTypesData);
-  //   } catch (error) {
-  //     console.error("Lỗi khi fetch API:", error);
-  //   }
-  // };
+  const getStatusLabel = (code) => {
+    switch (code) {
+      case 1:
+        return "Đang hoạt động";
+      case 0:
+        return "Tạm dừng";
+      case -1:
+        return "Đã hủy";
+      default:
+        return "";
+    }
+  };
 
-  // fetchData();
-  // }, []);
-  // const handleOnChange = (name, value) => {
-  //   setFormData({ ...formData, [name]: value });
-  //   console.log(formData);
-  // };
+  useEffect(() => {
+    setIsRecurring(record.recurrence === null ? false : true);
+    const fetchApi = async () => {
+      try {
+        const categoriesData = await getCategoryByUser(userId);
+        setCategories(categoriesData);
+      } catch (error) {
+        console.error("Lỗi khi fetch API:", error);
+      }
+    };
+    fetchApi();
+
+    if (record) {
+      form.setFieldsValue({
+        name: record.name,
+        amount: record.amount,
+        description: record.description,
+        createdAt: dayjs(record.createdAt),
+        type: record.type,
+        recurrence: record.recurrence,
+      });
+
+      setFormData(record);
+    }
+  }, [record, form, userId]);
+
+  const handleOnChange = (name, value) => {
+    if (name === "createdAt" && value) {
+      // Chỉ cập nhật createdAt khi người dùng thực sự thay đổi nó
+      console.log("Người dùng đã thay đổi ngày:", value);
+    }
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Thêm hàm log để kiểm tra API requests
+  const logBeforeSubmit = (data) => {
+    console.log("=====================");
+    console.log("Gửi yêu cầu cập nhật:");
+    console.log("ID giao dịch:", record.id);
+    console.log("Dữ liệu gửi đi:", JSON.stringify(data, null, 2));
+    console.log("=====================");
+  };
+
   const handleSubmit = async () => {
-    console.log("suax");
-    // try {
-    //   const values = await form.validateFields();
+    try {
+      const values = await form.validateFields();
+      const updatedTran = {};
+      updatedTran.amount = values.amount
+        ? parseFloat(values.amount.toString().replace(/,/g, ""))
+        : 0;
+      updatedTran.description = values.description || "";
+      if (values.createdAt) {
+        // Format date to match the required format: "2025-05-04T17:11:00Z"
+        updatedTran.createdAt = values.createdAt
+          .utc()
+          .format("YYYY-MM-DDTHH:mm:ss[Z]");
 
-    //   const updatedTransaction = {};
+        console.log("Ngày đã chọn:", updatedTran.createdAt);
+      }
 
-    //   if (values.amount !== record.amount) {
-    //     updatedTransaction.amount = values.amount;
-    //   }
+      if (values.name !== record.name) {
+        try {
+          const categoriesData = await getCategoryByUser(userId);
+          const category = categoriesData.find(
+            (cat) => cat.name === values.name
+          );
+          if (category) {
+            updatedTran.categoryId = category.id;
+          }
+        } catch (error) {
+          console.error("Lỗi khi lấy thông tin danh mục:", error);
+        }
+      }
 
-    //   if (values.note !== record.note) {
-    //     updatedTransaction.note = values.note;
-    //   }
+      // Handle recurring status
+      if (isInitiallyRecurring && !isRecurring) {
+        updatedTran.recurrenceId = -1;
+        console.log("Recurrence: " + updatedTran.recurrenceId);
+      }
 
-    //   if (values.date) {
-    //     const dateObj =
-    //       values.date instanceof dayjs
-    //         ? values.date.toDate()
-    //         : new Date(values.date);
-    //     const recordDate = record.date
-    //       ? new Date(record.date).toISOString()
-    //       : null;
-    //     const newDateISO = dateObj.toISOString();
+      logBeforeSubmit(updatedTran);
 
-    //     if (!isNaN(dateObj) && newDateISO !== recordDate) {
-    //       updatedTransaction.date = newDateISO;
-    //     }
-    //   }
+      const result = await updateTransaction(record.id, updatedTran);
+      if (result) {
+        Swal.fire({
+          icon: "success",
+          title: "Cập nhật giao dịch thành công!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
 
-    //   if (values.category !== record.category) {
-    //     updatedTransaction.category = values.category;
-    //   }
-
-    //   if (values.paymentMethod !== record.paymentMethod) {
-    //     updatedTransaction.paymentMethod = values.paymentMethod;
-    //   }
-
-    //   if (isRecurring) {
-    //     if (!record.recurrence) {
-    //       updatedTransaction.recurrence = { ...formData.recurrence };
-    //     } else {
-    //       updatedTransaction.recurrence = {
-    //         type: formData.recurrence?.type || record.recurrence.type,
-    //         next_date:
-    //           formData.recurrence?.next_date || record.recurrence.next_date,
-    //         status: formData.recurrence?.status || record.recurrence.status,
-    //       };
-    //     }
-    //   } else if (record.recurrence) {
-    //     updatedTransaction.recurrence = null;
-    //   }
-
-    //   // Kiểm tra nếu không có thay đổi nào
-    //   if (Object.keys(updatedTransaction).length === 0) {
-    //     Swal.fire({
-    //       icon: "info",
-    //       title: "Không có thay đổi nào!",
-    //       showConfirmButton: false,
-    //       timer: 1500,
-    //     });
-    //     return;
-    //   }
-
-    //   console.log("🚀 Dữ liệu gửi đi:", updatedTransaction);
-
-    //   const result = await updateTransaction(record.id, updatedTransaction);
-    //   if (result) {
-    //     Swal.fire({
-    //       icon: "success",
-    //       title: "Cập nhật giao dịch thành công!",
-    //       showConfirmButton: false,
-    //       timer: 2000,
-    //     });
-
-    //     onReLoad();
-    //     setIsModalOpen(false);
-    //   } else {
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "Cập nhật giao dịch thất bại!",
-    //       showConfirmButton: false,
-    //       timer: 1500,
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.error("❌ Lỗi khi cập nhật giao dịch:", error);
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Lỗi!",
-    //     text: error.message || "Không thể cập nhật giao dịch!",
-    //   });
-    // }
+        onReLoad();
+        setIsModalOpen(false);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Cập nhật giao dịch thất bại!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("Lỗi khi cập nhật giao dịch:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi!",
+        text: error.message || "Không thể cập nhật giao dịch!",
+      });
+    }
   };
 
   return (
@@ -183,227 +198,184 @@ function EditTransaction(props) {
         onClick={showModal}
         size="small"
         style={{ backgroundColor: "#52c41a", borderColor: "#52c41a" }}
-      ></Button>
+      />
 
-      {/* <Modal
-        title="Thêm giao dịch mới"
+      <Modal
+        title="Chỉnh sửa giao dịch"
         open={isModalOpen}
         onCancel={handleCancel}
         footer={null}
-        // width={500}
+        width="500px"
         centered
+        className="custom-modal"
+        closeIcon={<CloseOutlined />}
       >
-        <Form
-          form={form}
-          onFinish={handleSubmit}
-          initialValues={record}
-          className="form__list"
-          name="edit-transaction"
-        >
-          <Card title="Thông tin" className="form__card">
-            <Form.Item name="type" hidden></Form.Item>
-            <Form.Item
-              name="category"
-              rules={[
-                { required: true, message: "Vui lòng chọn tên danh mục!" },
-              ]}
-            >
-              <div className="form__card--item">
-                <div className="form__card--logo">
-                  <TagOutlined />
-                </div>
-                <div className="form__card--input">
+        <Card className="edit-transaction-card">
+          <Form
+            form={form}
+            onFinish={handleSubmit}
+            initialValues={{
+              name: record.name,
+              amount: record.amount,
+              description: record.description,
+              createdAt: dayjs(record.createdAt),
+              type: record.type,
+              recurrence: record.recurrence
+                ? {
+                    type: record.recurrence.type,
+                    status: record.recurrence.status,
+                    next_date: record.recurrence.next_date,
+                  }
+                : null,
+            }}
+            layout="vertical"
+            className="edit-transaction-form"
+          >
+            <div className="edit-transaction-section">
+              <Form.Item
+                name="name"
+                className="detail-form-item"
+                rules={[{ required: true, message: "Vui lòng chọn danh mục!" }]}
+              >
+                <div className="detail-input-container">
                   <CategoryForm
                     onChange={(category) => {
                       if (form) {
                         form.setFieldsValue({
-                          type: category.type, // Lưu loại danh mục
-                          category: category.name, // Lưu tên danh mục
+                          type: category.type,
+                          name: category.name,
                         });
                       }
                       setFormData((prev) => ({
                         ...prev,
-                        type: category.type, // Cập nhật type trong state
-                        category: category.name, // Cập nhật category trong state
+                        type: category.type,
+                        name: category.name,
                       }));
                     }}
                     categories={categories}
-                    categoryTypes={categoryTypes}
-                    value={formData.category}
+                    value={formData.name}
+                    className="detail-input"
                   />
                 </div>
-              </div>
-            </Form.Item>
+              </Form.Item>
 
-            <Form.Item
-              name="amount"
-              rules={[{ required: true, message: "Vui lòng nhập số tiền!" }]}
-            >
-              <div className="form__card--item">
-                <div className="form__card--logo">
-                  <DollarOutlined />
-                </div>
-                <div className="form__card--input">
+              <Form.Item
+                name="amount"
+                className="detail-form-item"
+                rules={[{ required: true, message: "Vui lòng nhập số tiền!" }]}
+              >
+                <div className="detail-input-container">
                   <InputNumber
-                    className="form__card--number"
+                    className="detail-input"
                     min={0}
-                    style={{ color: "#8836f6" }}
-                    placeholder="nhập số tiền ..."
+                    style={{ width: "100%" }}
+                    placeholder="Nhập số tiền..."
+                    prefix={<DollarCircleOutlined className="detail-icon" />}
+                    formatter={(value) =>
+                      `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    }
+                    parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
                     value={formData.amount}
                     onChange={(value) => handleOnChange("amount", value)}
                   />
                 </div>
-              </div>
-            </Form.Item>
-            <Form.Item name="note">
-              <div className="form__card--item">
-                <div className="form__card--logo">
-                  <FileTextOutlined />
-                </div>
-                <div className="form__card--input">
+              </Form.Item>
+
+              <Form.Item name="description" className="detail-form-item">
+                <div className="textarea-wrapper">
+                  <FileTextOutlined className="textarea-icon" />
                   <Input.TextArea
-                    className="form__card--textarea"
+                    className="textarea-with-icon"
                     placeholder="Nhập ghi chú (nếu có)..."
                     rows={2}
                     showCount
                     maxLength={100}
-                    value={formData.note ? formData.note.toString() : ""}
-                    onChange={(e) => handleOnChange("note", e.target.value)}
+                    value={formData.description || ""}
+                    onChange={(e) =>
+                      handleOnChange("description", e.target.value)
+                    }
                   />
                 </div>
-              </div>
-            </Form.Item>
-            <Form.Item
-              name="date"
-              rules={[{ required: true, message: "Chọn ngày giao dịch!" }]}
-              initialValue={dayjs()}
-            >
-              <div className="form__card--item">
-                <div className="form__card--logo">
-                  <CalendarOutlined />
-                </div>
-                <div className="form__card--input">
-                  <DatePicker
-                    className="form__card--datepicker"
-                    showTime
-                    format={(value) => value.format("dddd, DD [Tháng] MM YYYY")}
-                    value={formData.date ? dayjs(formData.date) : null} // Kiểm tra tránh lỗi
-                    onChange={(date) =>
-                      handleOnChange("date", date ? date.toISOString() : null)
-                    } // Chuyển đổi ngày về ISO string
-                  />
-                </div>
-              </div>
-            </Form.Item>
-          </Card>
+              </Form.Item>
 
-          <div>
-            <div className="switch__container">
-              <span className="switch__container--title">
-                Giao dịch định kì:
-              </span>
-              <Switch
-                checked={isRecurring}
-                onChange={(checked) => {
-                  setIsRecurring(checked);
-                  setFormData((prev) => ({
-                    ...prev,
-                    recurrence: checked
-                      ? {
-                          type: "",
-                          nextDueDate: null,
-                          status: { code: 1, label: "Đang hoạt động" },
-                        }
-                      : null,
-                  }));
-                }}
-                className="custom-switch"
-              />
+              <Form.Item
+                name="createdAt"
+                className="detail-form-item"
+                rules={[{ required: true, message: "Chọn ngày giao dịch!" }]}
+              >
+                <div className="detail-input-container">
+                  <DatePicker
+                    prefix={<CalendarOutlined className="detail-icon" />}
+                    className="detail-input"
+                    format="DD/MM/YYYY HH:mm"
+                    showTime={{ format: "HH:mm" }}
+                    style={{ width: "100%" }}
+                    value={form.getFieldValue("createdAt")}
+                    onChange={(date) => {
+                      if (date) {
+                        console.log(
+                          "DatePicker onChange được gọi với:",
+                          date.format("DD/MM/YYYY HH:mm")
+                        );
+                        handleOnChange("createdAt", date);
+                        form.setFieldsValue({ createdAt: date });
+                      }
+                    }}
+                    placeholder="Chọn ngày và giờ giao dịch"
+                  />
+                </div>
+              </Form.Item>
             </div>
 
-            {isRecurring && (
-              <Card className="form__card">
-                <Form.Item label="Chu kỳ">
-                  <div className="form__card--item">
-                    <Select
-                      placeholder="Chọn chu kỳ"
-                      className="form__card--select"
-                      value={formData.recurrence?.type || ""}
-                      onChange={(value) => {
-                        handleOnChange("recurrence", {
-                          ...formData.recurrence,
-                          type: value,
-                          nextDueDate: null,
-                        });
-                      }}
-                    >
-                      <Select.Option value="Hằng tuần">Hằng tuần</Select.Option>
-                      <Select.Option value="Hằng tháng">
-                        Hằng tháng
-                      </Select.Option>
-                      <Select.Option value="Hằng quý">Hằng quý</Select.Option>
-                      <Select.Option value="Hằng năm">Hằng năm</Select.Option>
-                    </Select>
-                  </div>
-                </Form.Item>
+            {(isInitiallyRecurring || isRecurring) === true && (
+              <div className="recurring-section">
+                <div className="switch-container">
+                  <Text strong className="recurring-title">
+                    Giao dịch định kì:
+                  </Text>
+                  <Switch
+                    checked={isRecurring}
+                    onChange={(checked) => {
+                      setIsRecurring(checked);
+                      setFormData((prev) => ({
+                        ...prev,
+                        recurrence: checked
+                          ? prev.recurrence || {
+                              type: "",
+                              nextDate: null,
+                              status: { code: 1, label: "Đang hoạt động" },
+                            }
+                          : null,
+                      }));
 
-                <Form.Item label="Trạng thái">
-                  <Select
-                    placeholder="Chọn trạng thái"
-                    className="form__card--select"
-                    value={formData.recurrence?.status?.code ?? 1}
-                    onChange={(value) => {
-                      handleOnChange("recurrence", {
-                        ...(formData.recurrence ?? {
-                          type: "",
-                          nextDueDate: null,
-                        }),
-                        status: { code: value, label: getStatusLabel(value) },
-                      });
+                      if (!checked) {
+                        form.setFields([
+                          { name: ["recurrence", "type"], errors: [] },
+                          { name: ["recurrence", "nextDate"], errors: [] },
+                          {
+                            name: ["recurrence", "status", "code"],
+                            errors: [],
+                          },
+                        ]);
+                      }
                     }}
-                  >
-                    <Select.Option value={1}>Đang hoạt động</Select.Option>
-                    <Select.Option value={0}>Tạm dừng</Select.Option>
-                    <Select.Option value={-1}>Đã hủy</Select.Option>
-                  </Select>
-                </Form.Item>
-              </Card>
-            )}
-          </div>
-
-          <Card title="Ví tiền" className="form__card">
-            <Form.Item
-              name="paymentMethod"
-              rules={[
-                { required: true, message: "Vui lòng chọn ví thanh toán!" },
-              ]}
-              label="Chọn ví tiền"
-            >
-              <div className="form__card--item">
-                <Select
-                  className="form__card--select"
-                  placeholder="Chọn ví"
-                  value={formData.paymentMethod}
-                  onChange={(value) => handleOnChange("paymentMethod", value)}
-                >
-                  {wallets &&
-                    wallets.map((wallet) => (
-                      <Select.Option key={wallet.id} value={wallet.name}>
-                        {wallet.name}
-                      </Select.Option>
-                    ))}
-                </Select>
+                    className="recurring-switch"
+                  />
+                </div>
               </div>
-            </Form.Item>
-          </Card>
+            )}
 
-          <Form.Item>
-            <Button className="form__card--button" htmlType="submit">
-              Lưu giao dịch
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal> */}
+            <Form.Item className="form-buttons">
+              <Button type="primary" htmlType="submit" className="save-button">
+                Lưu thay đổi
+              </Button>
+              <Button onClick={handleCancel} className="cancel-button">
+                Hủy
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
+      </Modal>
     </>
   );
 }

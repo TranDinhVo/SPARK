@@ -1,8 +1,9 @@
 .custom-modal {
   .ant-modal-content {
     border-radius: 12px;
-    background: linear-gradient(90deg, #4c1bf0, #aa46f9);
-    color: white;
+    // background: linear-gradient(90deg, #4c1bf0, #aa46f9);
+    background: linear-gradient(90deg, var(--primary-color-light));
+    color: #000;
   }
 
   .ant-card {
@@ -15,7 +16,7 @@
       border-bottom: none;
       text-align: center;
       font-size: 28px;
-      color: white;
+      color: var(--primary-color);
     }
   }
   .ant-card-body {
@@ -37,23 +38,33 @@
       padding: 10px;
       border-radius: 8px;
       position: relative;
+      margin-bottom: 10px;
+      &-content {
+        display: flex;
+        width: 100%;
+        margin-left: 20px;
+        justify-content: space-between;
+      }
       svg {
         font-size: 24px;
-        color: white;
+        color: var(--primary-color);
       }
 
       span {
         font-size: 16px;
-        color: white;
+        color: var(--primary-color);
+        &:nth-child(2) {
+          padding-left: 20px;
+        }
       }
 
       &::after {
         content: "";
-        background-color: #ddd;
-        width: calc(100% - 50px);
+        background-color: var(--primary-color-dark);
+        width: calc(100% - 60px);
         height: 1px;
         position: absolute;
-        bottom: 0;
+        bottom: 5px;
         right: 0;
       }
     }
@@ -69,11 +80,11 @@
     flex-direction: column;
     padding: 5px 20px;
   }
-  h4.recurring,
-  h4.payment {
+  h4.recurring {
     font-size: 18px;
     margin-top: 10px;
-    color: #fff;
+    color: var(--primary-color);
+    text-align: center;
   }
   .ant-tag {
     font-size: 20px;

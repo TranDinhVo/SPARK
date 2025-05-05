@@ -12,16 +12,16 @@ export const getCategoryByUser = async (id) => {
 //   const result = await get(`categories/${id}`);
 //   return result;
 // };
-// export const createBudget = async (option) => {
-//   const result = await post("categories", option);
-//   return result;
-// };
+export const createCategory = async (option) => {
+  const result = await post("categories", option);
+  return result;
+};
 
-// export const deleteBudget = async (id) => {
-//   const result = await del(`categories/${id}`);
-//   return result;
-// };
-// export const updateBudget = async (id, options) => {
-//   const result = await patch(`categories/${id}`, options);
-//   return result;
-// };
+export const deleteCategory = async (id) => {
+  const result = await del(`categories/${id}`);
+  return result;
+};
+export const updateCategory = async (id, options) => {
+  const result = await patch(`categories/${id}`, options);
+  return result;
+};

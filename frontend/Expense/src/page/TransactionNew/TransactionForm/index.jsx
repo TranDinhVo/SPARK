@@ -9,7 +9,7 @@ import { createTransaction } from "../../../services/TransactionService";
 
 function TransactionForm(props) {
   const { onReload } = props;
-  const [isExpense, setIsExpense] = useState(false);
+  const [isExpense, setIsExpense] = useState(true);
   const [isRecurring, setIsRecurring] = useState(false);
   const [description, setDescription] = useState("");
   const [savingDate, setSavingDate] = useState(new Date());

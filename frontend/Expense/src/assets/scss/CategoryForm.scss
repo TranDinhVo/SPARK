@@ -9,6 +9,7 @@
   top: 3px;
   left: 60px;
 }
+
 .category {
   &-show {
     width: 420px;
@@ -17,6 +18,7 @@
     //     gap: 10px;
     padding: 0;
   }
+
   &__title {
     font-size: 32px;
     margin: 0;
@@ -37,7 +39,7 @@
       background: #e4beff;
     }
     &--item {
-      width: 120px;
+      width: calc(50% - 6px);
       border-radius: 14px;
       color: #fff;
       font-weight: 600;
@@ -57,32 +59,34 @@
         color: #fff !important;
       }
     }
-    &--active2 {
-      background-color: #ff3c6a;
-      &:hover {
-        background-color: #ff3c6a !important;
-        color: #fff !important;
-      }
-    }
+    // &--active2 {
+    //   background-color: #ff3c6a;
+    //   &:hover {
+    //     background-color: #ff3c6a !important;
+    //     color: #fff !important;
+    //   }
+    // }
     &--default {
       &0 {
         background-color: #bae0ff;
         &:hover {
           background-color: #007ee5 !important;
+          color: #fff !important;
         }
       }
       &1 {
         background-color: #ffceb6;
         &:hover {
           background-color: #f87535 !important;
+          color: #fff !important;
         }
       }
-      &2 {
-        background-color: #ffb4c6;
-        &:hover {
-          background-color: #ff3c6a !important;
-        }
-      }
+      // &2 {
+      //   background-color: #ffb4c6;
+      //   &:hover {
+      //     background-color: #ff3c6a !important;
+      //   }
+      // }
     }
   }
   &__list {
@@ -108,29 +112,39 @@
       cursor: pointer;
     }
     &--logo {
-      font-size: 24px;
+      // font-size: 24px;
+      width: 48px;
+      height: 48px;
+      background-color: var(--primary-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        transform: scale(0.9);
+      }
     }
     &--content {
       font-size: 16px;
       margin-left: 30px;
     }
     &--color {
-      &00 {
+      &-Chi0 {
         background-color: #b1dcff;
       }
-      &01 {
+      &-Chi1 {
         background-color: #51a9f1;
       }
-      &10 {
+      &-Thu0 {
         background-color: #fecdb5;
       }
-      &11 {
+      &-Thu1 {
         background-color: #fe8c73;
       }
-      &20 {
+      &0 {
         background-color: #fed2dd;
       }
-      &21 {
+      &1 {
         background-color: #fa7398;
       }
     }

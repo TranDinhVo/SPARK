@@ -40,14 +40,7 @@ export const createTransaction = async (option) => {
   return result;
 };
 export const deleteTransaction = async (id) => {
-  const recurringTransactions = await getRecurringTransaction();
-
-  // const recurring = recurringTransactions.find((rt) => rt.transactionId === id);
-
-  // if (recurring) {
-  //   await deleteRecurringTransaction(recurring.id);
-  // }
-  // const result = await del(`transactions/${id}`);
+  const result = await del(`transactions/${id}`);
   return result;
 };
 

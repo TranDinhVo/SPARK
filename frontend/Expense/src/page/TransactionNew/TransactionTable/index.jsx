@@ -8,7 +8,8 @@ import EditTransaction from "../EditTransaction";
 import DeleteTransaction from "../DeleteTransaction";
 import DetailTransaction from "../DetailTransaction";
 
-function TransactionTable({ transactions = [], onReload }) {
+function TransactionTable(props) {
+  const { transactions = [], onReload } = props;
   const [search, setSearch] = useState("");
   const [filtered, setFiltered] = useState(transactions);
   const [loading, setLoading] = useState(false);

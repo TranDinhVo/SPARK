@@ -3,11 +3,15 @@ import { Button, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import DateNavigator from "../../../components/DateNavigator";
 import Swal from "sweetalert2";
+import iconList from "../../../assets/images/iconList";
 
-function GoalForm({ userId, onSave }) {
+function GoalForm({ userId, onSave, savingList }) {
   const [savingName, setSavingName] = useState("");
   const [savingAmountInput, setSavingAmountInput] = useState("");
   const [savingDate, setSavingDate] = useState(new Date());
+  const [selectedIcon, setSelectedIcon] = useState(
+    iconList.length > 0 ? iconList[0] : null
+  );
 
   const handleAmountChange = (e) => {
     const raw = e.target.value.replace(/\D/g, "");
@@ -57,6 +61,31 @@ function GoalForm({ userId, onSave }) {
       return false;
     }
 
+    if (!selectedIcon) {
+      Swal.fire({
+        icon: "error",
+        title: "Thiếu biểu tượng",
+        text: "Vui lòng chọn một biểu tượng!",
+        showClass: {
+          popup: "animate__animated animate__shakeX",
+        },
+      });
+      return false;
+    }
+
+    const check = savingList.filter((saving) => saving.goalName === savingName);
+    if (check.length > 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Tên tiết kiệm đã được sử dụng",
+        text: "Vui lòng nhập tên tiết kiệm khác!",
+        showClass: {
+          popup: "animate__animated animate__shakeX",
+        },
+      });
+      return false;
+    }
+
     return true;
   };
 
@@ -67,15 +96,16 @@ function GoalForm({ userId, onSave }) {
       goalName: savingName.trim(),
       targetAmount: Number(savingAmountInput),
       deadline: savingDate.toISOString(),
+      iconUrl: selectedIcon?.svg || "",
       userId,
     };
 
     onSave(saveData);
 
-    // Reset form
     setSavingName("");
     setSavingAmountInput("");
     setSavingDate(new Date());
+    setSelectedIcon(iconList.length > 0 ? iconList[0] : null);
   };
 
   return (
@@ -99,7 +129,7 @@ function GoalForm({ userId, onSave }) {
 
         <div className="goal__form-group">
           <span className="label">Tên tiết kiệm</span>
-          <div>
+          <div className="flex-1">
             <Input
               value={savingName}
               onChange={(e) => setSavingName(e.target.value)}
@@ -110,13 +140,43 @@ function GoalForm({ userId, onSave }) {
 
         <div className="goal__form-group">
           <span className="label">Khoản tiền để ra</span>
-          <div className="amount-input-container">
+          <div className="amount-input-container flex-1">
             <Input
-              value={Number(savingAmountInput).toLocaleString("vi-VN")}
+              value={Number(savingAmountInput || 0).toLocaleString("vi-VN")}
               onChange={handleAmountChange}
               placeholder="0"
             />
             <span className="currency">VND</span>
+          </div>
+        </div>
+
+        <div className="goal__form-group">
+          <span className="label">Chọn biểu tượng</span>
+          <div className="selected-icon-list flex-1">
+            <div className="selected-icon-box">
+              {selectedIcon && (
+                <div
+                  className="selected-icon-preview"
+                  dangerouslySetInnerHTML={{ __html: selectedIcon.svg }}
+                />
+              )}
+            </div>
+            <div className="icon-selector">
+              {iconList && iconList.length > 0 ? (
+                iconList.map((icon, index) => (
+                  <div
+                    key={index}
+                    className={`icon-item ${
+                      selectedIcon?.name === icon.name ? "selected" : ""
+                    }`}
+                    onClick={() => setSelectedIcon(icon)}
+                    dangerouslySetInnerHTML={{ __html: icon.svg }}
+                  />
+                ))
+              ) : (
+                <div>Không có biểu tượng nào</div>
+              )}
+            </div>
           </div>
         </div>
       </div>

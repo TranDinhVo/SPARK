@@ -23,7 +23,12 @@ function TransactionNew() {
         date.getFullYear() === currentYear
       );
     });
-    setTransactions(filteredByMonth);
+
+    const sortedByDate = filteredByMonth.sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+
+    setTransactions(sortedByDate);
   };
   useEffect(() => {
     fetchApi();
