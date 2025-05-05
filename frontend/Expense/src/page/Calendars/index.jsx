@@ -16,7 +16,11 @@ function Calendars() {
     const fetchTransactions = async () => {
       try {
         const result = await getTransactionByUser(userId);
-        setTransactions(result);
+        const res = result.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+
+        setTransactions(res);
       } catch (error) {
         console.error("Error fetching transactions:", error);
       }

@@ -16,16 +16,25 @@
 .ant-modal {
   .ant-modal-content {
     .ant-modal-header {
+      background: linear-gradient(90deg, var(--primary-color-light));
+      padding-bottom: 0;
       .ant-modal-title {
         background: linear-gradient(90deg, var(--primary-color-light));
         color: var(--primary-color);
         text-align: center;
-        margin-top: 10px;
         font-size: 28px;
+        padding-bottom: 0;
+      }
+    }
+    .ant-modal-body {
+      padding-top: 0 !important;
+      .ant-card-body {
+        padding-top: 0;
       }
     }
   }
 }
+
 .edit-transaction-form {
   padding: 15px;
 }
@@ -99,21 +108,22 @@
 }
 
 .save-button {
-  background-color: #52c41a;
-  border-color: #52c41a;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
 
   &:hover,
   &:focus {
-    background-color: #73d13d;
-    border-color: #73d13d;
+    background-color: var(--primary-color-light) !important;
+    border-color: var(--primary-color);
+    color: var(--primary-color) !important;
   }
 }
 
 .cancel-button {
   &:hover,
   &:focus {
-    color: #ff4d4f;
-    border-color: #ff4d4f;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
   }
 }
 

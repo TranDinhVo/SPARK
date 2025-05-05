@@ -10,9 +10,11 @@ function CategoryForm(props) {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   // Filter categories based on selected type
-  const filteredCategories = categories.filter(
-    (cat) => cat.type === selectedType
-  );
+  const filtered = categories.filter((cat) => cat.type === selectedType);
+  const filteredCategories =
+    selectedType === "Chi"
+      ? filtered.filter((item) => item.name?.toLowerCase() !== "tiết kiệm")
+      : filtered;
 
   const handleSelectCategory = (category) => {
     setSelectedCategory(category);

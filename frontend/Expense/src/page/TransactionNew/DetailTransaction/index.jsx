@@ -31,7 +31,11 @@ function DetailTransaction({ record }) {
         size="small"
         icon={<InfoCircleOutlined />}
         onClick={showModal}
-        style={{ backgroundColor: "#1890ff", borderColor: "#1890ff" }}
+        style={{
+          backgroundColor: "var(--primary-color-light)",
+          borderColor: "var(--primary-color)",
+          color: "var(--primary-color)",
+        }}
       />
 
       <Modal

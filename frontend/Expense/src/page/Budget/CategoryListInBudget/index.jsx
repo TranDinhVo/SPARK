@@ -10,7 +10,11 @@ function CategoryListInBudget({ selectedCategory, onSelectCategory }) {
   useEffect(() => {
     const fetchApi = async () => {
       const result = await getCategoryByUser(userId);
-      const filter = result.filter((item) => item.type === "Chi");
+      const filter = result.filter(
+        (item) =>
+          item.type === "Chi" && item.name?.toLowerCase() !== "tiết kiệm"
+      );
+
       setCategories(filter);
     };
     fetchApi();

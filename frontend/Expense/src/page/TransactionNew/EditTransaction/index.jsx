@@ -107,13 +107,11 @@ function EditTransaction(props) {
 
   const handleOnChange = (name, value) => {
     if (name === "createdAt" && value) {
-      // Chỉ cập nhật createdAt khi người dùng thực sự thay đổi nó
       console.log("Người dùng đã thay đổi ngày:", value);
     }
     setFormData({ ...formData, [name]: value });
   };
 
-  // Thêm hàm log để kiểm tra API requests
   const logBeforeSubmit = (data) => {
     console.log("=====================");
     console.log("Gửi yêu cầu cập nhật:");
@@ -131,7 +129,6 @@ function EditTransaction(props) {
         : 0;
       updatedTran.description = values.description || "";
       if (values.createdAt) {
-        // Format date to match the required format: "2025-05-04T17:11:00Z"
         updatedTran.createdAt = values.createdAt
           .utc()
           .format("YYYY-MM-DDTHH:mm:ss[Z]");
@@ -153,7 +150,6 @@ function EditTransaction(props) {
         }
       }
 
-      // Handle recurring status
       if (isInitiallyRecurring && !isRecurring) {
         updatedTran.recurrenceId = -1;
         console.log("Recurrence: " + updatedTran.recurrenceId);
@@ -197,7 +193,10 @@ function EditTransaction(props) {
         icon={<EditOutlined />}
         onClick={showModal}
         size="small"
-        style={{ backgroundColor: "#52c41a", borderColor: "#52c41a" }}
+        style={{
+          backgroundColor: "var(--primary-color)",
+          borderColor: "var(--primary-color)",
+        }}
       />
 
       <Modal
