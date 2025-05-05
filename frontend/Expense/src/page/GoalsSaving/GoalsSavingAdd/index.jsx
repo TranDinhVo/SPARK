@@ -73,11 +73,13 @@ function GoalsSavingAdd({ savingList, onReload }) {
 
       const createdAtDate = values.createdAt.clone();
 
+      const utcTime = createdAtDate.utc().format("YYYY-MM-DDTHH:mm:ss[Z]");
+
       const transactionData = {
         ...values,
         amount: parseFloat(parseNumber(values.amount)),
         categoryId: savingCategoryId || 1,
-        createdAt: createdAtDate.format("YYYY-MM-DDTHH:mm:ss[Z]"),
+        createdAt: utcTime,
         userId,
       };
 
