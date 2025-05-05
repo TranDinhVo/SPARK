@@ -17,6 +17,7 @@ import { Menu as MenuIcon } from "lucide-react";
 import Footer from "../../page/Footer";
 import { getCookie } from "../../helpers/cookie";
 // import { ReactComponent as Logo } from "../../assets/images/logotest.svg";
+import logoSvg from "../../assets/images/logotest.svg?raw";
 
 // import "../../assets/styles/variable.scss";
 // import Logo from "../../components/Logo";
@@ -34,7 +35,19 @@ function LayoutDefault() {
             className={"header__logo " + (collapse && "header__logo--collapse")}
             style={{ background: "var(--primary-color)" }}
           >
-            <img src={logo} alt="Logo" className="header__logo--img" />
+            {/* <img src={logo} alt="Logo" className="header__logo--img" /> */}
+            <div className="header__logo--left">
+              <div className="header__logo--logo">
+                <div
+                  className="logo-svg"
+                  dangerouslySetInnerHTML={{ __html: logoSvg }}
+                />
+              </div>
+              <div className="header__logo--content">
+                <h2>SPARK</h2>
+                <p>Quản Lí Chi Tiêu Cá Nhân</p>
+              </div>
+            </div>
           </div>
 
           <div className="header__nav">

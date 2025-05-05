@@ -6,6 +6,7 @@ import "../../assets/scss/Introduce.scss";
 import Login from "../Login";
 import { useSelector } from "react-redux";
 import { getCookie } from "../../helpers/cookie";
+import logoSvg from "../../assets/images/logotest.svg?raw";
 
 const { Content } = Layout;
 
@@ -20,7 +21,10 @@ function Introduce() {
           <div className="header__nav">
             <div className="header__nav--left">
               <div className="header__nav--logo">
-                <img src={logoSpark} alt="logo"></img>
+                <div
+                  className="logo-svg"
+                  dangerouslySetInnerHTML={{ __html: logoSvg }}
+                />
               </div>
               <div className="header__nav--content">
                 <h2>SPARK</h2>
