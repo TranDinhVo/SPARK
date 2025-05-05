@@ -49,7 +49,7 @@ function TransactionForm(props) {
 
     const selectedCreateAt = new Date(savingDate);
 
-    if (!savingDate || selectedCreateAt > now) {
+    if (!savingDate) {
       Swal.fire({
         icon: "error",
         title: "Ngày không hợp lệ",

@@ -144,7 +144,7 @@ function MenuSider(props) {
           className={"menu--custom " + (collapse && "menu--collapse")}
         />
         <div className="menu-sider__footer">
-          <p>Saving Money - Quản lí chi tiêu</p>
+          <p>SPARK - Quản lí chi tiêu</p>
           <p>một cách thông minh</p>
           <p>@ 2025 All Right Reserved</p>
           <p>
