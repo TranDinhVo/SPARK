@@ -111,14 +111,44 @@
       }
 
       &--image {
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-top: 40px;
+        // padding-top: 56.25%;
+        aspect-ratio: 16 / 9;
+        &-under,
+        &-above {
+          position: absolute;
+          transition: all 0.3s ease;
+          aspect-ratio: 16 / 9;
+          width: 70%;
+          img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.6);
+          }
+        }
+        &-above {
+          width: 45%;
+        }
 
-        img {
-          width: 100%;
-          max-width: 480px;
-          object-fit: contain;
+        &-under {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          z-index: 1;
+          transform: translate(-50%, -50%) scale(1); // Gộp lại
+          // filter: blur(1px);
+        }
+
+        &-above {
+          top: 60%;
+          left: 50%;
+          z-index: 2;
+          transform: translate(0%, -10%) scale(1); // Gộp lại
         }
       }
     }

@@ -7,6 +7,9 @@ import Login from "../Login";
 import { useSelector } from "react-redux";
 import { getCookie } from "../../helpers/cookie";
 import logoSvg from "../../assets/images/logotest.svg?raw";
+import web1 from "../../assets/images/web-1.png";
+import web2 from "../../assets/images/web-2.png";
+import FeatureShowcase from "./FeatureShowcase";
 
 const { Content } = Layout;
 
@@ -50,8 +53,8 @@ function Introduce() {
               <div className="spark-container">
                 <Row gutter={[20, 20]} className="spark-home__wrap">
                   <Col
-                    xl={12}
-                    lg={12}
+                    xl={10}
+                    lg={10}
                     md={24}
                     sm={24}
                     xs={24}
@@ -69,22 +72,26 @@ function Introduce() {
                   </Col>
 
                   <Col
-                    xl={12}
-                    lg={12}
+                    xl={14}
+                    lg={14}
                     md={24}
                     sm={24}
                     xs={24}
                     className="spark-home__wrap--image"
                   >
-                    {/* <img src="your-image-path.png" alt="banner" /> */}
-                    img
+                    <div className="spark-home__wrap--image-under">
+                      <img src={web1} alt="trang - chu" />
+                    </div>
+                    <div className="spark-home__wrap--image-above">
+                      <img src={web2} alt="trang - chu2" />
+                    </div>
                   </Col>
                 </Row>
               </div>
             </div>
             <div className="spark-feature">
               <div className="spark-container">
-                <div className="spark-feature__wrap"></div>
+                <FeatureShowcase />
               </div>
             </div>
           </Content>
