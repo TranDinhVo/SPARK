@@ -70,7 +70,8 @@ function ExpenseDashboard() {
         );
 
         if (dateOnly >= startOfThisWeek && dateOnly <= endOfThisWeek) {
-          const dayIndex = dateOnly.getDay() === 0 ? 6 : dateOnly.getDay() - 1;
+          // Tính toán index cho ngày trong tuần (0-6)
+          const dayIndex = (dateOnly.getDay() + 6) % 7; // Chuyển đổi để thứ 2 = 0, chủ nhật = 6
           weeklyData[dayIndex] += t.amount;
           totalThisWeekAmount += t.amount;
         } else if (dateOnly >= startOfLastWeek && dateOnly <= endOfLastWeek) {
@@ -137,7 +138,12 @@ function ExpenseDashboard() {
           ) : (
             <ResponsiveContainer width="100%" height={270}>
               <BarChart data={chartData} barCategoryGap={10}>
-                <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                <XAxis
+                  dataKey="name"
+                  axisLine={false}
+                  tickLine={false}
+                  interval={0}
+                />
                 <YAxis hide />
                 <Tooltip
                   cursor={{ fill: "var(--primary-color-light)" }}

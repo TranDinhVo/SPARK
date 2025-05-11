@@ -2,16 +2,51 @@ import { useEffect, useState } from "react";
 import CategoryListInBudget from "../CategoryListInBudget";
 import "./BudgetFormModal.scss";
 import { getCookie } from "../../../helpers/cookie";
-import { createBudget, getBudgetByUser } from "../../../services/BudgetService";
+import {
+  createBudget,
+  getBudgetByUser,
+  updateBudget,
+} from "../../../services/BudgetService";
 import Swal from "sweetalert2";
+import { getCategoryByUser } from "../../../services/CategoryService";
 
 function BudgetFormModal(props) {
-  const { open, onCancel, onSave, onReload, budgets } = props;
+  const { open, onCancel, onSave, onReload, budgets, editBudget } = props;
   const [amountLimit, setAmountLimit] = useState(0);
   const [alertThreshold, setAlertThreshold] = useState(0.8);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [categories, setCategories] = useState([]);
 
   const userId = getCookie("id");
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const userId = getCookie("id");
+      const result = await getCategoryByUser(userId);
+      const filter = result.filter(
+        (item) =>
+          item.type === "Chi" && item.name?.toLowerCase() !== "tiết kiệm"
+      );
+      setCategories(filter);
+    };
+    if (open) fetchCategories();
+  }, [open]);
+
+  useEffect(() => {
+    if (editBudget && open && categories.length > 0) {
+      const foundCat = categories.find(
+        (cat) => String(cat.name) === String(editBudget.budgetName)
+      );
+      setAmountLimit(editBudget.amountLimit || 0);
+      setAlertThreshold(editBudget.alertThreshold || 0.8);
+      setSelectedCategory(foundCat || null);
+    } else if (open && !editBudget) {
+      setAmountLimit(0);
+      setAlertThreshold(0.8);
+      setSelectedCategory(null);
+    }
+  }, [editBudget, open, categories]);
+
   if (!open) return null;
 
   const handleSave = async () => {
@@ -40,12 +75,14 @@ function BudgetFormModal(props) {
       return;
     }
 
-    const isDuplicate = budgets.some(
-      (b) =>
-        b.budgetName?.toLowerCase().trim() ===
-        selectedCategory.name.trim().toLowerCase()
-    );
-    if (isDuplicate) {
+    if (
+      budgets.some(
+        (b) =>
+          b.budgetName?.toLowerCase().trim() ===
+            selectedCategory.name.trim().toLowerCase() &&
+          (!editBudget || b.id !== editBudget.id)
+      )
+    ) {
       Swal.fire({
         icon: "error",
         title: "Lỗi",
@@ -55,7 +92,9 @@ function BudgetFormModal(props) {
     }
 
     Swal.fire({
-      title: "Đang lưu ngân sách...",
+      title: editBudget
+        ? "Đang cập nhật ngân sách..."
+        : "Đang lưu ngân sách...",
       allowOutsideClick: false,
       didOpen: () => Swal.showLoading(),
     });
@@ -63,44 +102,62 @@ function BudgetFormModal(props) {
     const today = new Date();
     const currentYear = today.getFullYear();
     const currentMonth = today.getMonth();
-
     const startDate = new Date(Date.UTC(currentYear, currentMonth, 1));
-
     const endDate = new Date(Date.UTC(currentYear, currentMonth + 1, 0));
 
-    console.log("startDate:", startDate.toISOString());
-    console.log("endDate:", endDate.toISOString());
+    const formData = {
+      userId: userId,
+      amountLimit,
+      alertThreshold,
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+      categoryId: selectedCategory.id,
+    };
 
     setTimeout(() => {
-      const formData = {
-        userId: userId,
-        amountLimit,
-        alertThreshold,
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
-        categoryId: selectedCategory.id,
-      };
-
-      onSave(formData);
-      const AddBudget = async () => {
-        const result = await createBudget(formData);
-        if (result) {
-          Swal.fire({
-            icon: "success",
-            title: "Thành công",
-            text: "Ngân sách mới đã được thêm thành công!",
-          });
-          onReload();
-          handleReset();
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Thất bại",
-            text: "Ngân sách mới chưa được thêm thành công!",
-          });
-        }
-      };
-      AddBudget();
+      if (editBudget) {
+        const doUpdate = async () => {
+          const result = await updateBudget(editBudget.id, formData);
+          if (result) {
+            Swal.fire({
+              icon: "success",
+              title: "Thành công",
+              text: "Ngân sách đã được cập nhật thành công!",
+            });
+            onReload();
+            onSave(formData);
+            handleReset();
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Thất bại",
+              text: "Cập nhật ngân sách thất bại!",
+            });
+          }
+        };
+        doUpdate();
+      } else {
+        onSave(formData);
+        const AddBudget = async () => {
+          const result = await createBudget(formData);
+          if (result) {
+            Swal.fire({
+              icon: "success",
+              title: "Thành công",
+              text: "Ngân sách mới đã được thêm thành công!",
+            });
+            onReload();
+            handleReset();
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Thất bại",
+              text: "Ngân sách mới chưa được thêm thành công!",
+            });
+          }
+        };
+        AddBudget();
+      }
     }, 1000);
   };
 
@@ -120,7 +177,7 @@ function BudgetFormModal(props) {
     <div className="budget-modal-overlay" onClick={handleBackdropClick}>
       <div className="budget-modal">
         <div className="budget-modal-header">
-          <h2>Thêm ngân sách mới</h2>
+          <h2>{editBudget ? "Chỉnh sửa danh mục" : "Thêm ngân sách mới"}</h2>
           <button className="budget-modal-close" onClick={onCancel}>
             ×
           </button>
@@ -171,7 +228,7 @@ function BudgetFormModal(props) {
                 Làm mới
               </button>
               <button className="btn-save" onClick={handleSave}>
-                Lưu
+                {editBudget ? "Cập nhật" : "Lưu"}
               </button>
             </div>
           </div>

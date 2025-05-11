@@ -23,7 +23,7 @@ export const deleteBudget = async (id) => {
   return result;
 };
 export const updateBudget = async (id, options) => {
-  const result = await patch(`budgets/${id}`, options);
+  const result = await patch(`budget/${id}`, options);
   return result;
 };
 

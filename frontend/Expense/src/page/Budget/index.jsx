@@ -8,7 +8,7 @@ import "./Budget.scss";
 import { formatDateTime } from "../../helpers/formatDateTime";
 import { formatDate } from "../../helpers/formatDate";
 import { GoChevronRight } from "react-icons/go";
-import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineClose, AiOutlineEdit } from "react-icons/ai";
 import Swal from "sweetalert2";
 
 import { formatCurrency } from "../../helpers/formatCurrency";
@@ -30,6 +30,9 @@ function Budget() {
   const pageSize = 4;
 
   const userId = getCookie("id");
+
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editBudget, setEditBudget] = useState(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -72,12 +75,13 @@ function Budget() {
     if (activeTab === "hoatdong") {
       setFilteredBudgets(budgets);
     } else {
-      const filer = budgets.filter(
-        (item) => item.amountLimit * item.alertThreshold < item.usedAmount
-      );
-      setFilteredBudgets(filer);
+      const filtered = budgets.filter((item) => {
+        const threshold = item.amountLimit * (item.alertThreshold || 0.8);
+        return item.usedAmount >= threshold;
+      });
+      setFilteredBudgets(filtered);
     }
-  }, [activeTab]);
+  }, [activeTab, budgets]);
   useEffect(() => {
     setLoading(true);
     const delayDebounceFn = setTimeout(() => {
@@ -143,7 +147,7 @@ function Budget() {
       text: `Bạn có chắc muốn xóa ngân sách "${budget.budgetName}" không?`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#f97316",
+      confirmButtonColor: "var(--primary-color)",
       cancelButtonColor: "#d1d5db",
       confirmButtonText: "Xóa",
       cancelButtonText: "Hủy",
@@ -239,6 +243,7 @@ function Budget() {
                   activeTab === "hoatdong" ? "active" : ""
                 }`}
                 onClick={() => setActiveTab("hoatdong")}
+                data-tab="hoatdong"
               >
                 Hoạt động
               </div>
@@ -247,6 +252,7 @@ function Budget() {
                   activeTab === "canhbao" ? "active" : ""
                 }`}
                 onClick={() => setActiveTab("canhbao")}
+                data-tab="canhbao"
               >
                 Cảnh báo
               </div>
@@ -387,13 +393,37 @@ function Budget() {
                     {formatDateTime(currentTime)}
                   </p>
                 </div>
-
                 <div
                   className="budget__detail--image"
-                  dangerouslySetInnerHTML={{
-                    __html: selectedBudget.iconUrl,
-                  }}
+                  dangerouslySetInnerHTML={{ __html: selectedBudget.iconUrl }}
                 ></div>
+                <button
+                  className="budget__detail--edit-btn"
+                  onClick={() => {
+                    setEditBudget({
+                      ...selectedBudget,
+                      categoryId:
+                        selectedBudget.categoryId ||
+                        selectedBudget.category?.id,
+                    });
+                    setEditModalOpen(true);
+                  }}
+                  style={{
+                    marginLeft: 16,
+                    background: "var(--primary-color, #ff8800)",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 8,
+                    padding: "8px 16px",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                  }}
+                >
+                  <AiOutlineEdit style={{ fontSize: 18 }} /> Chỉnh sửa
+                </button>
               </div>
 
               <div className="budget__detail--box">
@@ -501,6 +531,17 @@ function Budget() {
           ) : (
             <p>Chọn ngân sách để xem chi tiết</p>
           )}
+          <BudgetFormModal
+            open={editModalOpen}
+            onCancel={() => setEditModalOpen(false)}
+            onSave={() => {
+              setEditModalOpen(false);
+              onReload();
+            }}
+            onReload={onReload}
+            budgets={budgets}
+            editBudget={editBudget}
+          />
         </Col>
       </Row>
     </>

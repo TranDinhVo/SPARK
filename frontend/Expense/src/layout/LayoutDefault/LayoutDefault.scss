@@ -168,9 +168,9 @@
     overflow-y: auto;
     overflow-x: hidden;
     border-top-right-radius: 32px;
-    background: var(--primary-color-dark-mode);
     padding: 50px 1.5% 24px;
     position: relative;
+    background-color: #ffffff !important;
     z-index: 100;
     scrollbar-width: none;
     -ms-overflow-style: none;

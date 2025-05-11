@@ -69,7 +69,7 @@ function IncomeDashboard() {
         );
 
         if (dateOnly >= startOfThisWeek && dateOnly <= endOfThisWeek) {
-          const dayIndex = dateOnly.getDay() === 0 ? 6 : dateOnly.getDay() - 1;
+          const dayIndex = (dateOnly.getDay() + 6) % 7;
           weeklyData[dayIndex] += t.amount;
           totalThisWeekAmount += t.amount;
         } else if (dateOnly >= startOfLastWeek && dateOnly <= endOfLastWeek) {
@@ -136,7 +136,12 @@ function IncomeDashboard() {
           ) : (
             <ResponsiveContainer width="100%" height={270}>
               <BarChart data={chartData} barCategoryGap={10}>
-                <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                <XAxis
+                  dataKey="name"
+                  axisLine={false}
+                  tickLine={false}
+                  interval={0}
+                />
                 <YAxis hide />
                 <Tooltip
                   cursor={{ fill: "var(--primary-color-light)" }}

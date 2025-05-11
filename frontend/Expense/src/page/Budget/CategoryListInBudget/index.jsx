@@ -26,7 +26,7 @@ function CategoryListInBudget({ selectedCategory, onSelectCategory }) {
         <div
           key={cat.id}
           className={`category-item ${
-            selectedCategory === cat.id ? "selected" : ""
+            String(selectedCategory) === String(cat.id) ? "selected" : ""
           }`}
           onClick={() => onSelectCategory(cat)}
         >

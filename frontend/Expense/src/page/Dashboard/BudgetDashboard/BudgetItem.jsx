@@ -1,4 +1,3 @@
-// BudgetItem.jsx
 import { Progress } from "antd";
 import useInViewAnimation from "../../../hooks/useInViewAnimation";
 
@@ -14,12 +13,26 @@ function BudgetItem(props) {
     return `${day}/${month}/${year}`;
   };
 
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
+
+  const progressPercent = (
+    (100 * parseFloat(item.usedAmount)) /
+    parseFloat(item.amountLimit)
+  ).toFixed(0);
+
   return (
     <div
       ref={ref}
       className={`budget-dashboard__content ${animationClass}`}
       style={{
-        animationDelay: `${index * 100}ms`,
+        animationDelay: `${index * 150}ms`,
         animationDuration: "0.8s",
       }}
     >
@@ -41,20 +54,18 @@ function BudgetItem(props) {
 
           <div className="budget-dashboard__content--center">
             <Progress
-              percent={(
-                (100 * parseFloat(item.usedAmount)) /
-                parseFloat(item.amountLimit)
-              ).toFixed(0)}
+              percent={progressPercent}
               strokeColor="var(--primary-color)"
               trailColor="#ffffff"
               strokeWidth={14}
               showInfo={false}
+              className="budget-progress"
             />
           </div>
 
           <div className="budget-dashboard__content--bottom">
-            <span>{item.usedAmount}đ</span>
-            <span>{item.amountLimit.toLocaleString("vi-VN")}đ</span>
+            <span>{formatCurrency(item.usedAmount)}</span>
+            <span>{formatCurrency(item.amountLimit)}</span>
           </div>
         </div>
       </div>

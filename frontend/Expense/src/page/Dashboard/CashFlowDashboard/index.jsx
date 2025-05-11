@@ -109,13 +109,13 @@ function CashFlowDashboard() {
             <td>Tổng cộng</td>
             <td>
               {data.totalIncome
-                ? Math.round(data.totalIncome).toLocaleString("vi-VN")
+                ? "+" + Math.round(data.totalIncome).toLocaleString("vi-VN")
                 : 0}
               đ
             </td>
             <td>
               {data.totalExpense
-                ? Math.round(data.totalExpense).toLocaleString("vi-VN")
+                ? "-" + Math.round(data.totalExpense).toLocaleString("vi-VN")
                 : 0}
               đ
             </td>
@@ -129,13 +129,15 @@ function CashFlowDashboard() {
             <td>Trung bình (Ngày)</td>
             <td>
               {data.averageDailyIncome
-                ? Math.round(data.averageDailyIncome).toLocaleString("vi-VN")
+                ? "+" +
+                  Math.round(data.averageDailyIncome).toLocaleString("vi-VN")
                 : 0}
               đ
             </td>
             <td>
               {data.averageDailyExpense
-                ? Math.round(data.averageDailyExpense).toLocaleString("vi-VN")
+                ? "-" +
+                  Math.round(data.averageDailyExpense).toLocaleString("vi-VN")
                 : 0}
               đ
             </td>
@@ -144,7 +146,8 @@ function CashFlowDashboard() {
             <td>Trung bình (Các giao dịch)</td>
             <td>
               {data.averageTransactionIncome
-                ? Math.round(data.averageTransactionIncome).toLocaleString(
+                ? "+" +
+                  Math.round(data.averageTransactionIncome).toLocaleString(
                     "vi-VN"
                   )
                 : 0}
@@ -152,7 +155,8 @@ function CashFlowDashboard() {
             </td>
             <td>
               {data.averageTransactionExpense
-                ? Math.round(data.averageTransactionExpense).toLocaleString(
+                ? "-" +
+                  Math.round(data.averageTransactionExpense).toLocaleString(
                     "vi-VN"
                   )
                 : 0}{" "}

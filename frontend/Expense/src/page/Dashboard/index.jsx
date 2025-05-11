@@ -9,6 +9,7 @@ import ExpenseDashboard from "./ExpenseDashboard";
 import BudgetTransaction from "./BudgetTransaction";
 import IncomeDashboard from "./IncomeDashboard";
 import CashFlowDashboard from "./CashFlowDashboard";
+import DashboardPiggyAnimation from "./DashboardPiggyAnimation";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -108,7 +109,7 @@ function Dashboard() {
       <Col xl={10} lg={10} className="dashboard__right">
         <motion.div
           variants={fadeInUpVariant}
-          custom={3}
+          custom={4}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
@@ -117,6 +118,19 @@ function Dashboard() {
             <Col xl={24}>
               <BudgetTransaction />
             </Col>
+          </Row>
+        </motion.div>
+        <motion.div
+          variants={fadeInUpVariant}
+          custom={3}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <Row className="dashboard__item dashboard__item--piggy">
+            <div className="dashboard__content dashboard__content--piggy">
+              <DashboardPiggyAnimation />
+            </div>
           </Row>
         </motion.div>
       </Col>
