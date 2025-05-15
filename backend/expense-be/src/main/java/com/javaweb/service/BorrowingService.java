@@ -13,4 +13,5 @@ public interface BorrowingService {
 	BorrowingResponseDTO createNewBorrowing(BorrowingRequestDTO borrowingRequestDTO);
 	BorrowingResponseDTO getById(Long id);
 	List<BorrowingResponseDTO> getByUserId(Long userId);
+	List<BorrowingResponseDTO> autoTransactions();
 }

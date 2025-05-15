@@ -62,7 +62,7 @@ public class BorrowingEntity {
     private BorrowingStatusEnum status = BorrowingStatusEnum.DANG_HOAT_DONG;
     
     @Column(name="auto_create_transaction")
-    private Boolean autoCreateTransaction = false;
+    private Boolean autoCreateTransaction = true;
     
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();

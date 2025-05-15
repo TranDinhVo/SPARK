@@ -41,6 +41,12 @@ public class RecurringTransactionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<RecurringTransactionResponseDTO>> getRecurringTransactionByUserId(@PathVariable Long userId) {
+        List<RecurringTransactionResponseDTO> response = recurringTransactionService.getRecurringTransactionByUserId(userId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    
     @PutMapping("/{id}")
     public ResponseEntity<RecurringTransactionResponseDTO> updateRecurringTransaction(
             @PathVariable Long id,

@@ -47,6 +47,11 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 		
 		return response;
 	}
+	//(số tiền bd / số lần bd) + lãi*số tiền còn nợ
+	
+//	L1: 2tr + 0.1*20tr = 4tr(2tr vốn + 2 tr lãi)
+//	L2: (18tr/9) + 0.1*18TR = 
+	
 	
 	public void updateStatuses(List<Long> completedIds) {
 	    if (!completedIds.isEmpty()) {
@@ -154,10 +159,12 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 		result.setPaidAmount( (BigDecimal) resultJoin[0]);
 		result.setRemainTimes(((Number) resultJoin[1]).longValue());
 	    result = borrowingConverter.toUpdateBorrowingEntity(exist, result);
-	    
-		 result = updateStatus(result);
-		 exist.setStatus(result.getStatus());
-		 entityManager.merge(exist);
+		result = updateStatus(result);
+		// amount + lãi * (số tiền bd - remainTime*amount)
+		BigDecimal monthMoney = exist.getAmount().add(result.getInterestRate().multiply(result.getAmountLoan().subtract(exist.getAmount().multiply(BigDecimal.valueOf(result.getRemainTimes()))))); 
+		result.setMonthMoney(monthMoney);
+		exist.setStatus(result.getStatus());
+		entityManager.merge(exist);
 		    
 	    return result;
 	}
@@ -166,12 +173,29 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 	public BorrowingEntity updateEntity(BorrowingEntity entity) {
 		entity.setAmount(entity.getAmountLoan().divide(BigDecimal.valueOf(entity.getTimes()),2,RoundingMode.HALF_UP));
 		entity.setNextDueDate(
-		        entity.getCreatedAt()
-		            .atZone(ZoneId.systemDefault())
-		            .toLocalDate()
-		            .plusMonths(1)
+				Instant.now()
+		        .atZone(ZoneId.systemDefault())
+		        .plusDays(1)
+		        .toLocalDateTime()
+		        .toLocalDate()
 		    );
 		return entity;
+	}
+	@Override
+	public List<BorrowingEntity> findBorrowingByAuto() {
+		StringBuilder sql = new StringBuilder("SELECT b.* \n"
+				+ "FROM borrowing AS b \n"
+				+ "WHERE b.auto_create_transaction = 1 \n"
+				+ "AND b.status = 'DANG_HOAT_DONG'\n"
+				+ "AND b.next_due_date <= CURDATE()\n"
+				+ "AND NOT EXISTS (\n"
+				+ "    SELECT 1 FROM transaction t \n"
+				+ "    WHERE t.borrowing_id = b.id \n"
+				+ "    AND DATE(t.created_at) = CURDATE()\n"
+				+ ");\n");
+		Query query = entityManager.createNativeQuery(sql.toString(), BorrowingEntity.class);
+		List<BorrowingEntity> result = query.getResultList();
+		return result;
 	}
 
 }

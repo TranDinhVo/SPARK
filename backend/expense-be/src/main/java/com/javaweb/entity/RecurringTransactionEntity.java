@@ -1,5 +1,6 @@
 package com.javaweb.entity;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,12 +16,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "recurring_transactions")
@@ -54,6 +53,13 @@ public class RecurringTransactionEntity {
     private Instant createAt = Instant.now();
     @Column(name = "user_id", nullable = false)
     private Long userId;
+    
+    @Column(name = "amount_recurring")
+    private BigDecimal amount;
+    
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private CategoryEntity categoryRecurringTransaction;
     
     // Getter và setter
     public Long getUserId() {
