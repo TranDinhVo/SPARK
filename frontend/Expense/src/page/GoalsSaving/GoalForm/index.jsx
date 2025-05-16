@@ -124,7 +124,12 @@ function GoalForm({ userId, onSave, savingList }) {
       <div className="goal__form">
         <div className="goal__form-group">
           <span className="label">Thời gian hoàn thành</span>
-          <DateNavigator date={savingDate} onChange={setSavingDate} />
+
+          <DateNavigator
+            date={savingDate}
+            onChange={setSavingDate}
+            mode="savings"
+          />
         </div>
 
         <div className="goal__form-group">

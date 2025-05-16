@@ -3,115 +3,43 @@
 }
 
 .transaction-table {
-  .ant-table {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
-    overflow: hidden;
-    border: none;
-  }
-  .ant-table-cell {
-    border-right: none !important;
-  }
-
   .ant-table-thead > tr > th {
-    border-right: none !important;
-  }
-
-  .ant-table-tbody > tr > td {
-    border-right: none !important;
-  }
-  .ant-table-thead > tr > th {
-    background-color: #fff;
+    background: var(--primary-color-light) !important;
+    color: var(--primary-color-dark) !important;
     font-weight: 600;
     font-size: 14px;
-    color: #1f2937;
     text-align: center;
     padding: 12px;
     border-bottom: none;
+    border-right: none !important;
   }
-
-  .ant-table-tbody > tr:hover > td {
-    background-color: #f0f7ff;
-  }
-
   .ant-table-tbody > tr > td {
+    border-right: none !important;
     vertical-align: middle;
     text-align: center;
     font-size: 14px;
-    padding: 10px;
+    padding: 12px;
     color: #333;
     border-bottom: none;
+    transition: background 0.2s;
   }
-
-  .ant-input-affix-wrapper {
-    border-radius: 20px;
-    height: 36px;
-    padding: 0 12px;
-    background-color: #f9fafb;
-    border-color: #e5e7eb;
+  .ant-table-tbody > tr:hover > td {
+    background-color: #f0f7ff;
   }
-
-  .ant-tag {
-    font-size: 13px;
-    font-weight: 500;
-    padding: 4px 12px;
-    border-radius: 16px;
-
-    &.ant-tag-orange {
-      background-color: #fff7ed;
-      color: #f97316;
-      border: 1px solid #f97316;
-    }
-    &.ant-tag-gold {
-      background-color: #fffbe6;
-      color: #facc15;
-      border: 1px solid #facc15;
-    }
+  .ant-space {
+    gap: 4px !important;
   }
-
-  .ant-btn {
-    background-color: #f9fafb;
-    color: #333;
-    transition: all 0.3s ease;
+  .ant-btn[type="text"] {
+    color: var(--primary-color-dark);
+    transition: color 0.2s, background 0.2s;
     &:hover {
-      background-color: #f3f4f6;
-      color: var(--primary-color-dark);
-    }
-  }
-
-  .ant-spin-nested-loading {
-    padding: 20px 0;
-  }
-
-  .ant-pagination {
-    justify-content: center;
-    margin-top: 16px;
-    position: sticky;
-    bottom: 0;
-    background: white;
-    padding: 10px 0;
-  }
-
-  .ant-btn > span {
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .ant-table-tbody .ant-table-cell {
-    .amount {
-      font-weight: 600;
-      &.positive {
-        color: #22c55e;
-      }
-      &.negative {
-        color: #ef4444;
-      }
+      color: #fff;
+      background: var(--primary-color);
+      border-radius: 50%;
     }
   }
 }
-
+// ... rest of the existing code ...
 .transaction-search {
   position: relative;
   width: 30%;
@@ -136,6 +64,60 @@
 
     &:focus {
       box-shadow: 0 0 0 2px #a855f7;
+    }
+  }
+}
+
+.transaction-toggle-mode {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 18px;
+
+  .ant-btn-group {
+    background: var(--primary-color-light);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(var(--primary-color-rgb), 0.08);
+    overflow: hidden;
+  }
+  .ant-btn {
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--primary-color);
+    background: transparent;
+    border: none;
+    transition: background 0.2s, color 0.2s;
+    &:hover,
+    &.ant-btn-primary {
+      background: var(--primary-color);
+      color: #fff;
+    }
+  }
+}
+
+.recurring-transaction-table-container {
+  .ant-table {
+    background: var(--primary-color-light);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(var(--primary-color-rgb), 0.08);
+    th,
+    td {
+      background: transparent;
+    }
+    th {
+      color: var(--primary-color-dark);
+      font-weight: 600;
+      font-size: 15px;
+      border-bottom: 2px solid var(--primary-color);
+    }
+    td {
+      font-size: 15px;
+      color: var(--primary-color-dark);
+    }
+  }
+  .ant-table-expanded-row {
+    background: var(--primary-color-light);
+    td {
+      border-bottom: none;
     }
   }
 }

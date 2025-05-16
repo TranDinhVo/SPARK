@@ -1,5 +1,6 @@
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import "./SearchBar.scss";
 
 function SearchBar({ value, onChange }) {
   return (
@@ -9,6 +10,7 @@ function SearchBar({ value, onChange }) {
       className="search-input"
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      allowClear
     />
   );
 }

@@ -15,6 +15,7 @@ import ViewToggle from "./ViewToggle";
 import Swal from "sweetalert2";
 import "./GoalsSaving.scss";
 import GoalsSavingAdd from "./GoalsSavingAdd";
+import removeVietnameseTones from "../../helpers/normalize";
 
 function GoalsSaving() {
   const [savingList, setSavingList] = useState([]);
@@ -175,7 +176,9 @@ function GoalsSaving() {
     setLoading(true);
     const delayDebounce = setTimeout(() => {
       const filteredGoals = savingList.filter((goal) =>
-        goal.goalName.toLowerCase().includes(searchTerm.toLowerCase())
+        removeVietnameseTones(goal.goalName)
+          .toLowerCase()
+          .includes(removeVietnameseTones(searchTerm).toLowerCase())
       );
       setFiltered(filteredGoals);
       setLoading(false);
@@ -213,6 +216,7 @@ function GoalsSaving() {
             onView={handleView}
             onEdit={handleEdit}
             onDelete={handleDelete}
+            keyword={searchTerm}
           />
         )}
       </div>

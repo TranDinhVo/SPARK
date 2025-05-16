@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import "./TransactionForm.scss";
-import { Input } from "antd";
+import { Input, Select, DatePicker, Switch, Button } from "antd";
 import DateNavigator from "../../../components/DateNavigator";
 import TransactionCategory from "../TransactionCategory";
 import Swal from "sweetalert2";
 import { getCookie } from "../../../helpers/cookie";
 import { createTransaction } from "../../../services/TransactionService";
+import { createRecurringTransaction } from "../../../services/RecurringTransactionService";
+import dayjs from "dayjs";
 
 function TransactionForm(props) {
   const { onReload } = props;
@@ -142,17 +144,6 @@ function TransactionForm(props) {
           </div>
 
           <div className="transaction-form__group">
-            <span className="label">Ghi chú</span>
-            <div>
-              <Input
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Nhập ghi chú"
-              />
-            </div>
-          </div>
-
-          <div className="transaction-form__group">
             <span className="label">{isExpense ? "Tiền chi" : "Tiền thu"}</span>
             <div className="amount-input-container">
               <Input
@@ -161,6 +152,16 @@ function TransactionForm(props) {
                 placeholder="0"
               />
               <span className="currency">VND</span>
+            </div>
+          </div>
+          <div className="transaction-form__group">
+            <span className="label">Ghi chú</span>
+            <div>
+              <Input
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Nhập ghi chú"
+              />
             </div>
           </div>
           <div className="transaction-form__group">
@@ -193,4 +194,5 @@ function TransactionForm(props) {
     </>
   );
 }
+
 export default TransactionForm;

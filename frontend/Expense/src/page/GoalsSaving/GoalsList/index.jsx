@@ -3,8 +3,10 @@ import GoalCard from "../GoalCard";
 import GoalStatus from "../GoalStatus";
 import GoalActions from "../GoalActions";
 import "./GoalsList.scss";
+import HighlightText from "../../../components/HighlightText";
+
 function GoalsList(props) {
-  const { goals, viewMode, onView, onEdit, onDelete } = props;
+  const { goals, viewMode, onView, onEdit, onDelete, keyword } = props;
   const columns = [
     {
       title: "Ảnh",
@@ -21,7 +23,7 @@ function GoalsList(props) {
       title: "Tên tiết kiệm",
       dataIndex: "goalName",
       key: "goalName",
-      render: (text) => <strong>{text}</strong>,
+      render: (text) => <HighlightText text={text} keyword={keyword} />,
     },
     {
       title: "Mục tiêu",
@@ -85,6 +87,7 @@ function GoalsList(props) {
             onView={onView}
             onEdit={onEdit}
             onDelete={onDelete}
+            keyword={keyword}
           />
         </Col>
       ))}

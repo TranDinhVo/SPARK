@@ -40,7 +40,7 @@ function TransactionTable(props) {
       dataIndex: "type",
       key: "type",
       render: (type) => (
-        <Tag color={type === "Chi" ? "orange" : "gold"}>{type}</Tag>
+        <Tag color={type === "Chi" ? "error" : "success"}>{type}</Tag>
       ),
     },
     {
@@ -53,16 +53,16 @@ function TransactionTable(props) {
       title: "Khoản tiền",
       dataIndex: "amount",
       key: "amount",
-      render: (amount) => (
-        <span style={{ color: amount < 0 ? "red" : "#f97316" }}>
-          {amount < 0 ? "- " : "+ "}
-          {Math.abs(amount).toLocaleString("vi-VN")}
+      render: (amount, record) => (
+        <span style={{ color: record.type === "Chi" ? "#ff4d4f" : "#52c41a" }}>
+          {record.type === "Chi" ? "- " : "+ "}
+          {Math.abs(amount).toLocaleString("vi-VN")} đ
         </span>
       ),
     },
     {
-      title: "hành động",
-      width: "70px",
+      title: "Thao tác",
+      width: "100px",
       key: "action",
       render: (_, record) => (
         <Space>
@@ -88,6 +88,7 @@ function TransactionTable(props) {
         />
       </div>
       <Table
+        className="transaction-table"
         columns={columns}
         dataSource={filtered.map((t) => ({ ...t, key: t.id }))}
         // pagination={{ pageSize: 8 }}

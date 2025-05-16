@@ -2,8 +2,9 @@ import { Card, Button, Dropdown, Menu } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import GoalStatus from "../GoalStatus";
 import "./GoalCard.scss";
+import HighlightText from "../../../components/HighlightText";
 
-function GoalCard({ goal, onView, onEdit, onDelete }) {
+function GoalCard({ goal, onView, onEdit, onDelete, keyword }) {
   const percent = ((goal.currentAmount || 0) / goal.targetAmount) * 100;
 
   const formatCompactMoney = (amount) => {
@@ -37,7 +38,9 @@ function GoalCard({ goal, onView, onEdit, onDelete }) {
           className="goal-card__icon"
           dangerouslySetInnerHTML={{ __html: goal.iconUrl }}
         ></div>
-        <div className="goal-card__title">{goal.goalName}</div>
+        <div className="goal-card__title">
+          <HighlightText text={goal.goalName} keyword={keyword} />
+        </div>
         <div className="goal-card__date">
           {new Date(goal.deadline).toLocaleDateString("vi-VN", {
             day: "2-digit",

@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { AppstoreOutlined, UnorderedListOutlined } from "@ant-design/icons";
-
+import "./ViewToggle.scss";
 function ViewToggle({ viewMode, onToggle }) {
   return (
     <div className="view-toggles">

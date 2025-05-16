@@ -17,6 +17,12 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
 
     .transaction-day-header {
       display: flex;
@@ -25,10 +31,24 @@
       padding: 20px;
       font-weight: 600;
       color: #333;
-    }
 
-    .transaction-day-total {
-      color: var(--primary-color-dark);
+      .date-display {
+        font-size: 1.1rem;
+        text-transform: capitalize;
+      }
+
+      .transaction-day-total {
+        font-size: 1.1rem;
+        font-weight: 700;
+
+        &.income {
+          color: #28a745;
+        }
+
+        &.expense {
+          color: #dc3545;
+        }
+      }
     }
 
     .transaction-item {
@@ -37,6 +57,11 @@
       align-items: center;
       padding: 16px 20px;
       border-top: 1px solid #eee;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: var(--primary-color-light);
+      }
 
       .transaction-left {
         display: flex;
@@ -51,10 +76,15 @@
           display: flex;
           align-items: center;
           justify-content: center;
+          transition: transform 0.2s ease;
+
+          &:hover {
+            transform: scale(1.5);
+          }
 
           svg {
-            width: 24px;
-            height: 24px;
+            transform: scale(1.2);
+            color: white;
           }
         }
 
@@ -62,20 +92,29 @@
           .transaction-name {
             font-weight: 600;
             margin: 0;
+            font-size: 1rem;
           }
           .transaction-note {
-            font-size: 12px;
+            font-size: 0.85rem;
             color: #666;
-            margin: 0;
+            margin: 4px 0 0 0;
           }
         }
       }
 
       .transaction-right {
         .transaction-amount {
-          font-size: 16px;
+          font-size: 1rem;
           font-weight: 700;
-          color: #333;
+          margin: 0;
+
+          &.income {
+            color: #28a745;
+          }
+
+          &.expense {
+            color: #dc3545;
+          }
         }
       }
     }

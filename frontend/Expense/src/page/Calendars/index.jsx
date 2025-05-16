@@ -198,12 +198,12 @@ function Calendars() {
                     <div className="date">{day.day}</div>
                     {totals.income > 0 && (
                       <div className="amount income">
-                        {formatAmount(totals.income)}
+                        +{formatAmount(totals.income)}
                       </div>
                     )}
                     {totals.expense > 0 && (
                       <div className="amount expense">
-                        {formatAmount(totals.expense)}
+                        -{formatAmount(totals.expense)}
                       </div>
                     )}
                   </td>

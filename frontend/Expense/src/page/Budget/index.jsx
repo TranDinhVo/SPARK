@@ -13,6 +13,8 @@ import Swal from "sweetalert2";
 
 import { formatCurrency } from "../../helpers/formatCurrency";
 import BudgetFormModal from "./BudgetFormModal";
+import HighlightText from "../../components/HighlightText";
+import { removeVietnameseTones } from "../../helpers/normalize";
 
 function Budget() {
   const [budgets, setBudgets] = useState([]);
@@ -85,11 +87,13 @@ function Budget() {
   useEffect(() => {
     setLoading(true);
     const delayDebounceFn = setTimeout(() => {
-      const text = searchText.trim().toLowerCase();
+      const text = removeVietnameseTones(searchText.trim().toLowerCase());
       const filtered = !text
         ? budgets
         : budgets.filter((item) =>
-            (item.budgetName || "").toLowerCase().includes(text)
+            removeVietnameseTones(item.budgetName || "")
+              .toLowerCase()
+              .includes(text)
           );
       setFilteredBudgets(filtered);
       setLoading(false);
@@ -276,7 +280,10 @@ function Budget() {
                         <div className="budget__content">
                           <div className="budget__top">
                             <h4 className="budget__top--title">
-                              {budget.budgetName}
+                              <HighlightText
+                                text={budget.budgetName}
+                                keyword={searchText}
+                              />
                             </h4>
                             <div
                               className="budget__top--delete"

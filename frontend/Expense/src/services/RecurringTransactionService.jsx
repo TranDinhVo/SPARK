@@ -4,6 +4,10 @@ export const getRecurringTransaction = async () => {
   const result = await get(`recurring-transactions`);
   return result;
 };
+export const getRecurringTransactionByUser = async (userId) => {
+  const result = await get(`recurring-transactions/user/${userId}`);
+  return result;
+};
 export const createRecurringTransaction = async (option) => {
   const result = await post(`recurring-transactions`, option);
   return result;

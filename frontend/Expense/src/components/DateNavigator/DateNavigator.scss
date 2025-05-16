@@ -1,0 +1,52 @@
+.date-navigator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+  background: var(--primary-color-light);
+  padding: 16px 24px;
+  font-size: 18px;
+  border-radius: 8px;
+  border: 1px solid var(--primary-color-dark);
+  color: var(--primary-color);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .nav-button {
+    border: 0;
+    background: var(--primary-color-light);
+    font-size: 16px;
+  }
+  .nav-arrow {
+    cursor: pointer;
+    color: var(--primary-color-dark);
+    font-weight: 600;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+  .ant-picker {
+    margin-left: 50px;
+  }
+  .selected-date {
+    flex: 1;
+    text-align: center;
+  }
+  .ant-picker {
+    position: absolute;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+}

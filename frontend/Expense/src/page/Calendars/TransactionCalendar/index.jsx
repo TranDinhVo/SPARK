@@ -6,7 +6,6 @@ function TransactionCalendar(props) {
   const formatAmount = (amount) =>
     new Intl.NumberFormat("vi-VN").format(amount);
 
-  // Lọc giao dịch đúng tháng đang xem
   const filteredTransactions = transactions.filter((tran) => {
     const date = new Date(tran.createdAt);
     return (
@@ -14,7 +13,6 @@ function TransactionCalendar(props) {
     );
   });
 
-  // Group theo ngày
   const groupedTransactions = filteredTransactions.reduce((acc, tran) => {
     const date = new Date(tran.createdAt);
     const dateString = date
@@ -22,10 +20,10 @@ function TransactionCalendar(props) {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
-        weekday: "short",
+        weekday: "long",
         timeZone: "Asia/Ho_Chi_Minh",
       })
-      .replace(",", ""); // "09/04/2025 Thứ tư"
+      .replace(",", "");
 
     if (!acc[dateString]) {
       acc[dateString] = [];
@@ -40,7 +38,7 @@ function TransactionCalendar(props) {
 
     const dateA = new Date(yearA, monthA - 1, dayA);
     const dateB = new Date(yearB, monthB - 1, dayB);
-    return dateB - dateA; // mới → cũ
+    return dateB - dateA;
   });
 
   return (
@@ -55,12 +53,13 @@ function TransactionCalendar(props) {
         return (
           <div key={date} className="transaction-day">
             <div className="transaction-day-header">
-              <span>{date}</span>
+              <span className="date-display">{date}</span>
               <span
-                className="transaction-day-total"
-                style={{ color: totalAmount >= 0 ? "#28a745" : "#dc3545" }}
+                className={`transaction-day-total ${
+                  totalAmount >= 0 ? "income" : "expense"
+                }`}
               >
-                {totalAmount >= 0 ? "+" : "-"}
+                {totalAmount > 0 ? "+" : totalAmount < 0 ? "-" : ""}
                 {formatAmount(Math.abs(totalAmount))} VND
               </span>
             </div>
@@ -79,13 +78,12 @@ function TransactionCalendar(props) {
                 </div>
                 <div className="transaction-right">
                   <p
-                    className="transaction-amount"
-                    style={{
-                      color: tran.type === "Thu" ? "#28a745" : "#dc3545",
-                    }}
+                    className={`transaction-amount ${
+                      tran.type === "Thu" ? "income" : "expense"
+                    }`}
                   >
                     {tran.type === "Thu" ? "+" : "-"}
-                    {formatAmount(Math.abs(tran.amount))}
+                    {formatAmount(Math.abs(tran.amount))} VND
                   </p>
                 </div>
               </div>
