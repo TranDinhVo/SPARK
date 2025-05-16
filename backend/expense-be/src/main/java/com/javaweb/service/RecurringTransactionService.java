@@ -17,6 +17,7 @@ public interface RecurringTransactionService {
     
     RecurringTransactionResponseDTO updateRecurringTransactionStatus(Long id, RecurringStatusEnum recurringStatus);
     
+    List<RecurringTransactionResponseDTO> getRecurringTransactionByUserId(Long userId);
     
     boolean deleteRecurringTransaction(Long id);
 }

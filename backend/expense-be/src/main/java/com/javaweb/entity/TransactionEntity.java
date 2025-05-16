@@ -46,7 +46,6 @@ public class TransactionEntity {
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
-
    
     @Column(name = "status")
     private Boolean status = true;

@@ -13,6 +13,7 @@ public class BorrowingRequestDTO {
     private Long times;
     private Instant createdAt;
     private String loanType;
+    
 	public Long getId() {
 		return id;
 	}

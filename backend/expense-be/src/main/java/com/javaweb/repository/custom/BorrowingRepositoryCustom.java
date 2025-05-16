@@ -12,4 +12,5 @@ public interface BorrowingRepositoryCustom {
 	BorrowingResponseDTO updateBorrowing(BorrowingRequestDTO request, BorrowingEntity exist);
 	BorrowingEntity updateEntity(BorrowingEntity entity);
 	BorrowingResponseDTO updateStatus(BorrowingResponseDTO response);
+	List<BorrowingEntity> findBorrowingByAuto();
 }

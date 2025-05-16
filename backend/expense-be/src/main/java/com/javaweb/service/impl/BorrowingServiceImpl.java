@@ -1,6 +1,6 @@
 package com.javaweb.service.impl;
 
-import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,10 +12,9 @@ import com.javaweb.Builder.BorrowingSearchBuilder;
 import com.javaweb.converter.BorrowingConverter;
 import com.javaweb.converter.BorrowingSearchBuilderConverter;
 import com.javaweb.entity.BorrowingEntity;
-import com.javaweb.entity.GoalEntity;
 import com.javaweb.model.request.BorrowingRequestDTO;
+import com.javaweb.model.request.TransactionRequestDTO;
 import com.javaweb.model.response.BorrowingResponseDTO;
-import com.javaweb.model.response.GoalResponseDTO;
 import com.javaweb.repository.BorrowingRepository;
 import com.javaweb.service.BorrowingService;
 
@@ -31,7 +30,10 @@ public class BorrowingServiceImpl implements BorrowingService{
 	private BorrowingSearchBuilderConverter borrowingSearchBuilderConverter;
 	
 	@Autowired
-	BorrowingConverter borrowingConverter;
+	private BorrowingConverter borrowingConverter;
+	
+	@Autowired
+	private TransactionServiceImpl transactionServiceImpl;
 	
 	@Override
 	public List<BorrowingResponseDTO> searchBorrowings(Map<String, Object> params) {
@@ -90,7 +92,31 @@ public class BorrowingServiceImpl implements BorrowingService{
 		}).collect(Collectors.toList());
 		return responseList;
 	}
-	 
+
+	@Override
+	public List<BorrowingResponseDTO> autoTransactions() {
+		//lấy ra list borrowEntity thỏa điều kiện
+		List<BorrowingEntity> entities =  borrowingRepository.findBorrowingByAuto();
+		if(entities != null) {
+				//tạo từng giao dịch cho từng entity ở repo
+			List<BorrowingResponseDTO> result = entities.stream().map(item -> {
+				item = borrowingRepository.updateEntity(item);
+	            borrowingRepository.save(item);
+				// amount + lãi * (số tiền bd - remainTime*amount)
+				BorrowingResponseDTO borrowResponse = borrowingRepository.updateBorrowing(new BorrowingRequestDTO(), item);
+				borrowingRepository.save(item);
+				TransactionRequestDTO transactionRequest = new TransactionRequestDTO(item.getUserBorrowing().getId(), item.getId(), null, Long.valueOf(6), null,
+						borrowResponse.getMonthMoney(), "", Instant.now());
+				transactionServiceImpl.createTransaction(transactionRequest);
+				//cập nhật lại status, next-due-date của borrow ở repos
+				return borrowResponse;
+			}).collect(Collectors.toList());
+			
+			return result;
+		}
+		return null;
+	}
+	
 	
 	
 	

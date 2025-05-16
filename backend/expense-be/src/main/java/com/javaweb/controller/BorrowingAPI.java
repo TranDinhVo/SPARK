@@ -1,9 +1,13 @@
 package com.javaweb.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.javaweb.model.request.BorrowingRequestDTO;
 import com.javaweb.model.response.BorrowingResponseDTO;
-import com.javaweb.model.response.GoalResponseDTO;
 import com.javaweb.service.BorrowingService;
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -53,21 +52,16 @@ public class BorrowingAPI {
 		List<BorrowingResponseDTO> borrowings = borrowingService.searchBorrowings(params);
 		return borrowings;
 	    }
-	
+	//Tìm kiếm theo id
 	@GetMapping("/{id}")
 	public BorrowingResponseDTO getBorowingById(@PathVariable Long id) {
 		return borrowingService.getById(id);
 	}
-	
+	//Tìm kiếm theo user id
 	@GetMapping("/user/{userId}")
 	public List<BorrowingResponseDTO> getBorowingByUserId(@PathVariable Long userId){
 		return borrowingService.getByUserId(userId);
 	}
-	
-	
-	
-	
-	
 	
 	//Chỉnh sửa 1 thông tin
 	@PatchMapping("/{id}")
@@ -78,5 +72,13 @@ public class BorrowingAPI {
 		borrowingRequestDTO.setLoanType(null);
 		BorrowingResponseDTO borrowing = borrowingService.updateBorrowing(borrowingRequestDTO);
 		return borrowing;
-	    }
+	}
+	
+	@Scheduled(fixedRate = 1000) // mỗi 1 giây
+    public List<BorrowingResponseDTO> autoTransactions() {
+		return borrowingService.autoTransactions();
+    }
+	
+	
+	
 }

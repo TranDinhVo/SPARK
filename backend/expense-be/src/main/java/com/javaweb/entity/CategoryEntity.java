@@ -53,6 +53,9 @@ public class CategoryEntity {
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
     
+    @OneToMany(mappedBy = "categoryRecurringTransaction", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RecurringTransactionEntity> recurringTransaction  = new ArrayList<>();
+    
 	public CategoryEntity() {}
 
 	public CategoryEntity(Long id, UserEntity userCategory, List<TransactionEntity> transaction,

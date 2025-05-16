@@ -19,6 +19,7 @@ public class BorrowingResponseDTO {
     private Instant createdAt;
     private LocalDate nextDueDate;
     private BigDecimal paidAmount;//tiền đã trả
+    private BigDecimal monthMoney;//tiền tháng này cần trả
     
 	public BorrowingResponseDTO() {} 
 	public BorrowingResponseDTO(Long id, String counterpartyName, BigDecimal amountLoan, BigDecimal interestRate,
@@ -103,6 +104,12 @@ public class BorrowingResponseDTO {
 	}
 	public void setPaidAmount(BigDecimal paidAmount) {
 		this.paidAmount = paidAmount;
+	}
+	public BigDecimal getMonthMoney() {
+		return monthMoney;
+	}
+	public void setMonthMoney(BigDecimal monthMoney) {
+		this.monthMoney = monthMoney;
 	}
 	
 }

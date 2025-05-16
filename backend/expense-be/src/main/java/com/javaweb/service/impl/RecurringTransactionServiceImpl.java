@@ -92,4 +92,10 @@ public class RecurringTransactionServiceImpl implements RecurringTransactionServ
             return false; // Trả về false nếu có lỗi xảy ra
         }
     }
+
+	@Override
+	public List<RecurringTransactionResponseDTO> getRecurringTransactionByUserId(Long userId) {
+		List<RecurringTransactionEntity> entities = recurringTransactionRepository.findByUserId(userId);
+		return recurringTransactionConverter.convertToResponseList(entities);
+	}
 }
