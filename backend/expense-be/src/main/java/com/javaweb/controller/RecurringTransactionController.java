@@ -7,11 +7,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import com.javaweb.enums.RecurringStatusEnum;
 import com.javaweb.model.request.RecurringStatusRequestDTO;
 import com.javaweb.model.request.RecurringTransactionRequestDTO;
+import com.javaweb.model.response.BorrowingResponseDTO;
 import com.javaweb.model.response.RecurringTransactionResponseDTO;
 import com.javaweb.service.RecurringTransactionService;
 @CrossOrigin(origins = "http://localhost:5173")
@@ -64,8 +66,6 @@ public class RecurringTransactionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
-
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Object>> deleteRecurringTransaction(@PathVariable Long id) {
         boolean isDeleted = recurringTransactionService.deleteRecurringTransaction(id);
@@ -81,5 +81,10 @@ public class RecurringTransactionController {
             response.put("message", "Không tìm thấy giao dịch định kì có id: " + id);
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
+    }
+    
+    @Scheduled(fixedDelay = 1000) // mỗi 1 giây
+    public List<RecurringTransactionResponseDTO> autoTransactions() {
+		return recurringTransactionService.autoTransactions();
     }
 }

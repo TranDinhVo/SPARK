@@ -106,7 +106,7 @@ public class BorrowingServiceImpl implements BorrowingService{
 				BorrowingResponseDTO borrowResponse = borrowingRepository.updateBorrowing(new BorrowingRequestDTO(), item);
 				borrowingRepository.save(item);
 				TransactionRequestDTO transactionRequest = new TransactionRequestDTO(item.getUserBorrowing().getId(), item.getId(), null, Long.valueOf(6), null,
-						borrowResponse.getMonthMoney(), "", Instant.now());
+						borrowResponse.getMonthMoney(), "Trả nợ " + item.getCounterpartyName() + " lần " + borrowResponse.getRemainTimes().toString(), Instant.now());
 				transactionServiceImpl.createTransaction(transactionRequest);
 				//cập nhật lại status, next-due-date của borrow ở repos
 				return borrowResponse;

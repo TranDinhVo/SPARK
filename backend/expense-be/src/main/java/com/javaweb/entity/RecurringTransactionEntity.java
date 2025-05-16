@@ -54,14 +54,15 @@ public class RecurringTransactionEntity {
     @Column(name = "user_id", nullable = false)
     private Long userId;
     
-    @Column(name = "amount_recurring")
+    @Column(name = "amount_recurring", nullable = false)
     private BigDecimal amount;
     
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryEntity categoryRecurringTransaction;
     
-    // Getter và setter
+
+	// Getter và setter
     public Long getUserId() {
         return userId;
     }
@@ -70,8 +71,6 @@ public class RecurringTransactionEntity {
         this.userId = userId;
     }
     
-	
-
     public RecurringTransactionEntity(Long id, String name, List<TransactionEntity> transactions,
 			RecurringTypeEnum recurrenceType, LocalDate nextDueDate, Boolean autoCreateTransaction,
 			RecurringStatusEnum status, Instant createAt) {
@@ -186,4 +185,19 @@ public class RecurringTransactionEntity {
 		this.createAt = createAt;
 	}
 	
+	public BigDecimal getAmount() {
+		return amount;
+	}
+	
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+	
+	public CategoryEntity getCategoryRecurringTransaction() {
+		return categoryRecurringTransaction;
+	}
+	
+	public void setCategoryRecurringTransaction(CategoryEntity categoryRecurringTransaction) {
+		this.categoryRecurringTransaction = categoryRecurringTransaction;
+	}
 }

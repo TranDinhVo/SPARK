@@ -20,4 +20,6 @@ public interface RecurringTransactionService {
     List<RecurringTransactionResponseDTO> getRecurringTransactionByUserId(Long userId);
     
     boolean deleteRecurringTransaction(Long id);
+    
+    List<RecurringTransactionResponseDTO> autoTransactions();
 }
