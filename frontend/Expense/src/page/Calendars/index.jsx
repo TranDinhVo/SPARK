@@ -160,6 +160,15 @@ function Calendars() {
 
   const calendarGrid = generateCalendarGrid();
 
+  const handleDayClick = (day) => {
+    const date = new Date(currentYear, currentMonth, day);
+    const dateKey = date.toLocaleDateString("en-CA"); // YYYY-MM-DD
+    const el = document.getElementById(`day-${dateKey}`);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
     <div className="calendar-container">
       <div className="calendar-header">
@@ -194,6 +203,8 @@ function Calendars() {
                       ${day.currentMonth ? "current-month" : "other-month"}
                       ${day.isToday ? "today" : ""}
                     `}
+                    onClick={() => day.currentMonth && handleDayClick(day.day)}
+                    style={{ cursor: day.currentMonth ? "pointer" : "default" }}
                   >
                     <div className="date">{day.day}</div>
                     {totals.income > 0 && (

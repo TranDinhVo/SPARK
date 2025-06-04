@@ -50,8 +50,10 @@ function TransactionCalendar(props) {
           0
         );
 
+        const dateKey = date.replace(/\//g, "-");
+
         return (
-          <div key={date} className="transaction-day">
+          <div key={date} className="transaction-day" id={`day-${dateKey}`}>
             <div className="transaction-day-header">
               <span className="date-display">{date}</span>
               <span
