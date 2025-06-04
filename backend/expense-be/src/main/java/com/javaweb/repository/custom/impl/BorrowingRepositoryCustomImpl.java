@@ -30,8 +30,6 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 	@Autowired
 	private BorrowingConverter borrowingConverter;
 	
-	 
-	
 	@PersistenceContext
     private EntityManager entityManager;
 	
@@ -187,7 +185,7 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 				+ "FROM borrowing AS b \n"
 				+ "WHERE b.auto_create_transaction = 1 \n"
 				+ "AND b.status = 'DANG_HOAT_DONG'\n"
-				+ "AND b.next_due_date <= CURDATE()\n"
+				+ "AND b.next_due_date = CURDATE()\n"
 				+ "AND NOT EXISTS (\n"
 				+ "    SELECT 1 FROM transaction t \n"
 				+ "    WHERE t.borrowing_id = b.id \n"

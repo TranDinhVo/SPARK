@@ -1,6 +1,8 @@
 package com.javaweb.service.impl;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import com.javaweb.converter.RecurringTransactionConverter;
 import com.javaweb.entity.RecurringTransactionEntity;
 import com.javaweb.enums.RecurringStatusEnum;
 import com.javaweb.model.request.RecurringTransactionRequestDTO;
+import com.javaweb.model.request.TransactionRequestDTO;
 import com.javaweb.model.response.RecurringTransactionResponseDTO;
 import com.javaweb.repository.RecurringTransactionRepository;
 import com.javaweb.service.RecurringTransactionService;
@@ -22,6 +25,7 @@ public class RecurringTransactionServiceImpl implements RecurringTransactionServ
     @Autowired
     private RecurringTransactionConverter recurringTransactionConverter;
 
+    @Autowired TransactionServiceImpl transactionServiceImpl;
     @Override
     public List<RecurringTransactionResponseDTO> getAllRecurringTransaction() {
         List<RecurringTransactionEntity> entities = recurringTransactionRepository.findAll();
@@ -97,5 +101,25 @@ public class RecurringTransactionServiceImpl implements RecurringTransactionServ
 	public List<RecurringTransactionResponseDTO> getRecurringTransactionByUserId(Long userId) {
 		List<RecurringTransactionEntity> entities = recurringTransactionRepository.findByUserId(userId);
 		return recurringTransactionConverter.convertToResponseList(entities);
+	}
+
+	@Override
+	public List<RecurringTransactionResponseDTO> autoTransactions() {
+		//lấy các khoản định kỳ đến hạn(<= now, status, auto=1)
+		List<RecurringTransactionEntity> entities = recurringTransactionRepository.findRecurringTransactionByAuto();
+		if(entities != null) {
+			//tạo từng giao dịch cho từng entity ở repo
+		List<RecurringTransactionResponseDTO> result = entities.stream().map(item -> {
+			TransactionRequestDTO transactionRequest = new TransactionRequestDTO(item.getUserId(), null, null, item.getCategoryRecurringTransaction().getId(), item.getId(),
+					item.getAmount(), item.getName(), Instant.now());
+			transactionServiceImpl.createTransaction(transactionRequest);
+			//cập nhật lại next-due-date của recurring ở repos
+			recurringTransactionRepository.updateEntity(item);
+			RecurringTransactionResponseDTO curringResponse = recurringTransactionConverter.convertToResponse(item);
+			return curringResponse;
+		}).collect(Collectors.toList());
+		return result;
+		}
+		return null;
 	}
 }

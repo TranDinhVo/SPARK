@@ -3,10 +3,10 @@ import java.math.BigDecimal;
 import java.time.Instant;
 public class TransactionRequestDTO {
     private Long userId; 
-    private Long borrowId;
+    private Long borrowId;//
     private Long goalId;//
     private Long categoryId;
-    private Long recurrenceId;//
+    private Long recurrenceId;
     private BigDecimal amount;
     private String description;//
     private Instant createdAt;
