@@ -72,7 +72,7 @@ public class CategoryEntity {
 		this.color = color;
 		this.createdAt = createdAt;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}

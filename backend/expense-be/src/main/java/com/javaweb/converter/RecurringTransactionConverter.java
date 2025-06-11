@@ -57,6 +57,9 @@ public class RecurringTransactionConverter {
         if (requestDTO.getCreateAt() != null) {
             existingEntity.setCreateAt(requestDTO.getCreateAt());
         }
+        if (requestDTO.getAmount() != null) {
+            existingEntity.setAmount(requestDTO.getAmount());
+        }
         return existingEntity;
     }
 }

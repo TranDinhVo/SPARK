@@ -49,7 +49,7 @@ public class RecurringTransactionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<RecurringTransactionResponseDTO> updateRecurringTransaction(
             @PathVariable Long id,
             @RequestBody RecurringTransactionRequestDTO recurringTransactionRequestDTO) {

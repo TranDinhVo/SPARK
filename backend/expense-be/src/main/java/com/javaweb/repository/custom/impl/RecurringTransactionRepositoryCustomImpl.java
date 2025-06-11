@@ -23,13 +23,7 @@ public class RecurringTransactionRepositoryCustomImpl implements RecurringTransa
 				+ "FROM recurring_transactions AS b\r\n"
 				+ "WHERE b.auto_create_transaction = 1\r\n"
 				+ "AND b.status = 'ACTIVE'\r\n"
-				+ "AND b.next_due_date = CURDATE()\r\n"
-				+ "AND NOT EXISTS (\r\n"
-				+ "  SELECT 1\r\n"
-				+ "  FROM transaction t\r\n"
-				+ "  WHERE recurring_id = b.id\r\n"
-				+ "    AND DATE(t.created_at) = CURDATE()\r\n"
-				+ ")");
+				+ "AND b.next_due_date <= CURDATE()\r\n");
 		Query query = entityManager.createNativeQuery(sql.toString(), RecurringTransactionEntity.class);
 		List<RecurringTransactionEntity> result = query.getResultList();
 		return result;
@@ -37,50 +31,41 @@ public class RecurringTransactionRepositoryCustomImpl implements RecurringTransa
 	@Transactional
 	@Override
 	public RecurringTransactionEntity updateEntity(RecurringTransactionEntity entity) {
-		if(entity.getRecurrenceType() == RecurringTypeEnum.MONTHLY) {
+		if (entity.getRecurrenceType() == RecurringTypeEnum.MONTHLY) {
 			entity.setNextDueDate(
-					Instant.now()
-					.atZone(ZoneId.systemDefault())
+				entity.getNextDueDate()
+					.atStartOfDay(ZoneId.systemDefault())
 					.plusMonths(1)
-					.toLocalDateTime()
 					.toLocalDate()
-					);
-		}
-		else if(entity.getRecurrenceType() == RecurringTypeEnum.YEARLY) {
+			);
+		} else if (entity.getRecurrenceType() == RecurringTypeEnum.YEARLY) {
 			entity.setNextDueDate(
-					Instant.now()
-					.atZone(ZoneId.systemDefault())
+				entity.getNextDueDate()
+					.atStartOfDay(ZoneId.systemDefault())
 					.plusYears(1)
-					.toLocalDateTime()
 					.toLocalDate()
-					);
-		}
-		else if(entity.getRecurrenceType() == RecurringTypeEnum.WEEKLY) {
+			);
+		} else if (entity.getRecurrenceType() == RecurringTypeEnum.WEEKLY) {
 			entity.setNextDueDate(
-					Instant.now()
-					.atZone(ZoneId.systemDefault())
+				entity.getNextDueDate()
+					.atStartOfDay(ZoneId.systemDefault())
 					.plusWeeks(1)
-					.toLocalDateTime()
 					.toLocalDate()
-					);
-		}
-		else if(entity.getRecurrenceType() == RecurringTypeEnum.QUARTERLY) {
+			);
+		} else if (entity.getRecurrenceType() == RecurringTypeEnum.QUARTERLY) {
 			entity.setNextDueDate(
-					Instant.now()
-					.atZone(ZoneId.systemDefault())
+				entity.getNextDueDate()
+					.atStartOfDay(ZoneId.systemDefault())
 					.plusMonths(3)
-					.toLocalDateTime()
 					.toLocalDate()
-					);
-		}
-		else{
+			);
+		} else {
 			entity.setNextDueDate(
-					Instant.now()
-					.atZone(ZoneId.systemDefault())
+				entity.getNextDueDate()
+					.atStartOfDay(ZoneId.systemDefault())
 					.plusDays(1)
-					.toLocalDateTime()
 					.toLocalDate()
-					);
+			);
 		}
 		entityManager.merge(entity);
 		return entity;

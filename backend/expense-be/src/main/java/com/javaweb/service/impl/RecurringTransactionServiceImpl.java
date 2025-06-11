@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaweb.converter.RecurringTransactionConverter;
+import com.javaweb.entity.CategoryEntity;
 import com.javaweb.entity.RecurringTransactionEntity;
 import com.javaweb.enums.RecurringStatusEnum;
 import com.javaweb.model.request.RecurringTransactionRequestDTO;
 import com.javaweb.model.request.TransactionRequestDTO;
 import com.javaweb.model.response.RecurringTransactionResponseDTO;
 import com.javaweb.repository.RecurringTransactionRepository;
+import com.javaweb.repository.custom.impl.CategoryRepositoryCustomImpl;
 import com.javaweb.service.RecurringTransactionService;
 
 @Service
@@ -21,7 +23,8 @@ public class RecurringTransactionServiceImpl implements RecurringTransactionServ
 
     @Autowired
     private RecurringTransactionRepository recurringTransactionRepository;
-
+    @Autowired
+    private CategoryRepositoryCustomImpl categoryRepositoryCustomImpl;
     @Autowired
     private RecurringTransactionConverter recurringTransactionConverter;
 
@@ -41,10 +44,12 @@ public class RecurringTransactionServiceImpl implements RecurringTransactionServ
 
     @Override
     public RecurringTransactionResponseDTO createRecurringTransaction(RecurringTransactionRequestDTO dto) {
+    	//Tìm category id có tên định kì dựa vào userId
+    	CategoryEntity category = categoryRepositoryCustomImpl.findByKey("Định kì", dto.getUserId());
         // Đảm bảo bạn không set ID nào khi tạo mới entity
         RecurringTransactionEntity entity = recurringTransactionConverter.convertToEntity(dto);
         entity.setId(null); // Đảm bảo ID là null khi tạo mới
-        
+        entity.setCategoryRecurringTransaction(category);
         // Lưu entity vào DB
         RecurringTransactionEntity savedEntity = recurringTransactionRepository.save(entity);
         
