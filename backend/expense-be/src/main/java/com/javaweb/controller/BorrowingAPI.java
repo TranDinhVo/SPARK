@@ -74,7 +74,7 @@ public class BorrowingAPI {
 		return borrowing;
 	}
 	
-	@Scheduled(fixedDelay = 1000) // mỗi 1 giây
+	@Scheduled(fixedDelay = 1000*60) // mỗi 1 giây
     public List<BorrowingResponseDTO> autoTransactions() {
 		return borrowingService.autoTransactions();
     }

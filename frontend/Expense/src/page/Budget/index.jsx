@@ -1,5 +1,5 @@
 import { Row, Col, Input, Spin, Progress, Modal } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { deleteBudget, getBudgetByUser } from "../../services/BudgetService";
 import { getTransactionByUser } from "../../services/TransactionService";
 import { FiSearch, FiChevronLeft, FiChevronRight } from "react-icons/fi";
@@ -18,7 +18,6 @@ import { removeVietnameseTones } from "../../helpers/normalize";
 
 function Budget() {
   const [budgets, setBudgets] = useState([]);
-  const [filteredBudgets, setFilteredBudgets] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedBudget, setSelectedBudget] = useState(null);
@@ -26,34 +25,34 @@ function Budget() {
   const [loadingTransaction, setLoadingTransaction] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [openModal, setOpenModal] = useState(false);
-
   const [activeTab, setActiveTab] = useState("hoatdong");
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 4;
-
-  const userId = getCookie("id");
-
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editBudget, setEditBudget] = useState(null);
 
+  const pageSize = 4;
+  const userId = getCookie("id");
+
+  // Timer cho current time
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 60000);
-
     return () => clearInterval(timer);
   }, []);
-  const fetchApi = async () => {
+
+  // Fetch budgets - chỉ chạy 1 lần khi userId thay đổi
+  const fetchApi = useCallback(async () => {
+    if (!userId) return;
+
     setLoading(true);
     try {
       const result = await getBudgetByUser(userId);
 
-      // Lấy tháng hiện tại
       const currentDate = new Date();
       const currentMonth = currentDate.getMonth() + 1;
       const currentYear = currentDate.getFullYear();
 
-      // Lọc ngân sách theo tháng hiện tại
       const filteredByMonth = result.filter((item) => {
         const date = new Date(item.startDate);
         return (
@@ -61,73 +60,80 @@ function Budget() {
           date.getFullYear() === currentYear
         );
       });
+
       setBudgets(filteredByMonth);
-      setFilteredBudgets(filteredByMonth);
     } catch (error) {
       console.error("Fetch Budget error:", error);
     } finally {
       setLoading(false);
     }
-  };
-  useEffect(() => {
-    fetchApi();
   }, [userId]);
 
   useEffect(() => {
-    if (activeTab === "hoatdong") {
-      setFilteredBudgets(budgets);
-    } else {
-      const filtered = budgets.filter((item) => {
+    fetchApi();
+  }, [fetchApi]);
+
+  // Memoize filtered budgets để tránh re-calculate không cần thiết
+  const filteredBudgets = useMemo(() => {
+    let filtered = budgets;
+
+    // Filter by active tab
+    if (activeTab === "canhbao") {
+      filtered = budgets.filter((item) => {
         const threshold = item.amountLimit * (item.alertThreshold || 0.8);
         return item.usedAmount >= threshold;
       });
-      setFilteredBudgets(filtered);
     }
-  }, [activeTab, budgets]);
-  useEffect(() => {
-    setLoading(true);
-    const delayDebounceFn = setTimeout(() => {
+
+    // Filter by search text
+    if (searchText.trim()) {
       const text = removeVietnameseTones(searchText.trim().toLowerCase());
-      const filtered = !text
-        ? budgets
-        : budgets.filter((item) =>
-            removeVietnameseTones(item.budgetName || "")
-              .toLowerCase()
-              .includes(text)
-          );
-      setFilteredBudgets(filtered);
-      setLoading(false);
-    }, 800);
+      filtered = filtered.filter((item) =>
+        removeVietnameseTones(item.budgetName || "")
+          .toLowerCase()
+          .includes(text)
+      );
+    }
 
-    return () => {
-      clearTimeout(delayDebounceFn);
-    };
-  }, [searchText, budgets]);
+    return filtered;
+  }, [budgets, activeTab, searchText]);
 
+  // Auto select first budget khi filteredBudgets thay đổi
   useEffect(() => {
     if (filteredBudgets.length > 0) {
-      setSelectedBudget(filteredBudgets[0]);
+      // Chỉ set selectedBudget nếu chưa có hoặc budget hiện tại không còn trong danh sách filtered
+      const currentBudgetExists = filteredBudgets.some(
+        (budget) =>
+          selectedBudget && budget.budgetName === selectedBudget.budgetName
+      );
+
+      if (!selectedBudget || !currentBudgetExists) {
+        setSelectedBudget(filteredBudgets[0]);
+      }
     } else {
       setSelectedBudget(null);
     }
-  }, [filteredBudgets]);
+  }, [filteredBudgets, selectedBudget]);
 
+  // Fetch transactions cho selected budget
   useEffect(() => {
     const fetchTransactions = async () => {
-      if (!selectedBudget) return;
+      if (!selectedBudget || !userId) {
+        setTransactions([]);
+        return;
+      }
 
       setLoadingTransaction(true);
-      const allTransactions = await getTransactionByUser(userId);
-      setTimeout(() => {
+      try {
+        const allTransactions = await getTransactionByUser(userId);
+
         const start = new Date(selectedBudget.startDate);
         const end = new Date(selectedBudget.endDate);
-
         start.setHours(0, 0, 0, 0);
         end.setHours(23, 59, 59, 999);
 
         const filtered = allTransactions.filter((tran) => {
           if (tran.type !== "Chi") return false;
-
           const tranDate = new Date(tran.createdAt);
           return (
             tranDate >= start &&
@@ -137,14 +143,18 @@ function Budget() {
         });
 
         setTransactions(filtered);
-
+      } catch (error) {
+        console.error("Fetch transactions error:", error);
+        setTransactions([]);
+      } finally {
         setLoadingTransaction(false);
-      }, 800);
+      }
     };
 
     fetchTransactions();
   }, [selectedBudget, userId]);
 
+  // Handle delete budget
   const handleDeleteBudget = async (budget) => {
     const confirm = await Swal.fire({
       title: "Xác nhận xóa?",
@@ -161,7 +171,11 @@ function Budget() {
       try {
         const result = await deleteBudget(budget.id);
         if (result) {
-          Swal.fire("Đã xóa!", "Ngân sách đã được xóa thành công.", "success");
+          await Swal.fire(
+            "Đã xóa!",
+            "Ngân sách đã được xóa thành công.",
+            "success"
+          );
           fetchApi();
         } else {
           Swal.fire("Thất bại", "Xóa ngân sách thất bại!", "error");
@@ -171,7 +185,16 @@ function Budget() {
       }
     }
   };
+
+  // Pagination logic
   const totalPages = Math.ceil(filteredBudgets.length / pageSize);
+  const paginatedBudgets = useMemo(() => {
+    return filteredBudgets.slice(
+      (currentPage - 1) * pageSize,
+      currentPage * pageSize
+    );
+  }, [filteredBudgets, currentPage, pageSize]);
+
   const renderPageNumbers = () => {
     const pages = [];
     const startPage = Math.max(1, currentPage - 1);
@@ -192,9 +215,35 @@ function Budget() {
     }
     return pages;
   };
-  const onReload = () => {
+
+  const onReload = useCallback(() => {
     fetchApi();
+  }, [fetchApi]);
+
+  // Event handlers
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
+
+  const handleModalSave = (formData) => {
+    console.log("Dữ liệu form:", formData);
+    setOpenModal(false);
   };
+
+  const handleEditBudget = (budget) => {
+    setEditBudget({
+      ...budget,
+      categoryId: budget.categoryId || budget.category?.id,
+    });
+    setEditModalOpen(true);
+  };
+
+  const handleEditModalClose = () => setEditModalOpen(false);
+
+  const handleEditModalSave = () => {
+    setEditModalOpen(false);
+    onReload();
+  };
+
   return (
     <>
       <Row gutter={[20, 20]} className="budget__row">
@@ -212,28 +261,14 @@ function Budget() {
         </Col>
         <Col span={12}></Col>
         <Col span={4}>
-          <div
-            className="budget__add--button"
-            onClick={() => setOpenModal(true)}
-          >
+          <div className="budget__add--button" onClick={handleOpenModal}>
             <AiOutlinePlus className="budget__add--icon" />
-            <span>Thêm ngân sách</span>
+            <span>Thêm</span>
           </div>
-          <BudgetFormModal
-            open={openModal}
-            onCancel={() => setOpenModal(false)}
-            onSave={(formData) => {
-              console.log("Dữ liệu form:", formData);
-              setOpenModal(false);
-            }}
-            onReload={onReload}
-            budgets={budgets}
-          />
         </Col>
       </Row>
 
-      {/* Danh sách ngân sách */}
-      <Row gutter={[20, 20]} className="budget__row">
+      <Row gutter={[]} className="budget__row">
         <Col span={8} className="budget__list">
           <div className="budget__wrapper">
             {loading && (
@@ -241,6 +276,7 @@ function Budget() {
                 <Spin tip="Đang tải dữ liệu..." size="large" />
               </div>
             )}
+
             <div className="budget__tab">
               <div
                 className={`budget__tab--item ${
@@ -261,127 +297,121 @@ function Budget() {
                 Cảnh báo
               </div>
             </div>
+
             {!loading &&
               (filteredBudgets.length > 0 ? (
                 <>
-                  {filteredBudgets
-                    .slice((currentPage - 1) * pageSize, currentPage * pageSize)
-                    .map((budget, index) => (
-                      <div
-                        key={index}
-                        className={`budget__item ${
-                          selectedBudget &&
-                          selectedBudget.budgetName === budget.budgetName
-                            ? "budget__active"
-                            : ""
-                        }`}
-                        onClick={() => setSelectedBudget(budget)}
-                      >
-                        <div className="budget__content">
-                          <div className="budget__top">
-                            <h4 className="budget__top--title">
-                              <HighlightText
-                                text={budget.budgetName}
-                                keyword={searchText}
-                              />
-                            </h4>
-                            <div
-                              className="budget__top--delete"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleDeleteBudget(budget);
-                              }}
-                            >
-                              <AiOutlineClose />
-                            </div>
+                  {paginatedBudgets.map((budget, index) => (
+                    <div
+                      key={`${budget.id}-${budget.budgetName}`}
+                      className={`budget__item ${
+                        selectedBudget &&
+                        selectedBudget.budgetName === budget.budgetName
+                          ? "budget__active"
+                          : ""
+                      }`}
+                      onClick={() => setSelectedBudget(budget)}
+                    >
+                      <div className="budget__content">
+                        <div className="budget__top">
+                          <h4 className="budget__top--title">
+                            <HighlightText
+                              text={budget.budgetName}
+                              keyword={searchText}
+                            />
+                          </h4>
+                          <div
+                            className="budget__top--delete"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteBudget(budget);
+                            }}
+                          >
+                            <AiOutlineClose />
                           </div>
-                          <div className="budget__center">
-                            <div
-                              className="budget__center--image"
-                              dangerouslySetInnerHTML={{
-                                __html: budget.iconUrl,
-                              }}
-                            >
-                              {/* <img /> */}
-                            </div>
-                            <div className="budget__amount">
-                              <p className="budget__amount--used">
-                                {formatCurrency(budget.usedAmount)}
-                              </p>
-                              <p className="budget__amount--limit">
-                                {formatCurrency(budget.amountLimit)}
-                              </p>
-                            </div>
-                            <p className="budget__center--btn">
-                              <GoChevronRight />
+                        </div>
+                        <div className="budget__center">
+                          <div
+                            className="budget__center--image"
+                            dangerouslySetInnerHTML={{
+                              __html: budget.iconUrl,
+                            }}
+                          />
+                          <div className="budget__amount">
+                            <p className="budget__amount--used">
+                              {formatCurrency(budget.usedAmount)}
+                            </p>
+                            <p className="budget__amount--limit">
+                              {formatCurrency(budget.amountLimit)}
                             </p>
                           </div>
-                        </div>
-                        <div className="budget__bottom">
-                          <p className="budget__bottom--time">
-                            {formatDate(budget.endDate)}
+                          <p className="budget__center--btn">
+                            <GoChevronRight />
                           </p>
-                          <div className="budget__bottom--progress">
-                            <Progress
-                              percent={
-                                budget.amountLimit
-                                  ? Math.min(
-                                      (budget.usedAmount / budget.amountLimit) *
-                                        100,
-                                      100
-                                    )
-                                  : 0
-                              }
-                              status={
-                                budget.amountLimit &&
-                                budget.usedAmount / budget.amountLimit > 1
-                                  ? "exception"
-                                  : "normal"
-                              }
-                              strokeColor={{
-                                "0%": "var(--primary-color)",
-                                // "100%": "#3b82f6",
-                              }}
-                              trailColor="#ffffff"
-                              strokeWidth={14}
-                              showInfo={false}
-                            />
-                          </div>
                         </div>
                       </div>
-                    ))}
-                  <div className="budget__pagination">
-                    <div
-                      className="budget__arrow"
-                      onClick={() =>
-                        currentPage > 1 && setCurrentPage(currentPage - 1)
-                      }
-                    >
-                      <FiChevronLeft />
+                      <div className="budget__bottom">
+                        <p className="budget__bottom--time">
+                          {formatDate(budget.endDate)}
+                        </p>
+                        <div className="budget__bottom--progress">
+                          <Progress
+                            percent={
+                              budget.amountLimit
+                                ? Math.min(
+                                    (budget.usedAmount / budget.amountLimit) *
+                                      100,
+                                    100
+                                  )
+                                : 0
+                            }
+                            status={
+                              budget.amountLimit &&
+                              budget.usedAmount / budget.amountLimit > 1
+                                ? "exception"
+                                : "normal"
+                            }
+                            strokeColor={{
+                              "0%": "var(--primary-color)",
+                            }}
+                            trailColor="#ffffff"
+                            strokeWidth={14}
+                            showInfo={false}
+                          />
+                        </div>
+                      </div>
                     </div>
+                  ))}
 
-                    {renderPageNumbers()}
-
-                    <div
-                      className="budget__arrow"
-                      onClick={() =>
-                        currentPage < totalPages &&
-                        setCurrentPage(currentPage + 1)
-                      }
-                    >
-                      <FiChevronRight />
+                  {totalPages > 1 && (
+                    <div className="budget__pagination">
+                      <div
+                        className="budget__arrow"
+                        onClick={() =>
+                          currentPage > 1 && setCurrentPage(currentPage - 1)
+                        }
+                      >
+                        <FiChevronLeft />
+                      </div>
+                      {renderPageNumbers()}
+                      <div
+                        className="budget__arrow"
+                        onClick={() =>
+                          currentPage < totalPages &&
+                          setCurrentPage(currentPage + 1)
+                        }
+                      >
+                        <FiChevronRight />
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </>
               ) : (
-                <>
-                  <p>Không tìm thấy kết quả phù hợp.</p>
-                </>
+                <p>Không tìm thấy kết quả phù hợp.</p>
               ))}
           </div>
         </Col>
 
-        {/* Cột chi tiết */}
         <Col span={15} className="budget__detail">
           <h2 className="budget__detail-title">Chi tiết ngân sách</h2>
           {loading && (
@@ -389,6 +419,7 @@ function Budget() {
               <Spin tip="Đang tải dữ liệu..." size="large" />
             </div>
           )}
+
           {selectedBudget ? (
             <div className="budget__detail--list">
               <div className="budget__detail--header">
@@ -403,18 +434,10 @@ function Budget() {
                 <div
                   className="budget__detail--image"
                   dangerouslySetInnerHTML={{ __html: selectedBudget.iconUrl }}
-                ></div>
+                />
                 <button
                   className="budget__detail--edit-btn"
-                  onClick={() => {
-                    setEditBudget({
-                      ...selectedBudget,
-                      categoryId:
-                        selectedBudget.categoryId ||
-                        selectedBudget.category?.id,
-                    });
-                    setEditModalOpen(true);
-                  }}
+                  onClick={() => handleEditBudget(selectedBudget)}
                   style={{
                     marginLeft: 16,
                     background: "var(--primary-color, #ff8800)",
@@ -472,30 +495,6 @@ function Budget() {
                 </p>
               </div>
 
-              {/* <Progress
-                percent={
-                  selectedBudget.amountLimit
-                    ? Math.min(
-                        (selectedBudget.usedAmount /
-                          selectedBudget.amountLimit) *
-                          100,
-                        100
-                      )
-                    : 0
-                }
-                status={
-                  selectedBudget.amountLimit &&
-                  selectedBudget.usedAmount / selectedBudget.amountLimit > 1
-                    ? "exception"
-                    : "normal"
-                }
-                strokeColor={{
-                  "0%": "#34d399",
-                  "100%": "#3b82f6",
-                }}
-                showInfo
-              /> */}
-
               <div className="budget__detail--transaction">
                 <h3>Danh sách giao dịch</h3>
                 {loadingTransaction ? (
@@ -503,7 +502,10 @@ function Budget() {
                 ) : transactions.length > 0 ? (
                   <div className="transaction__list">
                     {transactions.map((tran, index) => (
-                      <div key={index} className="transaction__item">
+                      <div
+                        key={`${tran.id}-${index}`}
+                        className="transaction__item"
+                      >
                         <div className="transaction__left">
                           <div
                             className="transaction__icon"
@@ -511,7 +513,6 @@ function Budget() {
                               __html: selectedBudget.iconUrl,
                             }}
                           />
-
                           <div className="transaction__info">
                             <p className="transaction__name">{tran.name}</p>
                             <p className="transaction__date">
@@ -538,19 +539,26 @@ function Budget() {
           ) : (
             <p>Chọn ngân sách để xem chi tiết</p>
           )}
-          <BudgetFormModal
-            open={editModalOpen}
-            onCancel={() => setEditModalOpen(false)}
-            onSave={() => {
-              setEditModalOpen(false);
-              onReload();
-            }}
-            onReload={onReload}
-            budgets={budgets}
-            editBudget={editBudget}
-          />
         </Col>
       </Row>
+
+      {/* Modals */}
+      <BudgetFormModal
+        open={openModal}
+        onCancel={handleCloseModal}
+        onSave={handleModalSave}
+        onReload={onReload}
+        budgets={budgets}
+      />
+
+      <BudgetFormModal
+        open={editModalOpen}
+        onCancel={handleEditModalClose}
+        onSave={handleEditModalSave}
+        onReload={onReload}
+        budgets={budgets}
+        editBudget={editBudget}
+      />
     </>
   );
 }

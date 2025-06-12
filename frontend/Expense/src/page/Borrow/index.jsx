@@ -34,15 +34,13 @@ function Borrow() {
   const [loading, setLoading] = useState(false);
   const userId = getCookie("id");
   const navigate = useNavigate();
-
+  const fetchApi = async () => {
+    const result = await getBorrowByUser(userId);
+    setBorrowList(Array.isArray(result) ? result : []);
+    setFilteredList(Array.isArray(result) ? result : []);
+  };
   useEffect(() => {
-    const fetchBorrow = async () => {
-      const result = await getBorrowByUser(userId);
-      console.log(result);
-      setBorrowList(Array.isArray(result) ? result : []);
-      setFilteredList(Array.isArray(result) ? result : []);
-    };
-    fetchBorrow();
+    fetchApi();
   }, [userId]);
 
   useEffect(() => {
@@ -264,6 +262,8 @@ function Borrow() {
           setIsModalVisible(false);
           form.resetFields();
         }}
+        okText="Thêm"
+        cancelText="Hủy"
         width={600}
       >
         <Form form={form} layout="vertical" className="borrow-form">

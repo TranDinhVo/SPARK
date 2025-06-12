@@ -125,7 +125,7 @@
   }
 
   &__row {
-    padding: 30px;
+    padding: 15px;
   }
   &__list {
     position: relative;
@@ -134,13 +134,13 @@
     border-radius: 12px;
     background-color: #fff;
     overflow: hidden;
-    height: 1000px;
+    // height: 1000px;
   }
 
   &__wrapper {
     position: relative;
     width: 100%;
-    height: 100%;
+    // height: 100%;
     padding: 30px 30px;
   }
 
@@ -411,7 +411,8 @@
     }
     &--transaction {
       margin-top: 24px;
-      height: 650px;
+      // height: 650px;
+      max-height: 650px;
       overflow: hidden;
 
       h3 {

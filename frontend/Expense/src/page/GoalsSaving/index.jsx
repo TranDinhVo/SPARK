@@ -58,25 +58,23 @@ function GoalsSaving() {
       const result = await createGoal(goalData);
 
       if (result) {
-        setTimeout(() => {
-          Swal.fire({
-            icon: "success",
-            title: "Đã lưu!",
-            text: "Mục tiêu tiết kiệm được tạo thành công 🎯",
-            timer: 2000,
-            timerProgressBar: true,
-            showConfirmButton: false,
-            position: "center",
-            toast: true,
-            showClass: {
-              popup: "animate__animated animate__fadeInDown",
-            },
-            hideClass: {
-              popup: "animate__animated animate__fadeOutUp",
-            },
-          });
-          fetchSavingGoals();
-        }, 500);
+        await Swal.fire({
+          icon: "success",
+          title: "Đã lưu!",
+          text: "Mục tiêu tiết kiệm được tạo thành công 🎯",
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          position: "center",
+          toast: true,
+          showClass: {
+            popup: "animate__animated animate__fadeInDown",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        });
+        fetchSavingGoals();
       } else {
         Swal.fire({
           icon: "error",

@@ -119,14 +119,14 @@ function BudgetFormModal(props) {
         const doUpdate = async () => {
           const result = await updateBudget(editBudget.id, formData);
           if (result) {
-            Swal.fire({
+            await Swal.fire({
               icon: "success",
               title: "Thành công",
               text: "Ngân sách đã được cập nhật thành công!",
             });
-            onReload();
             onSave(formData);
             handleReset();
+            onReload();
           } else {
             Swal.fire({
               icon: "error",
@@ -141,7 +141,7 @@ function BudgetFormModal(props) {
         const AddBudget = async () => {
           const result = await createBudget(formData);
           if (result) {
-            Swal.fire({
+            await Swal.fire({
               icon: "success",
               title: "Thành công",
               text: "Ngân sách mới đã được thêm thành công!",
