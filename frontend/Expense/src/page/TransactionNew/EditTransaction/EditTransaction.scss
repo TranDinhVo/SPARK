@@ -1,0 +1,203 @@
+.edit-transaction {
+  &-btn {
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      color: var(--primary-color-dark);
+      transform: scale(1.1);
+    }
+  }
+
+  &-modal {
+    .ant-modal-content {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .close-icon {
+      font-size: 18px;
+      color: #999;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        color: var(--primary-color);
+        transform: rotate(90deg);
+      }
+    }
+
+    .modal-title {
+      margin: 0;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .edit-transaction-form {
+      .edit-transaction-section {
+        .detail-form-item {
+          margin-bottom: 16px;
+
+          .detail-input-container {
+            position: relative;
+
+            .detail-input {
+              width: 100%;
+              padding: 8px 12px;
+              border-radius: 8px;
+              border: 1px solid #d9d9d9;
+              transition: all 0.3s ease;
+
+              &:hover, &:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.1);
+              }
+
+              .detail-icon {
+                color: var(--primary-color);
+                margin-right: 8px;
+              }
+            }
+          }
+
+          .textarea-wrapper {
+            position: relative;
+
+            .textarea-icon {
+              position: absolute;
+              top: 12px;
+              left: 12px;
+              color: var(--primary-color);
+              z-index: 1;
+            }
+
+            .textarea-with-icon {
+              padding-left: 36px;
+              border-radius: 8px;
+              resize: none;
+              transition: all 0.3s ease;
+
+              &:hover, &:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.1);
+              }
+            }
+          }
+        }
+      }
+
+      .recurring-section {
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid #f0f0f0;
+
+        .switch-container {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .recurring-title {
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+          }
+
+          .recurring-switch {
+            &.ant-switch-checked {
+              background-color: var(--primary-color);
+            }
+          }
+        }
+      }
+
+      .form-buttons {
+        margin-top: 32px;
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+
+        .save-button {
+          background-color: var(--primary-color);
+          border-color: var(--primary-color);
+          min-width: 120px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background-color: var(--primary-color-dark);
+            border-color: var(--primary-color-dark);
+            transform: translateY(-1px);
+          }
+
+          &:active {
+            transform: translateY(0);
+          }
+        }
+
+        .cancel-button {
+          min-width: 120px;
+          height: 40px;
+          transition: all 0.3s ease;
+
+          &:hover {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+          }
+        }
+      }
+    }
+  }
+}
+
+.edit-transaction-modal {
+  .ant-modal-content {
+    animation: editTransactionModalFadeIn 0.3s ease;
+  }
+}
+
+@keyframes editTransactionModalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Loading animation
+.edit-transaction-modal {
+  .ant-spin {
+    .ant-spin-dot {
+      i {
+        background-color: var(--primary-color);
+      }
+    }
+  }
+}
+
+// SweetAlert2 custom styles
+.edit-transaction-swal {
+  &-popup {
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  &-title {
+    color: var(--primary-color);
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  &-icon {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+} 

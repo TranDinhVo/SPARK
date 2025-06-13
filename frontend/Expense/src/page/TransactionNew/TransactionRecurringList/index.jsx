@@ -11,26 +11,10 @@ import Swal from "sweetalert2";
 import HighlightText from "../../../components/HighlightText";
 import "./TransactionRecurringList.scss";
 
-function TransactionRecurringList(props) {
+const TransactionRecurringList = (props) => {
   const { list, loading, selectedId, onSelect, onDelete, search } = props;
 
-  const handleDelete = async (item, e) => {
-    e.stopPropagation();
-    const confirm = await Swal.fire({
-      title: "Xóa giao dịch định kỳ?",
-      text: `Bạn chắc chắn muốn xóa \"${item.name}\"?`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#ef4444",
-      cancelButtonColor: "#9ca3af",
-      confirmButtonText: "Xóa",
-      cancelText: "Hủy",
-      reverseButtons: true,
-    });
-    if (confirm.isConfirmed) {
-      onDelete(item);
-    }
-  };
+ 
   const getTypeIcon = (type) => {
     switch (type) {
       case "Tháng":
@@ -72,9 +56,14 @@ function TransactionRecurringList(props) {
               <span>
                 {getTypeIcon(item.type)} {item.type}
               </span>
-              <Tag color={item.status?.code === 1 ? "green" : "red"}>
-                {item.status?.lable}
-              </Tag>
+              <Tag 
+              color={
+                item.status?.code === 1 ? "green" : 
+                item.status?.code === 0 ? "orange" : 
+                "red"
+              } 
+            > {item.status?.lable}</Tag>
+              
             </div>
           </div>
         ))

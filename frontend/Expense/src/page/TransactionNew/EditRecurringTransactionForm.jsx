@@ -4,37 +4,107 @@ import Swal from "sweetalert2";
 import dayjs from "dayjs";
 import { LoadingOutlined } from "@ant-design/icons";
 
-import "./RecurringTransactionModelForm.scss";
-import { createRecurringTransaction, getCategoryRecurringTransaction } from "../../../services/RecurringTransactionService";
+import "./TransactionForm/RecurringTransactionModelForm.scss";
+import { getCategoryRecurringTransaction, updateRecurringTransaction } from "../../services/RecurringTransactionService";
 
-const RecurringTransactionModelForm = (props) => {
-  const { userId, fetchRecurring, showRecurringForm, setShowRecurringForm, recurringLoading, setRecurringLoading, onCancel, categories } = props;
+const EditRecurringTransactionForm = (props) => {
+  const { 
+    userId, 
+    fetchRecurring, 
+    showEditForm, 
+    setShowEditForm, 
+    recurringLoading, 
+    setRecurringLoading, 
+    selectedRecurring,
+    categories
+  } = props;
+
   const [form] = Form.useForm();
+
   const [loading, setLoading] = useState(false);
+  const [categoryEdit, setCategoryEdit] = useState(null);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
+  useEffect(() => {
+    if (selectedRecurring) {
+      form.setFieldsValue({
+        name: selectedRecurring.name,
+        recurrenceType: selectedRecurring.type,
+        nextDueDate: dayjs(selectedRecurring.nextDate),
+        categoryRecurringTransaction: selectedRecurring.categoryId,
+        amount: selectedRecurring.amount
+      });
+    }
+    const category = categories.find(cat => cat.id === selectedRecurring.categoryRecurringTransaction);
+    setCategoryEdit(category);
+  }, [selectedRecurring, form]);
 
-  const resetFormAll = () => {
-    form.resetFields();
-    setShowRecurringForm(false);
-  }
+  const handleCancel = () => {
+    if (selectedRecurring) {
+      form.setFieldsValue({
+        name: selectedRecurring.name,
+        recurrenceType: selectedRecurring.type,
+        nextDueDate: dayjs(selectedRecurring.nextDate),
+        categoryRecurringTransaction: selectedRecurring.categoryId,
+        amount: selectedRecurring.amount
+      });
+    }
+    setShowEditForm(false);
+  };
 
   const handleSubmit = async (values) => {
     try {
       setLoading(true);
+      
+      // Tạo object chứa các trường đã thay đổi
+      const changedFields = {};
+      
+      // So sánh từng trường với giá trị ban đầu
+      if (values.name !== selectedRecurring.name) {
+        changedFields.name = values.name;
+      }
+      if (values.recurrenceType !== selectedRecurring.type) {
+        changedFields.recurrenceType = values.recurrenceType;
+      }
+      if (values.nextDueDate.format("YYYY-MM-DD") !== selectedRecurring.nextDate) {
+        changedFields.nextDueDate = values.nextDueDate.format("YYYY-MM-DD");
+      }
+      if (values.categoryRecurringTransaction !== selectedRecurring.categoryRecurringTransaction?.id) {
+        changedFields.categoryRecurringTransaction = values.categoryRecurringTransaction;
+      }
+      if (Number(values.amount) !== selectedRecurring.amount) {
+        changedFields.amount = Number(values.amount);
+      }
+
+      // Nếu không có trường nào thay đổi
+      if (Object.keys(changedFields).length === 0) {
+        Swal.fire({
+          title: 'Thông báo!',
+          text: 'Không có thay đổi nào được thực hiện',
+          icon: 'info',
+          confirmButtonText: 'Đồng ý',
+          confirmButtonColor: 'var(--primary-color)',
+          customClass: {
+            popup: 'animated fadeInDown'
+          }
+        });
+        handleCancel();
+        return;
+      }
+
+      // Thêm các trường bắt buộc
       const data = {
-        ...values,
-        nextDueDate: values.nextDueDate.format("YYYY-MM-DD"),
-        categoryRecurringTransaction: values.categoryRecurringTransaction,
-        amount: Number(values.amount),
+        ...changedFields,
         userId: userId,
-        autoCreateTransaction: true,
       };
-      const res = await createRecurringTransaction(data);
+      
+      // Thêm timeout để tạo hiệu ứng loading
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const res = await updateRecurringTransaction(selectedRecurring.id,data);
       if(res){
         await Swal.fire({
           title: 'Thành công!',
-          text: 'Giao dịch định kỳ đã được tạo',
+          text: 'Giao dịch định kỳ đã được cập nhật',
           icon: 'success',
           showConfirmButton: false,
           timer: 1500,
@@ -42,13 +112,13 @@ const RecurringTransactionModelForm = (props) => {
             popup: 'animated fadeInDown'
           }
         });
-        resetFormAll();
+        handleCancel();
         await fetchRecurring();
       }
     } catch (error) {
       Swal.fire({
         title: 'Lỗi!',
-        text: 'Không thể tạo giao dịch định kỳ. Vui lòng thử lại!',
+        text: 'Không thể cập nhật giao dịch định kỳ. Vui lòng thử lại!',
         icon: 'error',
         confirmButtonText: 'Đồng ý',
         confirmButtonColor: 'var(--primary-color)',
@@ -63,8 +133,8 @@ const RecurringTransactionModelForm = (props) => {
 
   return (
     <Modal
-      open={showRecurringForm}
-      onCancel={resetFormAll}
+      open={showEditForm}
+      onCancel={handleCancel}
       footer={null}
       title={
         <span
@@ -74,12 +144,11 @@ const RecurringTransactionModelForm = (props) => {
             color: "var(--primary-color)",
           }}
         >
-          Thêm giao dịch định kỳ
+          Chỉnh sửa giao dịch định kỳ
         </span>
       }
       width={450}
       centered
-      destroyOnClose
       maskClosable={false}
     >
       <div className="recurring-transaction-model-form">
@@ -88,10 +157,7 @@ const RecurringTransactionModelForm = (props) => {
             form={form}
             layout="vertical"
             onFinish={handleSubmit}
-            initialValues={{
-              recurrenceType: "MONTHLY",
-              nextDueDate: dayjs(),
-            }}
+            preserve={true}
           >
             <Form.Item
               name="name"
@@ -120,7 +186,7 @@ const RecurringTransactionModelForm = (props) => {
       
               <Form.Item
                 name="nextDueDate"
-                label="Ngày giao dịch đầu tiên"
+                label="Ngày giao dịch tiếp theo"
                 rules={[{ required: true, message: "Vui lòng chọn ngày đến hạn!" }]}
               >
                 <DatePicker format="DD/MM/YYYY" style={{ width: 180 }} />
@@ -132,9 +198,11 @@ const RecurringTransactionModelForm = (props) => {
                 name="categoryRecurringTransaction"
                 label="Danh mục"
                 rules={[{ required: true, message: "Vui lòng chọn danh mục!" }]}
+               
               >
                 <Select
                   style={{ width: 180 }}
+                  defaultValue={categoryEdit?.id}
                   placeholder="Chọn danh mục"
                   options={categories.map((cat) => ({
                     value: cat.id,
@@ -166,7 +234,7 @@ const RecurringTransactionModelForm = (props) => {
       
             <div className="rtmf__btns">
               <Button 
-                onClick={resetFormAll} 
+                onClick={handleCancel} 
                 className="rtmf__btn rtmf__btn--cancel"
                 disabled={recurringLoading}
               >
@@ -176,9 +244,9 @@ const RecurringTransactionModelForm = (props) => {
                 type="primary"
                 htmlType="submit"
                 className="rtmf__btn rtmf__btn--submit"
-                loading={recurringLoading}
+                loading={loading}
               >
-                Tạo mới
+                Cập nhật
               </Button>
             </div>
           </Form>
@@ -188,4 +256,4 @@ const RecurringTransactionModelForm = (props) => {
   );
 };
 
-export default RecurringTransactionModelForm;
+export default EditRecurringTransactionForm; 

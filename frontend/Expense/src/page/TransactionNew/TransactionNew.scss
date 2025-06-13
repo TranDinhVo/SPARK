@@ -22,7 +22,8 @@
   margin-top: 18px;
 }
 .recurring__list {
-  background: var(--primary-color-light);
+  // background: var(--primary-color-light);
+  border: 2px solid var(--primary-color-light);
   border-radius: 14px;
   box-shadow: 0 2px 12px rgba(var(--primary-color-rgb), 0.08);
   padding: 18px 8px 8px 8px;
@@ -31,11 +32,9 @@
 .recurring__search {
   position: relative;
   margin-bottom: 8px;
+  border: 2px solid var(--primary-color-light);
+  border-radius: 12px;
 }
-// .recurring__status-filter {
-//   display: flex;
-//   padding: 10px;
-// }
 .recurring__search-icon {
   position: absolute;
   left: 16px;
@@ -67,5 +66,25 @@
   .recurring__list,
   .recurring__detail {
     padding: 8px 2px;
+  }
+}
+.recurring-button-container {
+  margin: 16px 0;
+  
+  .ant-btn {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: #fff;
+      color: var(--primary-color);
+      border-color: var(--primary-color-dark);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
   }
 }

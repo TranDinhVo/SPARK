@@ -11,50 +11,138 @@ import {
   getRecurringTransactionByUser,
   deleteRecurringTransaction,
   getRecurringTransaction,
+  getCategoryRecurringTransaction,
 } from "../../services/RecurringTransactionService";
 import { FiSearch } from "react-icons/fi";
 import "./TransactionNew.scss";
 import removeVietnameseTones from "../../helpers/normalize";
 import HighlightText from "../../components/HighlightText";
+import Swal from "sweetalert2";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import EditRecurringTransactionForm from "./EditRecurringTransactionForm";
 
 function TransactionNew() {
-  const [transactions, setTransactions] = useState([]);
-  const [mode, setMode] = useState("normal"); // normal | recurring
+  const [transactionsAll, setTransactionsAll] = useState([]);
+  const [mode, setMode] = useState(() => {
+    return localStorage.getItem('transactionMode') || "normal";
+  });
+  const [selectedRecurring, setSelectedRecurring] = useState(() => {
+    const saved = localStorage.getItem('selectedRecurring');
+    return saved ? JSON.parse(saved) : null;
+  });
   const userId = getCookie("id");
   const [showRecurringForm, setShowRecurringForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [recurringList, setRecurringList] = useState([]);
   const [recurringLoading, setRecurringLoading] = useState(false);
   const [detailLoading, setDetailLoading] = useState(false);
-  const [selectedRecurring, setSelectedRecurring] = useState(null);
   const [recurringSearch, setRecurringSearch] = useState("");
-  const [recurringStatus, setRecurringStatus] = useState("all"); // all | active | cancelled | paused
+  const [recurringStatus, setRecurringStatus] = useState("all");
+  const [categories, setCategories] = useState([]);
+
+  const handleModeChange = (newMode) => {
+    setMode(newMode);
+    localStorage.setItem('transactionMode', newMode);
+  };
+
+  const handleSelectRecurring = (item) => {
+    setDetailLoading(true);
+    setSelectedRecurring(item);
+    localStorage.setItem('selectedRecurring', JSON.stringify(item));
+    setTimeout(() => {
+      setDetailLoading(false);
+    }, 400);
+  };
+
+  const handleDeleteRecurring = async (item) => {
+    try {
+      const result = await Swal.fire({
+        title: 'Bạn có chắc chắn?',
+        text: "Giao dịch định kỳ này sẽ bị xóa vĩnh viễn!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: 'var(--primary-color)',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Hủy',
+        customClass: {
+          popup: 'animated fadeInDown'
+        }
+      });
+
+      if (result.isConfirmed) {
+        await deleteRecurringTransaction(item.id);
+        await Swal.fire({
+          title: 'Đã xóa!',
+          text: 'Giao dịch định kỳ đã được xóa thành công.',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500,
+          customClass: {
+            popup: 'animated fadeInDown'
+          }
+        });
+        await fetchRecurring();
+        setSelectedRecurring(null);
+        localStorage.removeItem('selectedRecurring');
+      }
+    } catch (error) {
+      Swal.fire({
+        title: 'Lỗi!',
+        text: 'Không thể xóa giao dịch định kỳ. Vui lòng thử lại!',
+        icon: 'error',
+        confirmButtonText: 'Đồng ý',
+        confirmButtonColor: 'var(--primary-color)',
+        customClass: {
+          popup: 'animated fadeInDown'
+        }
+      });
+    }
+  };
 
   const fetchApi = async () => {
-    const result = await getTransactionByUser(userId);
-    console.log(result);
-
+    const [transactions, categories] = await Promise.all([
+      getTransactionByUser(userId),
+      getCategoryRecurringTransaction(userId)
+    ]);
+    setCategories(categories);
     const currentDate = new Date();
     const currentMonth = currentDate.getMonth() + 1;
     const currentYear = currentDate.getFullYear();
 
-    const filteredByMonth = result.filter((item) => {
-      return item.recurrence?.id === selectedRecurring?.id;
+    const filteredByMonth = transactions.filter((item) => {
+      const itemDate = new Date(item.createdAt);
+      const itemMonth = itemDate.getMonth() + 1;
+      const itemYear = itemDate.getFullYear();
+      return itemMonth === currentMonth && itemYear === currentYear;
     });
 
     const sortedByDate = filteredByMonth.sort((a, b) => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
 
-    setTransactions(sortedByDate);
+    setTransactionsAll(sortedByDate);
   };
 
   const fetchRecurring = async () => {
-    setRecurringLoading(true);
     try {
+      setRecurringLoading(true);
       const res = await getRecurringTransactionByUser(userId);
       setRecurringList(res);
-      if (res.length > 0) setSelectedRecurring(res[0]);
-      else setSelectedRecurring(null);
+      
+      // Khôi phục selected recurring sau khi fetch data
+      const savedRecurring = localStorage.getItem('selectedRecurring');
+      if (savedRecurring) {
+        const parsedRecurring = JSON.parse(savedRecurring);
+        const foundRecurring = res.find(r => r.id === parsedRecurring.id);
+        if (foundRecurring) {
+          setSelectedRecurring(foundRecurring);
+        } else {
+          // Nếu không tìm thấy recurring đã lưu trong danh sách mới
+          localStorage.removeItem('selectedRecurring');
+          setSelectedRecurring(null);
+        }
+      }
     } catch (e) {
       setRecurringList([]);
       setSelectedRecurring(null);
@@ -66,6 +154,7 @@ function TransactionNew() {
   useEffect(() => {
     fetchApi();
   }, []);
+
 
   useEffect(() => {
     if (mode === "recurring") {
@@ -81,22 +170,14 @@ function TransactionNew() {
     if (mode === "recurring") fetchRecurring();
   }, [mode]);
 
+  useEffect(() => {
+    if (selectedRecurring) {
+      fetchApi();
+    }
+  }, [selectedRecurring]);
+
   const onReload = () => {
     fetchApi();
-  };
-
-  const handleDeleteRecurring = async (item) => {
-    setRecurringLoading(true);
-    await deleteRecurringTransaction(item.id);
-    await fetchRecurring();
-  };
-
-  const handleSelectRecurring = (item) => {
-    setDetailLoading(true);
-    setSelectedRecurring(item);
-    setTimeout(() => {
-      setDetailLoading(false);
-    }, 400); // 400ms, khớp với hiệu ứng fadeIn
   };
 
   const filteredRecurring = recurringList.filter((item) => {
@@ -117,13 +198,13 @@ function TransactionNew() {
           <Button.Group>
             <Button
               type={mode === "normal" ? "primary" : "default"}
-              onClick={() => setMode("normal")}
+              onClick={() => handleModeChange("normal")}
             >
               Giao dịch thường
             </Button>
             <Button
               type={mode === "recurring" ? "primary" : "default"}
-              onClick={() => setMode("recurring")}
+              onClick={() => handleModeChange("recurring")}
             >
               Giao dịch định kỳ
             </Button>
@@ -132,7 +213,7 @@ function TransactionNew() {
         {mode === "normal" && (
           <>
             <TransactionForm onReload={onReload} />
-            <TransactionTable transactions={transactions} onReload={onReload} />
+            <TransactionTable transactionsAll={transactionsAll} onReload={onReload} />
           </>
         )}
         {mode === "recurring" && (
@@ -149,7 +230,7 @@ function TransactionNew() {
                     className="recurring__search-input"
                   />
                 </div>
-                <div style={{ margin: "16px 0" }}>
+                <div className="recurring-button-container">
                   <Button
                     type="primary"
                     block
@@ -166,7 +247,7 @@ function TransactionNew() {
                     <Select
                       value={recurringStatus}
                       onChange={setRecurringStatus}
-                      style={{ width: 200 }}
+                      style={{ width: "100%" }}
                       options={[
                         { value: "active", label: "Đang hoạt động" },
                         { value: "paused", label: "Tạm dừng" },
@@ -187,40 +268,38 @@ function TransactionNew() {
               </Col>
               <Col span={16} className="recurring__detail">
                 <TransactionRecurringDetail
+                categories={categories}
+                  onReload={onReload}
+                  fetchRecurring={fetchRecurring}
                   data={selectedRecurring}
                   loading={detailLoading}
-                  transactions={transactions}
-                  onEdit={() => setShowRecurringForm(true)}
+                  transactionsAll={transactionsAll}
+                  onEdit={() => setShowEditForm(true)}
                   onDelete={() => handleDeleteRecurring(selectedRecurring)}
                 />
               </Col>
             </Row>
-            <Modal
-              open={showRecurringForm}
-              onCancel={() => setShowRecurringForm(false)}
-              footer={null}
-              title={
-                <span
-                  style={{
-                    fontWeight: 600,
-                    fontSize: 20,
-                    color: "var(--primary-color)",
-                  }}
-                >
-                  Thêm giao dịch định kỳ
-                </span>
-              }
-              width={450}
-              centered
-              destroyOnClose
-            >
+            
               <RecurringTransactionModelForm
                 userId={userId}
                 fetchRecurring={fetchRecurring}
+                showRecurringForm={showRecurringForm}
                 setShowRecurringForm={setShowRecurringForm}
+                recurringLoading={recurringLoading}
+                setRecurringLoading={setRecurringLoading}
+                categories={categories}
                 onCancel={() => setShowRecurringForm(false)}
               />
-            </Modal>
+              <EditRecurringTransactionForm 
+                userId={userId}
+                fetchRecurring={fetchRecurring}
+                showEditForm={showEditForm}
+                setShowEditForm={setShowEditForm}
+                recurringLoading={recurringLoading}
+                setRecurringLoading={setRecurringLoading}
+                selectedRecurring={selectedRecurring}
+                categories={categories}
+                />
           </>
         )}
       </div>

@@ -1,11 +1,83 @@
 import React from "react";
-import { Button, Tag, Spin, Table } from "antd";
+import { Button, Tag, Spin, Table, Space, Select } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import "./TransactionRecurringDetail.scss";
+import DeleteTransaction from "../DeleteTransaction";
+import DetailTransaction from "../DetailTransaction";
+import { updateRecurringTransactionStatus } from "../../../services/RecurringTransactionService";
+import Swal from "sweetalert2";
 
 function TransactionRecurringDetail(props) {
-  const { data, loading, transactions = [], onEdit, onDelete } = props;
+  const { onReload, fetchRecurring, data, loading, transactionsAll = [], onEdit, onDelete } = props;
+
+  const handleUpdateStatus = async (recurring) => {
+    try {
+      const { value: newStatus } = await Swal.fire({
+        title: 'Cập nhật trạng thái',
+        input: 'select',
+        inputOptions: {
+          'ACTIVE': 'Đang hoạt động',
+          'COMPLETED': 'Tạm dừng',
+          'CANCELLED': 'Đã hủy'
+        },
+        inputValue: recurring.status?.code,
+        showCancelButton: true,
+        confirmButtonText: 'Cập nhật',
+        cancelButtonText: 'Hủy',
+        confirmButtonColor: 'var(--primary-color)',
+        customClass: {
+          popup: 'animated fadeInDown'
+        },
+        inputValidator: (value) => {
+          if (!value) {
+            return 'Vui lòng chọn trạng thái!';
+          }
+        }
+      });
+
+      if (newStatus) {
+        const loadingAlert = Swal.fire({
+          title: 'Đang cập nhật...',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
+        const res = await updateRecurringTransactionStatus(recurring.id, {status: newStatus});
+        
+        await loadingAlert.close();
+
+        if (res) {
+          await Swal.fire({
+            title: 'Thành công!',
+            text: 'Trạng thái đã được cập nhật',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500,
+            customClass: {
+              popup: 'animated fadeInDown'
+            }
+          });
+          fetchRecurring();
+          onReload();
+        }
+      }
+    } catch (error) {
+      Swal.fire({
+        title: 'Lỗi!',
+        text: 'Không thể cập nhật trạng thái. Vui lòng thử lại!',
+        icon: 'error',
+        confirmButtonText: 'Đồng ý',
+        confirmButtonColor: 'var(--primary-color)',
+        customClass: {
+          popup: 'animated fadeInDown'
+        }
+      });
+    }
+  };
+
   if (loading) {
     return (
       <div className="recurring-detail__loading">
@@ -20,14 +92,17 @@ function TransactionRecurringDetail(props) {
       </div>
     );
   }
-
   // Lọc transaction liên quan đến recurring này
-  const relatedTransactions = transactions.filter(
-    (t) => t.recurringTransaction && t.recurringTransaction.id === data.id
+  const relatedTransactions = transactionsAll.filter(
+    (t) => t.recurrence && t.recurrence.id === data.id
   );
 
-  const columns = [
-    { title: "Tên", dataIndex: "name", key: "name" },
+  const columns = [{
+    title: "STT",
+    dataIndex: "index",
+    key: "index",
+    render: (v, r, i) => i + 1,
+  },
     {
       title: "Số tiền",
       dataIndex: "amount",
@@ -40,13 +115,18 @@ function TransactionRecurringDetail(props) {
       key: "createdAt",
       render: (v) => dayjs(v).format("DD/MM/YYYY"),
     },
-    { title: "Mô tả", dataIndex: "description", key: "description" },
     {
-      title: "Trạng thái",
-      dataIndex: "status",
-      key: "status",
-      render: (v) => (v ? "Hoạt động" : "Ẩn"),
-    },
+      title: "Thao tác",
+      width: "100px",
+      key: "action",
+      render: (_, record) => (
+        <Space>
+          <DeleteTransaction record={record} onReLoad={onReload} />
+          <DetailTransaction record={record} />
+        </Space>
+      ),
+
+    }
   ];
 
   return (
@@ -72,16 +152,32 @@ function TransactionRecurringDetail(props) {
             <b>Chu kỳ:</b> <Tag color="blue">{data.type}</Tag>
           </div>
           <div>
+            <b>Số tiền:</b>
+            <span style={{ marginLeft: 8, color: 'var(--primary-color)', fontWeight: 500 }}>
+              {data.amount?.toLocaleString('vi-VN')} VNĐ
+            </span>
+          </div>
+          <div>
             <b>Trạng thái:</b>
-            <Tag color={data.status?.code === 1 ? "green" : "red"}>
+            <Tag 
+              color={
+                data.status?.code === 1 ? "green" : 
+                data.status?.code === 0 ? "orange" : 
+                "red"
+              } 
+              onClick={() => handleUpdateStatus(data)} 
+              style={{ cursor: 'pointer' }}
+            >
               {data.status?.lable}
             </Tag>
+           
           </div>
         </div>
 
         <div className="recurring-detail__info--row">
+        
           <div>
-            <b>Ngày bắt đầu:</b>
+            <b>Ngày Tạo:</b>
             <span>{dayjs(data.createAt).format("DD/MM/YYYY")}</span>
           </div>
           <div>
@@ -89,6 +185,8 @@ function TransactionRecurringDetail(props) {
             <span> {dayjs(data.nextDate).format("DD/MM/YYYY")}</span>
           </div>
         </div>
+
+        
       </div>
       <div
         className="recurring-detail__transaction-list"
@@ -99,6 +197,7 @@ function TransactionRecurringDetail(props) {
           dataSource={relatedTransactions.map((t) => ({ ...t, key: t.id }))}
           pagination={false}
           size="small"
+          scroll={{ y: 362 }}
           locale={{ emptyText: "Không có giao dịch nào cho định kỳ này." }}
         />
       </div>

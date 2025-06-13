@@ -1,0 +1,132 @@
+.delete-transaction-btn {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+    background-color: rgba(255, 77, 79, 0.1);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Animation for SweetAlert2
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+}
+
+.animated {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+}
+
+.fadeInDown {
+  animation-name: fadeInDown;
+}
+
+.fadeOutUp {
+  animation-name: fadeOutUp;
+}
+
+// Custom styles for SweetAlert2
+.swal2-popup {
+  border-radius: 12px !important;
+  padding: 2rem !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.swal2-title {
+  font-size: 1.5rem !important;
+  color: var(--primary-color-dark) !important;
+  margin-bottom: 1rem !important;
+}
+
+.swal2-html-container {
+  font-size: 1rem !important;
+  color: #666 !important;
+  margin: 1rem 0 !important;
+}
+
+.swal2-confirm {
+  border-radius: 8px !important;
+  padding: 0.5rem 2rem !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  
+  &:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+.swal2-cancel {
+  border-radius: 8px !important;
+  padding: 0.5rem 2rem !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  
+  &:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+// Loading animation
+.swal2-loader {
+  border-color: var(--primary-color) !important;
+}
+
+// Icon animations
+.swal2-icon {
+  &.swal2-success {
+    animation: scaleIn 0.3s ease-out !important;
+  }
+  
+  &.swal2-error {
+    animation: shake 0.5s ease-in-out !important;
+  }
+  
+  &.swal2-warning {
+    animation: pulse 1s ease-in-out !important;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+} 

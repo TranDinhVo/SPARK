@@ -7,11 +7,12 @@ import "./TransactionTable.scss";
 import EditTransaction from "../EditTransaction";
 import DeleteTransaction from "../DeleteTransaction";
 import DetailTransaction from "../DetailTransaction";
+import dayjs from "dayjs";
 
 function TransactionTable(props) {
-  const { transactions = [], onReload } = props;
+  const { transactionsAll = [], onReload } = props;
   const [search, setSearch] = useState("");
-  const [filtered, setFiltered] = useState(transactions);
+  const [filtered, setFiltered] = useState(transactionsAll);
   const [loading, setLoading] = useState(false);
   const [expandedRowKeys, setExpandedRowKeys] = useState([]);
 
@@ -19,7 +20,7 @@ function TransactionTable(props) {
     setLoading(true);
     const delayDebounce = setTimeout(() => {
       const keyword = search.trim().toLowerCase();
-      const filteredData = transactions.filter((item) =>
+      const filteredData = transactionsAll.filter((item) =>
         item.name.toLowerCase().includes(keyword)
       );
       setFiltered(filteredData);
@@ -27,7 +28,7 @@ function TransactionTable(props) {
     }, 800);
 
     return () => clearTimeout(delayDebounce);
-  }, [search, transactions]);
+  }, [search, transactionsAll]);
 
   const columns = [
     {
@@ -47,7 +48,7 @@ function TransactionTable(props) {
       title: "Ngày giao dịch",
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (date) => formatDateTime(new Date(date)),
+      render: (date) => dayjs(date).format("DD/MM/YYYY")
     },
     {
       title: "Khoản tiền",
@@ -95,6 +96,7 @@ function TransactionTable(props) {
         pagination={false}
         bordered
         loading={loading}
+        locale={{ emptyText: "Không có giao dịch nào ." }}
         // scroll={{ y: 400 }} // chiều cao cố định
       />
     </div>

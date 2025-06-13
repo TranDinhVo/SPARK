@@ -23,9 +23,9 @@ function TransactionForm(props) {
   useEffect(() => {
     handleReset();
   }, [isExpense]);
-  const validateForm = () => {
+  const validateForm = async () => {
     if (!selectedCategory) {
-      Swal.fire({
+      await Swal.fire({
         icon: "error",
         title: "Danh mục",
         text: "Vui lòng chọn danh mục!",
@@ -90,12 +90,11 @@ function TransactionForm(props) {
     };
     const result = await createTransaction(saveData);
     if (result) {
-      setTimeout(() => {
-        Swal.fire({
+        await Swal.fire({
           icon: "success",
           title: "Đã lưu!",
           text: "Giao dịch được tạo thành công 🎯",
-          timer: 2000,
+          timer: 1500,
           timerProgressBar: true,
           showConfirmButton: false,
           position: "center",
@@ -107,7 +106,7 @@ function TransactionForm(props) {
             popup: "animate__animated animate__fadeOutUp",
           },
         });
-      }, 500);
+      
       handleReset();
       onReload();
     }
