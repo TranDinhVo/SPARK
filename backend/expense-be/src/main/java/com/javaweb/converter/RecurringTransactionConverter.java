@@ -6,15 +6,19 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.javaweb.entity.CategoryEntity;
 import com.javaweb.entity.RecurringTransactionEntity;
 import com.javaweb.enums.RecurringTypeEnum;
 import com.javaweb.model.dto.RecurrenceStatusDTO;
 import com.javaweb.model.request.RecurringTransactionRequestDTO;
 import com.javaweb.model.response.RecurringTransactionResponseDTO;
+import com.javaweb.repository.CategoryRepository;
 @Component
 public class RecurringTransactionConverter {
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private CategoryRepository categoryRepository;
     // Chuyển từ Entity sang ResponseDTO
     public RecurringTransactionResponseDTO convertToResponse(RecurringTransactionEntity entity) {
         RecurringTransactionResponseDTO response = modelMapper.map(entity, RecurringTransactionResponseDTO.class);
@@ -41,7 +45,7 @@ public class RecurringTransactionConverter {
     }
     // Cập nhật từ RequestDTO vào Entity khi cần
     public RecurringTransactionEntity updateEntityFromRequest(RecurringTransactionEntity existingEntity, RecurringTransactionRequestDTO requestDTO) {
-        if (requestDTO.getRecurrenceType() != null) {
+    	if (requestDTO.getRecurrenceType() != null) {
             // Chuyển đổi String thành Enum
             existingEntity.setRecurrenceType(RecurringTypeEnum.valueOf(requestDTO.getRecurrenceType().toUpperCase()));
         }
@@ -59,6 +63,11 @@ public class RecurringTransactionConverter {
         }
         if (requestDTO.getAmount() != null) {
             existingEntity.setAmount(requestDTO.getAmount());
+        }
+        if(requestDTO.getCategoryRecurringTransaction() != null) {
+        	CategoryEntity category = categoryRepository.findById(requestDTO.getCategoryRecurringTransaction())
+                    .orElseThrow(() -> new RuntimeException("Category not found"));
+        	existingEntity.setCategoryRecurringTransaction(category);
         }
         return existingEntity;
     }

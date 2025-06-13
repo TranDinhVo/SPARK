@@ -21,3 +21,10 @@ export const deleteRecurringTransaction = async (id) => {
   const result = await del(`recurring-transactions/${id}`);
   return result;
 };
+export const getCategoryRecurringTransaction = async (userId) => {
+  const res = await get(`categories/${userId}`);
+  const result = res.filter(
+    (item) => item.name === "Định kì thu" || item.name === "Định kì chi"
+  );
+  return result;
+};

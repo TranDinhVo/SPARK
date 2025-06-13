@@ -7,20 +7,23 @@ import com.javaweb.enums.RecurringTypeEnum;
 public class RecurringTransactionRequestDTO {
 
     private String name;
-//    private Instant createAt = Instant.now();
-    private Instant createAt;
+    private Instant createAt = Instant.now();
+//    private Instant createAt;
     private String recurrenceType;
     private RecurringStatusEnum status = RecurringStatusEnum.ACTIVE;
     private LocalDate nextDueDate;
     private Long userId; // Thêm trường này
     private BigDecimal amount;
     private Boolean autoCreateTransaction;
+    private Long categoryRecurringTransaction;
+    
     public RecurringTransactionRequestDTO() {
+    	
     }
     
 	public RecurringTransactionRequestDTO(String name, Instant createAt, String recurrenceType,
 			RecurringStatusEnum status, LocalDate nextDueDate, Long userId, BigDecimal amount,
-			Boolean autoCreateTransaction) {
+			Boolean autoCreateTransaction, Long categoryRecurringTransaction) {
 		super();
 		this.name = name;
 		this.createAt = createAt;
@@ -30,6 +33,16 @@ public class RecurringTransactionRequestDTO {
 		this.userId = userId;
 		this.amount = amount;
 		this.autoCreateTransaction = autoCreateTransaction;
+		this.categoryRecurringTransaction = categoryRecurringTransaction;
+	}
+	
+
+	public Long getCategoryRecurringTransaction() {
+		return categoryRecurringTransaction;
+	}
+
+	public void setCategoryRecurringTransaction(Long categoryRecurringTransaction) {
+		this.categoryRecurringTransaction = categoryRecurringTransaction;
 	}
 
 	public String getName() {

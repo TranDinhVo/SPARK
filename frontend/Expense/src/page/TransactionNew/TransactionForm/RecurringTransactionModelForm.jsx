@@ -1,111 +1,140 @@
-import { useState } from "react";
-import { Input, Select, DatePicker, Switch, Button } from "antd";
+import { useEffect, useState } from "react";
+import { Input, Select, DatePicker, Form, Button } from "antd";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
+
 import "./RecurringTransactionModelForm.scss";
+import { getCategoryRecurringTransaction } from "../../../services/RecurringTransactionService";
 
-function RecurringTransactionModelForm({ userId, onSubmit, onCancel }) {
-  const [name, setName] = useState("");
-  const [recurrenceType, setRecurrenceType] = useState("MONTHLY");
-  const [nextDueDate, setNextDueDate] = useState(dayjs());
-  const [status, setStatus] = useState("ACTIVE");
-  const [autoCreateTransaction, setAutoCreateTransaction] = useState(true);
+const RecurringTransactionModelForm = (props) => {
+  const { userId, fetchRecurring, setShowRecurringForm, onCancel } = props;
+  const [form] = Form.useForm();
+  const [categories, setCategories] = useState([]);
 
-  const handleSubmit = () => {
-    if (!name.trim()) {
-      Swal.fire({
-        icon: "error",
-        title: "Tên giao dịch",
-        text: "Vui lòng nhập tên giao dịch!",
-      });
-      return;
-    }
-    if (!recurrenceType) {
-      Swal.fire({
-        icon: "error",
-        title: "Tần suất",
-        text: "Vui lòng chọn tần suất!",
-      });
-      return;
-    }
-    if (!nextDueDate) {
-      Swal.fire({
-        icon: "error",
-        title: "Ngày đến hạn",
-        text: "Vui lòng chọn ngày đến hạn!",
-      });
-      return;
-    }
-    const data = {
-      name: name.trim(),
-      recurrenceType,
-      nextDueDate: nextDueDate.format("YYYY-MM-DD"),
-      status,
-      autoCreateTransaction,
-      userId: Number(userId),
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await getCategoryRecurringTransaction(userId);
+        setCategories(res);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
     };
-    onSubmit && onSubmit(data);
+    fetchCategories();
+  }, []);
+
+  const handleSubmit = async (values) => {
+    try {
+      const data = {
+        ...values,
+        nextDueDate: values.nextDueDate.format("YYYY-MM-DD"),
+        categoryRecurringTransaction: Number(
+          values.categoryRecurringTransaction
+        ),
+        amount: Number(values.amount),
+        userId: Number(userId),
+        status: "ACTIVE",
+        autoCreateTransaction: true,
+      };
+      setShowRecurringForm(false);
+      fetchRecurring();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   return (
     <div className="recurring-transaction-model-form">
-      <div className="rtmf__form">
-        <div className="rtmf__group">
-          <span className="rtmf__label">Tên giao dịch</span>
-          <Input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Nhập tên giao dịch định kỳ"
-          />
-        </div>
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={handleSubmit}
+        initialValues={{
+          recurrenceType: "MONTHLY",
+          nextDueDate: dayjs(),
+        }}
+      >
+        <Form.Item
+          name="name"
+          label="Tên giao dịch"
+          rules={[{ required: true, message: "Vui lòng nhập tên giao dịch!" }]}
+        >
+          <Input placeholder="Nhập tên giao dịch định kỳ" />
+        </Form.Item>
+
         <div className="rtmf__group-list">
-          <div className="rtmf__group">
-            <span className="rtmf__label">Tần suất</span>
+          <Form.Item
+            name="recurrenceType"
+            label="Tần suất"
+            rules={[{ required: true, message: "Vui lòng chọn tần suất!" }]}
+          >
             <Select
-              value={recurrenceType}
-              onChange={setRecurrenceType}
+              style={{ width: 180 }}
               options={[
                 { value: "DAILY", label: "Hàng ngày" },
                 { value: "WEEKLY", label: "Hàng tuần" },
                 { value: "MONTHLY", label: "Hàng tháng" },
                 { value: "YEARLY", label: "Hàng năm" },
               ]}
-              style={{ width: 180 }}
             />
-          </div>
-          <div className="rtmf__group">
-            <span className="rtmf__label">Ngày giao dịch đầu tiên</span>
-            <DatePicker
-              value={nextDueDate}
-              onChange={setNextDueDate}
-              format="DD/MM/YYYY"
-              style={{ width: 180 }}
-            />
-          </div>
+          </Form.Item>
+
+          <Form.Item
+            name="nextDueDate"
+            label="Ngày giao dịch đầu tiên"
+            rules={[{ required: true, message: "Vui lòng chọn ngày đến hạn!" }]}
+          >
+            <DatePicker format="DD/MM/YYYY" style={{ width: 180 }} />
+          </Form.Item>
         </div>
 
-        {/* <div className="rtmf__group">
-          <span className="rtmf__label">Tự động tạo giao dịch</span>
-          <Switch
-            checked={autoCreateTransaction}
-            onChange={setAutoCreateTransaction}
-          />
-        </div> */}
+        <div className="rtmf__group-list">
+          <Form.Item
+            name="categoryRecurringTransaction"
+            label="Danh mục"
+            rules={[{ required: true, message: "Vui lòng chọn danh mục!" }]}
+          >
+            <Select
+              style={{ width: 180 }}
+              placeholder="Chọn danh mục"
+              options={categories.map((cat) => ({
+                value: cat.id,
+                label: cat.name,
+              }))}
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="amount"
+            label="Số tiền"
+            rules={[
+              { required: true, message: "Vui lòng nhập số tiền!" },
+              { type: "number", min: 1, message: "Số tiền phải lớn hơn 0!" },
+            ]}
+          >
+            <Input
+              type="number"
+              placeholder="Nhập số tiền"
+              style={{ width: 180 }}
+            />
+          </Form.Item>
+        </div>
+
         <div className="rtmf__btns">
           <Button onClick={onCancel} className="rtmf__btn rtmf__btn--cancel">
             Hủy
           </Button>
           <Button
             type="primary"
-            onClick={handleSubmit}
+            htmlType="submit"
             className="rtmf__btn rtmf__btn--submit"
           >
             Tạo giao dịch định kỳ
           </Button>
         </div>
-      </div>
+      </Form>
     </div>
   );
-}
+};
 
 export default RecurringTransactionModelForm;

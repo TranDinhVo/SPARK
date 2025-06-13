@@ -14,8 +14,8 @@ import com.javaweb.enums.RecurringStatusEnum;
 import com.javaweb.model.request.RecurringTransactionRequestDTO;
 import com.javaweb.model.request.TransactionRequestDTO;
 import com.javaweb.model.response.RecurringTransactionResponseDTO;
+import com.javaweb.repository.CategoryRepository;
 import com.javaweb.repository.RecurringTransactionRepository;
-import com.javaweb.repository.custom.impl.CategoryRepositoryCustomImpl;
 import com.javaweb.service.RecurringTransactionService;
 
 @Service
@@ -24,7 +24,7 @@ public class RecurringTransactionServiceImpl implements RecurringTransactionServ
     @Autowired
     private RecurringTransactionRepository recurringTransactionRepository;
     @Autowired
-    private CategoryRepositoryCustomImpl categoryRepositoryCustomImpl;
+    private CategoryRepository categoryRepository;
     @Autowired
     private RecurringTransactionConverter recurringTransactionConverter;
 
@@ -44,8 +44,9 @@ public class RecurringTransactionServiceImpl implements RecurringTransactionServ
 
     @Override
     public RecurringTransactionResponseDTO createRecurringTransaction(RecurringTransactionRequestDTO dto) {
-    	//Tìm category id có tên định kì dựa vào userId
-    	CategoryEntity category = categoryRepositoryCustomImpl.findByKey("Định kì", dto.getUserId());
+//    	//Tìm category id có tên định kì dựa vào userId
+    	CategoryEntity category = categoryRepository.findById(dto.getCategoryRecurringTransaction())
+                .orElseThrow(() -> new RuntimeException("Category not found"));
         // Đảm bảo bạn không set ID nào khi tạo mới entity
         RecurringTransactionEntity entity = recurringTransactionConverter.convertToEntity(dto);
         entity.setId(null); // Đảm bảo ID là null khi tạo mới

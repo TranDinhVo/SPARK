@@ -73,7 +73,7 @@ public class RecurringTransactionEntity {
     
     public RecurringTransactionEntity(Long id, String name, List<TransactionEntity> transactions,
 			RecurringTypeEnum recurrenceType, LocalDate nextDueDate, Boolean autoCreateTransaction,
-			RecurringStatusEnum status, Instant createAt) {
+			RecurringStatusEnum status, Instant createAt, CategoryEntity categoryRecurringTransaction) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -83,6 +83,7 @@ public class RecurringTransactionEntity {
 		this.autoCreateTransaction = autoCreateTransaction;
 		this.status = status;
 		this.createAt = createAt;
+		this.categoryRecurringTransaction = categoryRecurringTransaction;
 	}
 
 

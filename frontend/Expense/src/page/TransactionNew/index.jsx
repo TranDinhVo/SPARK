@@ -3,7 +3,7 @@ import { getCookie } from "../../helpers/cookie";
 import TransactionForm from "./TransactionForm";
 import TransactionTable from "./TransactionTable";
 import { getTransactionByUser } from "../../services/TransactionService";
-import { Button, Modal, Row, Col, Input } from "antd";
+import { Button, Modal, Row, Col, Input, Select } from "antd";
 import RecurringTransactionModelForm from "./TransactionForm/RecurringTransactionModelForm";
 import TransactionRecurringList from "./TransactionRecurringList";
 import TransactionRecurringDetail from "./TransactionRecurringDetail";
@@ -51,8 +51,7 @@ function TransactionNew() {
   const fetchRecurring = async () => {
     setRecurringLoading(true);
     try {
-      // const res = await getRecurringTransactionByUser(userId);
-      const res = await getRecurringTransaction();
+      const res = await getRecurringTransactionByUser(userId);
       setRecurringList(res);
       if (res.length > 0) setSelectedRecurring(res[0]);
       else setSelectedRecurring(null);
@@ -162,42 +161,19 @@ function TransactionNew() {
                 <div className="recurring__wrapper">
                   <div
                     className="recurring__status-filter"
-                    style={{ display: "flex", gap: 8, margin: "0 0 12px 0" }}
+                    style={{ margin: "0 0 12px 0" }}
                   >
-                    <Button
-                      type={
-                        recurringStatus === "active" ? "primary" : "default"
-                      }
-                      onClick={() => setRecurringStatus("active")}
-                      style={{ fontWeight: 600 }}
-                    >
-                      Đang hoạt động
-                    </Button>
-                    <Button
-                      type={
-                        recurringStatus === "paused" ? "primary" : "default"
-                      }
-                      onClick={() => setRecurringStatus("paused")}
-                      style={{ fontWeight: 600 }}
-                    >
-                      Tạm dừng
-                    </Button>
-                    <Button
-                      type={
-                        recurringStatus === "cancelled" ? "primary" : "default"
-                      }
-                      onClick={() => setRecurringStatus("cancelled")}
-                      style={{ fontWeight: 600 }}
-                    >
-                      Đã hủy
-                    </Button>
-                    <Button
-                      type={recurringStatus === "all" ? "primary" : "default"}
-                      onClick={() => setRecurringStatus("all")}
-                      style={{ fontWeight: 600 }}
-                    >
-                      Tất cả
-                    </Button>
+                    <Select
+                      value={recurringStatus}
+                      onChange={setRecurringStatus}
+                      style={{ width: 200 }}
+                      options={[
+                        { value: "active", label: "Đang hoạt động" },
+                        { value: "paused", label: "Tạm dừng" },
+                        { value: "cancelled", label: "Đã hủy" },
+                        { value: "all", label: "Tất cả" },
+                      ]}
+                    />
                   </div>
                   <TransactionRecurringList
                     list={filteredRecurring}
@@ -240,10 +216,8 @@ function TransactionNew() {
             >
               <RecurringTransactionModelForm
                 userId={userId}
-                onSubmit={(data) => {
-                  fetchRecurring();
-                  setShowRecurringForm(false);
-                }}
+                fetchRecurring={fetchRecurring}
+                setShowRecurringForm={setShowRecurringForm}
                 onCancel={() => setShowRecurringForm(false)}
               />
             </Modal>
