@@ -171,11 +171,10 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 	public BorrowingEntity updateEntity(BorrowingEntity entity) {
 		entity.setAmount(entity.getAmountLoan().divide(BigDecimal.valueOf(entity.getTimes()),2,RoundingMode.HALF_UP));
 		entity.setNextDueDate(
-				Instant.now()
-		        .atZone(ZoneId.systemDefault())
-		        .plusDays(1)
-		        .toLocalDateTime()
-		        .toLocalDate()
+				entity.getNextDueDate()
+				.atStartOfDay(ZoneId.systemDefault())
+				.plusMonths(1)
+				.toLocalDate()
 		    );
 		return entity;
 	}
@@ -185,12 +184,7 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 				+ "FROM borrowing AS b \n"
 				+ "WHERE b.auto_create_transaction = 1 \n"
 				+ "AND b.status = 'DANG_HOAT_DONG'\n"
-				+ "AND b.next_due_date = CURDATE()\n"
-				+ "AND NOT EXISTS (\n"
-				+ "    SELECT 1 FROM transaction t \n"
-				+ "    WHERE t.borrowing_id = b.id \n"
-				+ "    AND DATE(t.created_at) = CURDATE()\n"
-				+ ");\n");
+				+ "AND b.next_due_date <= CURDATE()\n");
 		Query query = entityManager.createNativeQuery(sql.toString(), BorrowingEntity.class);
 		List<BorrowingEntity> result = query.getResultList();
 		return result;

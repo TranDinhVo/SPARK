@@ -1,6 +1,7 @@
  package com.javaweb.service.impl;
 
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -115,9 +116,11 @@ public class RecurringTransactionServiceImpl implements RecurringTransactionServ
 		List<RecurringTransactionEntity> entities = recurringTransactionRepository.findRecurringTransactionByAuto();
 		if(entities != null) {
 			//tạo từng giao dịch cho từng entity ở repo
+			
 		List<RecurringTransactionResponseDTO> result = entities.stream().map(item -> {
+			Instant instant = item.getNextDueDate().atStartOfDay(ZoneId.systemDefault()).toInstant();
 			TransactionRequestDTO transactionRequest = new TransactionRequestDTO(item.getUserId(), null, null, item.getCategoryRecurringTransaction().getId(), item.getId(),
-					item.getAmount(), item.getName(), Instant.now());
+					item.getAmount(), item.getName(), instant);
 			transactionServiceImpl.createTransaction(transactionRequest);
 			//cập nhật lại next-due-date của recurring ở repos
 			recurringTransactionRepository.updateEntity(item);

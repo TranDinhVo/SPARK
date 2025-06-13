@@ -83,7 +83,7 @@ public class RecurringTransactionController {
         }
     }
     
-    @Scheduled(fixedDelay = 1000*60) // mỗi 1 phut
+    @Scheduled(fixedDelay = 1000) // mỗi 1s
     public List<RecurringTransactionResponseDTO> autoTransactions() {
 		return recurringTransactionService.autoTransactions();
     }
