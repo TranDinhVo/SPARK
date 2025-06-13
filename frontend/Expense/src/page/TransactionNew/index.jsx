@@ -40,7 +40,7 @@ function TransactionNew() {
     const filteredByMonth = result.filter((item) => {
       return item.recurrence?.id === selectedRecurring?.id;
     });
-    console.log(filteredByMonth);
+
     const sortedByDate = filteredByMonth.sort((a, b) => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
