@@ -15,6 +15,7 @@ const RecurringTransactionModelForm = (props) => {
     const fetchCategories = async () => {
       try {
         const res = await getCategoryRecurringTransaction(userId);
+        console.log(res);
         setCategories(res);
       } catch (error) {
         console.error("Error fetching categories:", error);
