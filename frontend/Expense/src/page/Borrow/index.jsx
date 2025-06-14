@@ -2,46 +2,56 @@ import { useState, useEffect } from "react";
 import {
   Button,
   Input,
-  Table,
-  Tag,
-  Space,
-  Modal,
-  Form,
-  DatePicker,
-  Select,
 } from "antd";
 import { PlusOutlined, SwapOutlined } from "@ant-design/icons";
 import { FiSearch } from "react-icons/fi";
 import "./Borrow.scss";
 import { getCookie } from "../../helpers/cookie";
 import { getBorrowByUser } from "../../services/BorrowService";
-import dayjs from "dayjs";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { removeVietnameseTones } from "../../helpers/normalize";
-import HighlightText from "../../components/HighlightText";
-import DeleteBorrow from "./DeleteBorrow";
-import EditBorrow from "./EditBorrow";
-import DetailBorrow from "./DetailBorrow";
+import CreateBorrow from "../../components/Borrow/createBorrow";
+import BorrowTable from "../../components/Borrow/BorrowTable";
+import { getCategoryByUser } from "../../services/CategoryService";
+import EditBorrow from "../../components/Borrow/EditBorrow";
 
-function Borrow() {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [form] = Form.useForm();
+const Borrow = () => {
+
   const [searchText, setSearchText] = useState("");
-  const [borrowType, setBorrowType] = useState("DI_VAY");
+  const [borrowType, setBorrowType] = useState(() => {
+    const savedType = localStorage.getItem('borrowType');
+    return savedType || "DI_VAY";
+  });
   const [borrowList, setBorrowList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
   const [loading, setLoading] = useState(false);
   const userId = getCookie("id");
+
+  const [isOpenModalCreated, setIsOpenModalCreated] = useState(false);
+
+  const [borrowDataEdit, setBorrowDataEdit] = useState(null);
+  const [isOpenModalEdited, setIsOpenModalEdited] = useState(false);
+
   const navigate = useNavigate();
+
   const fetchApi = async () => {
     const result = await getBorrowByUser(userId);
-    setBorrowList(Array.isArray(result) ? result : []);
-    setFilteredList(Array.isArray(result) ? result : []);
+    const categoryResult = await getCategoryByUser(userId);
+    setCategoryList(categoryResult);
+
+    const data = Array.isArray(result) ? result : [];
+    setBorrowList(data);
+    // Lọc dữ liệu ngay khi nhận được từ API
+    const filtered = data.filter(item => item.loanType === borrowType);
+    setFilteredList(filtered);
   };
+
   useEffect(() => {
-    fetchApi();
-  }, [userId]);
+    if (userId) {
+      fetchApi();
+    }
+  }, [userId, borrowType]); // Thêm borrowType vào dependencies
 
   useEffect(() => {
     setLoading(true);
@@ -61,150 +71,17 @@ function Borrow() {
       setLoading(false);
     }, 400);
     return () => clearTimeout(timeout);
-  }, [borrowType, searchText, borrowList]);
+  }, [borrowType, searchText, borrowList, borrowDataEdit]);
+
+
   const onReload = () => {
     fetchApi();
   };
-  const typeOptions = [
-    { value: "DI_VAY", label: "Đi vay" },
-    { value: "CHO_VAY", label: "Cho vay" },
-  ];
-
-  const statusOptions = [
-    { value: "CHUA_TRA", label: "Chưa trả" },
-    { value: "DA_TRA", label: "Đã trả" },
-    { value: "DANG_TRA", label: "Đang trả dần" },
-    { value: "DA_HUY", label: "Đã hủy" },
-  ];
-
-  const columns = [
-    {
-      title: borrowType === "CHO_VAY" ? "Người cho vay" : "Người đi vay",
-      dataIndex: "counterpartyName",
-      key: "counterpartyName",
-      render: (text) => <HighlightText text={text} keyword={searchText} />,
-    },
-    {
-      title: "Loại",
-      dataIndex: "loanType",
-      key: "loanType",
-      render: (type) => (
-        <Tag color={type === "CHO_VAY" ? "green" : "orange"}>
-          {type === "CHO_VAY" ? "Cho vay" : "Đi vay"}
-        </Tag>
-      ),
-    },
-    {
-      title: "Số tiền",
-      dataIndex: "amountLoan",
-      key: "amountLoan",
-      render: (amount) => (
-        <span style={{ color: borrowType === "DI_VAY" ? "red" : "#52c41a" }}>
-          {borrowType === "DI_VAY" ? "- " : "+ "}
-          {amount.toLocaleString("vi-VN")} VND
-        </span>
-      ),
-    },
-    {
-      title: "Lãi suất",
-      dataIndex: "interestRate",
-      key: "interestRate",
-      render: (rate) => `${rate}%`,
-    },
-    {
-      title: "Ngày tạo",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      render: (date) => dayjs(date).format("DD/MM/YYYY"),
-    },
-    {
-      title: "Ngày đến hạn",
-      dataIndex: "nextDueDate",
-      key: "nextDueDate",
-      render: (date) => dayjs(date).format("DD/MM/YYYY"),
-    },
-    {
-      title: "Trạng thái",
-      dataIndex: "status",
-      key: "status",
-      render: (status) => {
-        const statusConfig = {
-          DANG_HOAT_DONG: { color: "blue", text: "Đang hoạt động" },
-          HOAN_THANH: { color: "green", text: "Hoàn thành" },
-          DA_HUY: { color: "gray", text: "Đã hủy" },
-        };
-        const config = statusConfig[status];
-        if (!config) {
-          return <Tag color="default">Không xác định</Tag>;
-        }
-        return <Tag color={config.color}>{config.text}</Tag>;
-      },
-    },
-    {
-      title: "Đã trả",
-      dataIndex: "paidAmount",
-      key: "paidAmount",
-      render: (amount) => amount.toLocaleString("vi-VN") + " VND",
-    },
-    {
-      title: "Thao tác",
-      key: "action",
-      render: (_, record) => (
-        <Space>
-          <DeleteBorrow record={record} onReLoad={onReload} />
-          <EditBorrow record={record} onReLoad={onReload} />
-          <DetailBorrow record={record} />
-        </Space>
-      ),
-    },
-  ];
-
-  const handleAdd = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleEdit = (record) => {
-    navigate(`/borrow/edit/${record.id}`);
-  };
-
-  const handleDetail = (record) => {
-    navigate(`/borrow/detail/${record.id}`);
-  };
-
-  const handleDelete = (record) => {
-    Swal.fire({
-      title: "Cảnh báo!",
-      html: `<span style='color:#d33;font-size:18px;font-weight:bold;'>Bạn chắc chắn muốn xóa khoản vay với <b>${record.counterpartyName}</b>?</span>`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Xóa ngay",
-      cancelButtonText: "Hủy",
-      focusCancel: true,
-      customClass: {
-        popup: "swal2-border-danger",
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // TODO: Gọi API xóa ở đây, ví dụ: await deleteBorrow(record.id);
-        Swal.fire("Đã xóa!", "Khoản vay đã được xóa.", "success");
-        // TODO: Sau đó reload lại danh sách nếu cần
-      }
-    });
-  };
-
-  const handleModalOk = () => {
-    form.validateFields().then((values) => {
-      // Handle form submission
-      console.log(values);
-      setIsModalVisible(false);
-      form.resetFields();
-    });
-  };
 
   const handleTypeToggle = () => {
-    setBorrowType(borrowType === "DI_VAY" ? "CHO_VAY" : "DI_VAY");
+    const newType = borrowType === "DI_VAY" ? "CHO_MUON" : "DI_VAY";
+    setBorrowType(newType);
+    localStorage.setItem('borrowType', newType);
   };
 
   return (
@@ -235,7 +112,7 @@ function Borrow() {
           <Button
             // type="primary"
             icon={<PlusOutlined />}
-            onClick={handleAdd}
+            onClick={() => setIsOpenModalCreated(true)}
             className="borrow-add-btn"
           >
             Thêm {borrowType === "DI_VAY" ? "khoản vay" : "cho vay"}
@@ -244,87 +121,34 @@ function Borrow() {
       </div>
 
       <div className="borrow-content">
-        <Table
-          columns={columns}
-          dataSource={Array.isArray(filteredList) ? filteredList : []}
-          rowKey="id"
-          pagination={{ pageSize: 10 }}
-          className="borrow-table"
-          loading={loading}
-        />
+       <BorrowTable 
+          searchText={searchText}
+          borrowType={borrowType} 
+          filteredList={filteredList} 
+          loading={loading} 
+          setIsOpenModalEdited={setIsOpenModalEdited}
+          setBorrowDataEdit={setBorrowDataEdit}
+          onReload={onReload}/>
       </div>
 
-      <Modal
-        title={`Thêm ${borrowType === "DI_VAY" ? "khoản vay" : "cho vay"}`}
-        open={isModalVisible}
-        onOk={handleModalOk}
-        onCancel={() => {
-          setIsModalVisible(false);
-          form.resetFields();
-        }}
-        okText="Thêm"
-        cancelText="Hủy"
-        width={600}
-      >
-        <Form form={form} layout="vertical" className="borrow-form">
-          <Form.Item
-            name="loanType"
-            label="Loại"
-            rules={[{ required: true, message: "Vui lòng chọn loại!" }]}
-            initialValue={borrowType}
-          >
-            <Select
-              placeholder="Chọn loại"
-              options={typeOptions}
-              className="borrow-select"
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="counterpartyName"
-            label="Người vay/cho vay"
-            rules={[{ required: true, message: "Vui lòng nhập tên!" }]}
-          >
-            <Input placeholder="Nhập tên người vay/cho vay" />
-          </Form.Item>
-
-          <Form.Item
-            name="amountLoan"
-            label="Số tiền"
-            rules={[{ required: true, message: "Vui lòng nhập số tiền!" }]}
-          >
-            <Input type="number" placeholder="Nhập số tiền" />
-          </Form.Item>
-
-          <Form.Item
-            name="interestRate"
-            label="Lãi suất (%)"
-            rules={[{ required: true, message: "Vui lòng nhập lãi suất!" }]}
-          >
-            <Input type="number" step="0.01" placeholder="Nhập lãi suất" />
-          </Form.Item>
-
-          <Form.Item
-            name="nextDueDate"
-            label="Ngày đến hạn"
-            rules={[{ required: true, message: "Vui lòng chọn ngày!" }]}
-          >
-            <DatePicker style={{ width: "100%" }} />
-          </Form.Item>
-
-          <Form.Item
-            name="status"
-            label="Trạng thái"
-            rules={[{ required: true, message: "Vui lòng chọn trạng thái!" }]}
-          >
-            <Select
-              placeholder="Chọn trạng thái"
-              options={statusOptions}
-              className="borrow-select"
-            />
-          </Form.Item>
-        </Form>
-      </Modal>
+      <CreateBorrow
+        isOpenModalCreated={isOpenModalCreated}
+        setIsOpenModalCreated={setIsOpenModalCreated}
+        borrowType={borrowType}
+        onReload={onReload}
+        userId={userId}
+        categoryList={categoryList}
+      />
+      <EditBorrow
+        isOpenModalEdit={isOpenModalEdited}
+        setIsOpenModalEdit={setIsOpenModalEdited}
+        borrowDataEdit={borrowDataEdit}
+        setBorrowDataEdit={setBorrowDataEdit}
+        borrowType={borrowType}
+        onReload={onReload}
+        userId={userId}
+        categoryList={categoryList}
+      />
     </div>
   );
 }

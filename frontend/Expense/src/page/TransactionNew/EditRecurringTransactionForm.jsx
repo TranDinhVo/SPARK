@@ -35,7 +35,7 @@ const EditRecurringTransactionForm = (props) => {
         amount: selectedRecurring.amount
       });
     }
-    const category = categories.find(cat => cat.id === selectedRecurring.categoryRecurringTransaction);
+    const category = categories.find(cat => cat.id === selectedRecurring?.categoryRecurringTransaction);
     setCategoryEdit(category);
   }, [selectedRecurring, form]);
 

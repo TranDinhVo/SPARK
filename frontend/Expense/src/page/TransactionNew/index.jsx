@@ -268,7 +268,7 @@ function TransactionNew() {
               </Col>
               <Col span={16} className="recurring__detail">
                 <TransactionRecurringDetail
-                categories={categories}
+                  categories={categories}
                   onReload={onReload}
                   fetchRecurring={fetchRecurring}
                   data={selectedRecurring}
