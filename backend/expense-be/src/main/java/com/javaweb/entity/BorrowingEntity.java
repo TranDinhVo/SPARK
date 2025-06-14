@@ -70,13 +70,26 @@ public class BorrowingEntity {
     @Column(name = "next_due_date")
     private LocalDate nextDueDate;
     
-    public BorrowingEntity() {
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private CategoryEntity categoryBorrowing;
+
+    
+    public CategoryEntity getCategoryBorrowing() {
+		return categoryBorrowing;
+	}
+
+	public void setCategoryBorrowing(CategoryEntity categoryBorrowing) {
+		this.categoryBorrowing = categoryBorrowing;
+	}
+
+	public BorrowingEntity() {
     	super();
     }
 
 	public BorrowingEntity(Long id, UserEntity userBorrowing, List<TransactionEntity> transaction,
 			String counterpartyName, BigDecimal amountLoan, BigDecimal interestRate, Long times, BigDecimal amount,
-			LoanTypeEnum loanType, BorrowingStatusEnum status, Boolean autoCreateTransaction, Instant createdAt, LocalDate nextDueDate) {
+			LoanTypeEnum loanType, BorrowingStatusEnum status, Boolean autoCreateTransaction, Instant createdAt, LocalDate nextDueDate, CategoryEntity categoryBorrowing) {
 		super();
 		this.id = id;
 		this.userBorrowing = userBorrowing;
@@ -90,7 +103,8 @@ public class BorrowingEntity {
 		this.status = status;
 		this.autoCreateTransaction = autoCreateTransaction;
 		this.createdAt = createdAt;
-		this.nextDueDate = this.nextDueDate;
+		this.nextDueDate = nextDueDate;
+		this.categoryBorrowing = categoryBorrowing;
 	}
 
 	public Long getId() {

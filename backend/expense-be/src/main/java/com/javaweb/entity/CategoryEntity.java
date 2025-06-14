@@ -34,6 +34,9 @@ public class CategoryEntity {
     @OneToMany(mappedBy = "categoryTransaction", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TransactionEntity> transaction  = new ArrayList<>();
     
+    @OneToMany(mappedBy = "categoryBorrowing", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BorrowingEntity> borrowing  = new ArrayList<>();
+    
     @OneToMany(mappedBy = "categoryBudget", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BudgetEntity> budget  = new ArrayList<>();
     

@@ -2,6 +2,7 @@ package com.javaweb.repository.custom.impl;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -158,8 +159,15 @@ public class BorrowingRepositoryCustomImpl implements BorrowingRepositoryCustom{
 		result.setRemainTimes(((Number) resultJoin[1]).longValue());
 	    result = borrowingConverter.toUpdateBorrowingEntity(exist, result);
 		result = updateStatus(result);
-		// amount + lãi * (số tiền bd - remainTime*amount)
-		BigDecimal monthMoney = exist.getAmount().add(result.getInterestRate().multiply(result.getAmountLoan().subtract(exist.getAmount().multiply(BigDecimal.valueOf(result.getRemainTimes()))))); 
+		// amount + lãi/100 * (số tiền bd - remainTime*amount)
+		BigDecimal monthMoney = exist.getAmount().add(
+			    result.getInterestRate().divide(BigDecimal.valueOf(100), MathContext.DECIMAL128)
+			        .multiply(
+			            result.getAmountLoan().subtract(
+			                exist.getAmount().multiply(BigDecimal.valueOf(result.getRemainTimes()))
+			            )
+			        )
+			);
 		result.setMonthMoney(monthMoney);
 		exist.setStatus(result.getStatus());
 		entityManager.merge(exist);

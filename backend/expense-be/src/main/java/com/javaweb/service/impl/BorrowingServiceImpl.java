@@ -1,6 +1,6 @@
 package com.javaweb.service.impl;
 
-import java.time.Instant;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,10 +12,12 @@ import com.javaweb.Builder.BorrowingSearchBuilder;
 import com.javaweb.converter.BorrowingConverter;
 import com.javaweb.converter.BorrowingSearchBuilderConverter;
 import com.javaweb.entity.BorrowingEntity;
+import com.javaweb.entity.CategoryEntity;
 import com.javaweb.model.request.BorrowingRequestDTO;
 import com.javaweb.model.request.TransactionRequestDTO;
 import com.javaweb.model.response.BorrowingResponseDTO;
 import com.javaweb.repository.BorrowingRepository;
+import com.javaweb.repository.CategoryRepository;
 import com.javaweb.service.BorrowingService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -32,6 +34,9 @@ public class BorrowingServiceImpl implements BorrowingService{
 	@Autowired
 	private BorrowingConverter borrowingConverter;
 	
+    @Autowired
+    private CategoryRepository categoryRepository;
+    
 	@Autowired
 	private TransactionServiceImpl transactionServiceImpl;
 	
@@ -65,7 +70,14 @@ public class BorrowingServiceImpl implements BorrowingService{
 	@Override
 	public BorrowingResponseDTO createNewBorrowing(BorrowingRequestDTO borrowingRequestDTO) {
 		BorrowingEntity newBorrowing = borrowingConverter.toUpdateBorrowingDTO(borrowingRequestDTO, new BorrowingEntity());
+		 // Tìm category theo categoryId
+        CategoryEntity category = categoryRepository.findById(borrowingRequestDTO.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+        newBorrowing.setCategoryBorrowing(category);
+		
 		borrowingRepository.updateEntity(newBorrowing);
+		
+
 		BorrowingResponseDTO response = borrowingConverter.toUpdateBorrowingEntity(newBorrowing, new BorrowingResponseDTO());
 		
 		borrowingRepository.save(newBorrowing);
@@ -105,8 +117,8 @@ public class BorrowingServiceImpl implements BorrowingService{
 				// amount + lãi * (số tiền bd - remainTime*amount)
 				BorrowingResponseDTO borrowResponse = borrowingRepository.updateBorrowing(new BorrowingRequestDTO(), item);
 				borrowingRepository.save(item);
-				TransactionRequestDTO transactionRequest = new TransactionRequestDTO(item.getUserBorrowing().getId(), item.getId(), null, Long.valueOf(6), null,
-						borrowResponse.getMonthMoney(), "Trả nợ " + item.getCounterpartyName() + " lần " + borrowResponse.getRemainTimes().toString(), Instant.now());
+				TransactionRequestDTO transactionRequest = new TransactionRequestDTO(item.getUserBorrowing().getId(), item.getId(), null, item.getCategoryBorrowing().getId(), null,
+						borrowResponse.getMonthMoney(), "Trả nợ " + item.getCounterpartyName() + " lần " + borrowResponse.getRemainTimes().toString(),  item.getNextDueDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 				transactionServiceImpl.createTransaction(transactionRequest);
 				//cập nhật lại status, next-due-date của borrow ở repos
 				return borrowResponse;

@@ -2,6 +2,7 @@ package com.javaweb.model.request;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDate;
 
 public class BorrowingRequestDTO {
 	private Long id;
@@ -12,8 +13,22 @@ public class BorrowingRequestDTO {
     private BigDecimal interestRate;
     private Long times;
     private Instant createdAt;
+    private LocalDate nextDueDate;
     private String loanType;
+    private Long categoryId;
     
+	public Long getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+	public LocalDate getNextDueDate() {
+		return nextDueDate;
+	}
+	public void setNextDueDate(LocalDate nextDueDate) {
+		this.nextDueDate = nextDueDate;
+	}
 	public Long getId() {
 		return id;
 	}

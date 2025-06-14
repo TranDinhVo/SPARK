@@ -69,12 +69,12 @@ public class BorrowingAPI {
 			@PathVariable Long id,
 			@RequestBody BorrowingRequestDTO borrowingRequestDTO) {
 		borrowingRequestDTO.setId(id);
-		borrowingRequestDTO.setLoanType(null);
+//		borrowingRequestDTO.setLoanType(null);
 		BorrowingResponseDTO borrowing = borrowingService.updateBorrowing(borrowingRequestDTO);
 		return borrowing;
 	}
 	
-	@Scheduled(fixedDelay = 1000*60) // mỗi 1 giây
+	@Scheduled(fixedDelay = 1000) // mỗi 1 giây
     public List<BorrowingResponseDTO> autoTransactions() {
 		return borrowingService.autoTransactions();
     }

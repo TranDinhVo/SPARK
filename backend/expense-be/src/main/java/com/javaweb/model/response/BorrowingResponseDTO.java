@@ -20,11 +20,12 @@ public class BorrowingResponseDTO {
     private LocalDate nextDueDate;
     private BigDecimal paidAmount;//tiền đã trả
     private BigDecimal monthMoney;//tiền tháng này cần trả
+    private Integer categoryId;
     
 	public BorrowingResponseDTO() {} 
 	public BorrowingResponseDTO(Long id, String counterpartyName, BigDecimal amountLoan, BigDecimal interestRate,
 			Long remainTimes, Long times, LoanTypeEnum loanType, BorrowingStatusEnum status, Instant createdAt, LocalDate nextDueDate,
-			BigDecimal paidAmount) {
+			BigDecimal paidAmount, Integer categoryId) {
 		super();
 		this.id = id;
 		this.counterpartyName = counterpartyName;
@@ -37,7 +38,16 @@ public class BorrowingResponseDTO {
 		this.nextDueDate = nextDueDate;
 		this.paidAmount = paidAmount;
 		this.times = times;
+		this.categoryId = categoryId;
 		
+	}
+	
+	
+	public Integer getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
 	}
 	public Long getId() {
 		return id;

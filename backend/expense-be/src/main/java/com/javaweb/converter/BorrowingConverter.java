@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.List;
 
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
@@ -32,10 +31,13 @@ public class BorrowingConverter {
 	    String counterpartyName = (row.length > 8 && row[8] != null) ? (String) row[8] : "";
 	    LoanTypeEnum loanTypeEnum = (row.length > 9 && row[9] != null) ? LoanTypeEnum.valueOf((String) row[9]) : null;
 	    BorrowingStatusEnum statusEnum = (row.length > 10 && row[10] != null) ? BorrowingStatusEnum.valueOf((String) row[10]) : null;
-	    BigDecimal paidAmount = (row.length > 11 && row[11] != null) ? (BigDecimal) row[11] : BigDecimal.ZERO;
-	    Long remainTimes = (row.length > 12 && row[12] != null) ? ((Number) row[12]).longValue() : null;
-
-	    return new BorrowingResponseDTO(id, counterpartyName, amount, interestRate, remainTimes, times, loanTypeEnum, statusEnum, createdAt, nextDueDate, paidAmount);
+	    BigDecimal paidAmount = (row.length > 13 && row[13] != null) ? (BigDecimal) row[13] : BigDecimal.ZERO;
+	    Long remainTimes = (row.length > 14 && row[14] != null) ? ((Number) row[14]).longValue() : null;
+	    Integer categoryId =  (row.length > 12 && row[12] != null) ? ((Number) row[12]).intValue() : null;
+	    return new BorrowingResponseDTO(id, counterpartyName, amount, interestRate, remainTimes, times, loanTypeEnum,
+	    		statusEnum, createdAt, nextDueDate, paidAmount, categoryId);
+	    
+	    
 	}
 	
 	public BorrowingResponseDTO toUpdateBorrowingEntity(BorrowingEntity entity, BorrowingResponseDTO response) {		
