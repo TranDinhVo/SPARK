@@ -1,0 +1,123 @@
+.transaction-list {
+    margin-top: 50px;
+    position: relative;
+    &::after {
+      content: "";
+      height: 2px;
+      width: 100%;
+      display: block;
+      position: absolute;
+      background-color: #ddd;
+      top: -25px;
+    }
+  
+    .transaction-day {
+      margin-bottom: 24px;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+  
+      .transaction-day-header {
+        display: flex;
+        justify-content: space-between;
+        background: var(--primary-color-light);
+        padding: 20px;
+        font-weight: 600;
+        color: #333;
+  
+        .date-display {
+          font-size: 1.1rem;
+          text-transform: capitalize;
+        }
+  
+        .transaction-day-total {
+          font-size: 1.1rem;
+          font-weight: 700;
+  
+          &.income {
+            color: #28a745;
+          }
+  
+          &.expense {
+            color: #dc3545;
+          }
+        }
+      }
+  
+      .transaction-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 20px;
+        border-top: 1px solid #eee;
+        transition: background-color 0.2s ease;
+  
+        &:hover {
+          background-color: var(--primary-color-light);
+        }
+  
+        .transaction-left {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+  
+          .transaction-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+  
+            &:hover {
+              transform: scale(1.5);
+            }
+  
+            svg {
+              transform: scale(1.2);
+              color: white;
+            }
+          }
+  
+          .transaction-info {
+            .transaction-name {
+              font-weight: 600;
+              margin: 0;
+              font-size: 1rem;
+            }
+            .transaction-note {
+              font-size: 0.85rem;
+              color: #666;
+              margin: 4px 0 0 0;
+            }
+          }
+        }
+  
+        .transaction-right {
+          .transaction-amount {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0;
+  
+            &.income {
+              color: #28a745;
+            }
+  
+            &.expense {
+              color: #dc3545;
+            }
+          }
+        }
+      }
+    }
+  }
+  

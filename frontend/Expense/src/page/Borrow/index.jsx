@@ -5,7 +5,7 @@ import {
 } from "antd";
 import { PlusOutlined, SwapOutlined } from "@ant-design/icons";
 import { FiSearch } from "react-icons/fi";
-import "./Borrow.scss";
+import "../../assets/scss/Borrow.scss";
 import { getCookie } from "../../helpers/cookie";
 import { getBorrowByUser } from "../../services/BorrowService";
 import { useNavigate } from "react-router-dom";
@@ -122,6 +122,7 @@ const Borrow = () => {
 
       <div className="borrow-content">
        <BorrowTable 
+          navigate={navigate}
           searchText={searchText}
           borrowType={borrowType} 
           filteredList={filteredList} 

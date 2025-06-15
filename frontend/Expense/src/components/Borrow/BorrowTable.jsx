@@ -1,15 +1,14 @@
 import { Space, Table, Tag, Button } from "antd";
 import dayjs from "dayjs";
 import HighlightText from "../HighlightText";
-import DetailBorrow from "./DetailBorrow";
 import "../../assets/scss/BorrowTable.scss";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import Swal from 'sweetalert2';
 import 'animate.css';
 import { deleteBorrow } from "../../services/BorrowService";
 
 const BorrowTable = (props) => {
-    const { borrowType, filteredList, loading, onReload, searchText, setIsOpenModalEdited, setBorrowDataEdit } = props;
+    const { borrowType, filteredList, loading, onReload, searchText, setIsOpenModalEdited, setBorrowDataEdit, navigate } = props;
 
     const handleDelete = async (record) => {
       const result = await Swal.fire({
@@ -139,8 +138,12 @@ const BorrowTable = (props) => {
               >
                 <EditOutlined />
               </Button>
-              
-              <DetailBorrow record={record} />
+              <Button 
+                type="text" 
+                onClick={() => navigate(`/khoan-vay/${record.id}`)}
+              >
+                <EyeOutlined />
+              </Button>
             </Space>
           ),
         },

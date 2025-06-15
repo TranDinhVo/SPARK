@@ -4,7 +4,7 @@ import { deleteBudget, getBudgetByUser } from "../../services/BudgetService";
 import { getTransactionByUser } from "../../services/TransactionService";
 import { FiSearch, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { getCookie } from "../../helpers/cookie";
-import "./Budget.scss";
+import "../../assets/scss/Budget.scss";
 import { formatDateTime } from "../../helpers/formatDateTime";
 import { formatDate } from "../../helpers/formatDate";
 import { GoChevronRight } from "react-icons/go";
@@ -12,7 +12,7 @@ import { AiOutlinePlus, AiOutlineClose, AiOutlineEdit } from "react-icons/ai";
 import Swal from "sweetalert2";
 
 import { formatCurrency } from "../../helpers/formatCurrency";
-import BudgetFormModal from "./BudgetFormModal";
+import BudgetFormModal from "../../components/Budget/BudgetFormModal";
 import HighlightText from "../../components/HighlightText";
 import { removeVietnameseTones } from "../../helpers/normalize";
 
@@ -141,8 +141,11 @@ function Budget() {
             tran.name === selectedBudget.budgetName
           );
         });
+        const sorted = filtered.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
 
-        setTransactions(filtered);
+        setTransactions(sorted);
       } catch (error) {
         console.error("Fetch transactions error:", error);
         setTransactions([]);

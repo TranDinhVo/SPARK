@@ -2,13 +2,17 @@
 import React, { useEffect, useState } from "react";
 import { getCookie } from "../../helpers/cookie";
 import { getTransactionByUser } from "../../services/TransactionService";
-import "./Calendars.scss";
-import TransactionCalender from "./TransactionCalendar";
+import "../../assets/scss/Calendars.scss";
+import { Modal } from "antd";
+import CreateTransactionCalendar from "../../components/Calendar/createTransactionCalendar";
+import TransactionCalender from "../../components/Calendar/TransactionCalender";
 
 function Calendars() {
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [transactions, setTransactions] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
   const userId = getCookie("id");
   const today = new Date();
 
@@ -162,11 +166,27 @@ function Calendars() {
 
   const handleDayClick = (day) => {
     const date = new Date(currentYear, currentMonth, day);
-    const dateKey = date.toLocaleDateString("en-CA"); // YYYY-MM-DD
-    const el = document.getElementById(`day-${dateKey}`);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    setSelectedDate(date);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedDate(null);
+  };
+
+  const handleTransactionCreated = async () => {
+    // Refresh transactions after creating new one
+    try {
+      const result = await getTransactionByUser(userId);
+      const res = result.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      setTransactions(res);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
     }
+    handleCloseModal();
   };
 
   return (
@@ -231,6 +251,21 @@ function Calendars() {
           currentYear={currentYear}
         />
       </div>
+
+      <Modal
+        title="Thêm giao dịch mới"
+        open={isModalOpen}
+        onCancel={handleCloseModal}
+        footer={null}
+        width={800}
+        destroyOnClose
+      >
+        <CreateTransactionCalendar
+          initialDate={selectedDate}
+          onSuccess={handleTransactionCreated}
+          onCancel={handleCloseModal}
+        />
+      </Modal>
     </div>
   );
 }

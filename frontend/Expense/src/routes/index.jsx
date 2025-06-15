@@ -1,11 +1,6 @@
 import LayoutDefault from "../layout/LayoutDefault";
 import Dashboard from "../page/Dashboard/index";
 import Budget from "../page/Budget/index";
-import Transaction from "../page/Transaction/index";
-import Recent from "../page/Transaction/Recent";
-import Expense from "../page/Transaction/Expense/index";
-import Income from "../page/Transaction/Income/index";
-import Recurring from "../page/Transaction/Recurring/index";
 import { Navigate } from "react-router-dom";
 import GoalsSaving from "../page/GoalsSaving";
 import Statistics from "../page/Statistics";
@@ -15,8 +10,9 @@ import PrivateRoutes from "../components/PrivateRoutes";
 import Error404 from "../page/Error404/index";
 import Introduce from "../page/Introduce";
 import Logout from "../page/Logout";
-import GoalDetail from "../page/GoalsSaving/GoalDetail";
+import GoalDetail from "../components/Goal/GoalDetail";
 import TransactionNew from "../page/TransactionNew";
+import DetailBorrow from "../components/Borrow/DetailBorrow";
 
 export const routes = [
   {
@@ -75,6 +71,10 @@ export const routes = [
           {
             path: "khoan-vay",
             element: <Borrow />,
+          },
+          {
+            path: "khoan-vay/:id",
+            element: <DetailBorrow />,
           },
 
           {

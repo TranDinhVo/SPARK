@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import "../../assets/scss/Dashboard.scss";
 import { useNavigate } from "react-router-dom";
 
-import CategoryDashboard from "./CategoryDashboard";
-import ExpenseDashboard from "./ExpenseDashboard";
-import BudgetTransaction from "./BudgetTransaction";
-import IncomeDashboard from "./IncomeDashboard";
-import CashFlowDashboard from "./CashFlowDashboard";
-import DashboardPiggyAnimation from "./DashboardPiggyAnimation";
+import CategoryDashboard from "../../components/Dashboard/CategoryDashboard";
+import ExpenseDashboard from "../../components/Dashboard/ExpenseDashboard";
+import BudgetTransaction from "../../components/Dashboard/BudgetTransaction";
+import IncomeDashboard from "../../components/Dashboard/IncomeDashboard";
+import CashFlowDashboard from "../../components/Dashboard/CashFlowDashboard";
+import DashboardPiggyAnimation from "../../components/Dashboard/DashboardPiggyAnimation";
 
 function Dashboard() {
   const navigate = useNavigate();

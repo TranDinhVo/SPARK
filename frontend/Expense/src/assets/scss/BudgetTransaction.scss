@@ -1,0 +1,17 @@
+.budget-transaction {
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid var(--primary-color);
+    border-radius: 16px;
+    background: var(--primary-color-light) !important;
+    max-width: 550px;
+    height: 1500px;
+    padding: 32px 16px;
+    box-shadow: 0 4px 20px rgba(252, 128, 25, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  
+    &:hover {
+      box-shadow: 0 8px 30px rgba(252, 128, 25, 0.12);
+    }
+  }
+  

@@ -8,16 +8,16 @@ import {
   deleteGoal,
 } from "../../services/GoalsSavingService";
 import { getCookie } from "../../helpers/cookie";
-import GoalForm from "./GoalForm";
-import GoalsList from "./GoalsList";
-import SearchBar from "./SearchBar";
-import ViewToggle from "./ViewToggle";
+import GoalForm from "../../components/Goal/GoalForm";
+import GoalsList from "../../components/Goal/GoalsList";
+import SearchBar from "../../components/Goal/SearchBar";
+import ViewToggle from "../../components/Goal/ViewToggle";
 import Swal from "sweetalert2";
-import "./GoalsSaving.scss";
-import GoalsSavingAdd from "./GoalsSavingAdd";
+import "../../assets/scss/GoalsSaving.scss";
+import GoalsSavingAdd from "../../components/Goal/GoalsSavingAdd";
 import removeVietnameseTones from "../../helpers/normalize";
 
-function GoalsSaving() {
+const GoalsSaving = () => {
   const [savingList, setSavingList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [viewMode, setViewMode] = useState("grid");
@@ -44,7 +44,6 @@ function GoalsSaving() {
       setLoading(false);
     }
   };
-
   const handleCreateGoal = async (goalData) => {
     try {
       Swal.fire({
@@ -76,7 +75,7 @@ function GoalsSaving() {
         });
         fetchSavingGoals();
       } else {
-        Swal.fire({
+        await Swal.fire({
           icon: "error",
           title: "Lỗi hệ thống",
           text: "Không thể lưu mục tiêu. Vui lòng thử lại.",
@@ -84,7 +83,7 @@ function GoalsSaving() {
       }
     } catch (err) {
       console.error(err);
-      Swal.fire({
+      await Swal.fire({
         icon: "error",
         title: "Lỗi",
         text: "Có lỗi xảy ra khi gửi dữ liệu!",
