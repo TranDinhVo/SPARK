@@ -69,6 +69,7 @@ public class BorrowingServiceImpl implements BorrowingService{
 
 	@Override
 	public BorrowingResponseDTO createNewBorrowing(BorrowingRequestDTO borrowingRequestDTO) {
+		
 		BorrowingEntity newBorrowing = borrowingConverter.toUpdateBorrowingDTO(borrowingRequestDTO, new BorrowingEntity());
 		 // Tìm category theo categoryId
         CategoryEntity category = categoryRepository.findById(borrowingRequestDTO.getCategoryId())
@@ -118,7 +119,10 @@ public class BorrowingServiceImpl implements BorrowingService{
 				BorrowingResponseDTO borrowResponse = borrowingRepository.updateBorrowing(new BorrowingRequestDTO(), item);
 				borrowingRepository.save(item);
 				TransactionRequestDTO transactionRequest = new TransactionRequestDTO(item.getUserBorrowing().getId(), item.getId(), null, item.getCategoryBorrowing().getId(), null,
-						borrowResponse.getMonthMoney(), "Trả nợ " + item.getCounterpartyName() + " lần " + borrowResponse.getRemainTimes().toString(),  item.getNextDueDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+						borrowResponse.getMonthMoney(), "Trả nợ " + item.getCounterpartyName() + " lần " + (borrowResponse.getRemainTimes() + 1),  item.getNextDueDate()
+					    .minusMonths(1)
+					    .atStartOfDay(ZoneId.systemDefault())
+					    .toInstant());
 				transactionServiceImpl.createTransaction(transactionRequest);
 				//cập nhật lại status, next-due-date của borrow ở repos
 				return borrowResponse;
