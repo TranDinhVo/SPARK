@@ -1,9 +1,6 @@
-import useInViewAnimation from "../../hooks/useInViewAnimation";
 import { formatDate } from "../../helpers/formatDate";
 
 function TransactionItem({ item, index }) {
-  const [ref, animationClass] = useInViewAnimation("animate__fadeInUp");
-
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat("vi-VN", {
       style: "currency",
@@ -14,14 +11,7 @@ function TransactionItem({ item, index }) {
   };
 
   return (
-    <li
-      ref={ref}
-      className={`transaction-dashboard__content--item ${animationClass}`}
-      style={{
-        animationDelay: `${index * 100}ms`,
-        animationDuration: "0.8s",
-      }}
-    >
+    <li className="transaction-dashboard__content--item">
       <div
         className="transaction-dashboard__content--image"
         dangerouslySetInnerHTML={{

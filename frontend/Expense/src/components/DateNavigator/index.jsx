@@ -6,14 +6,13 @@ import "dayjs/locale/vi";
 import "./DateNavigator.scss";
 
 dayjs.locale("vi");
-
-function DateNavigator({
+const DateNavigator = ({
   date,
   onChange,
   minDate = null, // ngày bắt đầu cho trang tiết kiệm
   maxDate = null, // ngày kết thúc (tùy chọn)
   mode = "transaction", // "transaction" hoặc "savings"
-}) {
+}) =>{
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
   // Xác định chế độ và giới hạn ngày

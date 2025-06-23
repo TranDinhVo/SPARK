@@ -63,6 +63,19 @@
     min-width: 200px;
     align-items: center;
 
+    &--category {
+      padding-left: 30px;
+      // flex: 1;
+      .label {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        color: #374151;
+        width: 20%;
+        display: block;
+        // padding-left: 30px;
+      }
+    }
     .label {
       font-size: 20px;
       font-weight: 600;
@@ -72,7 +85,7 @@
       display: block;
       padding-left: 30px;
     }
-    div {
+    .flex-1 {
       flex: 1;
     }
 

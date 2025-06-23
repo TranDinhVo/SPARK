@@ -31,10 +31,7 @@ function MenuSider(props) {
     if (path.startsWith("/khoan-vay")) return "/khoan-vay";
     if (path.startsWith("/lich")) return "/lich";
     if (path.startsWith("/bao-cao")) return "/bao-cao";
-    if (path.startsWith("/tai-khoan")) return "/tai-khoan";
-    if (path.startsWith("/thong-bao")) return "/thong-bao";
-    if (path.startsWith("/xuat-file")) return "/xuat-file";
-    if (path.startsWith("/cai-dat")) return "/cai-dat";
+    if (path.startsWith("/gioi-thieu")) return "/gioi-thieu";
     if (path.startsWith("/dang-xuat")) return "/dang-xuat";
     if (path === "/") return "/dieu-khien";
     return "";
@@ -101,30 +98,13 @@ function MenuSider(props) {
       type: "group",
       children: [
         {
-          key: "/tai-khoan",
+          key: "/gioi-thieu",
           icon: <User />,
-          label: <Link to="/tai-khoan">Tài khoản</Link>,
-        },
-        {
-          key: "/thong-bao",
-          icon: <Bell />,
-          label: <Link to="/thong-bao">Thông báo</Link>,
-        },
-        {
-          key: "/xuat-file",
-          icon: <FileDown />,
-          label: <Link to="/xuat-file">Xuất File</Link>,
-        },
-
-        {
-          key: "/cai-dat",
-          icon: <Settings />,
-          label: <Link to="/cai-dat">Cài đặt</Link>,
+          label: <Link to="/gioi-thieu">Giới thiệu</Link>,
         },
       ],
     },
   ];
-
   if (token) {
     items.push({
       key: "/dang-xuat",

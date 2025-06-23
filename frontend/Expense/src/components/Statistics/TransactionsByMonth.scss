@@ -1,0 +1,244 @@
+.statis-recent-transactions {
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+
+  .ant-card-head {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 0 24px;
+
+    .ant-card-head-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+  }
+
+  .ant-card-body {
+    padding: 24px;
+  }
+
+  // Styles cho giao dịch theo tháng
+  .statis-transactions-by-month {
+    .statis-month-group {
+      margin-bottom: 24px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .statis-month-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding: 16px 20px;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        border-radius: 12px;
+        border: 1px solid rgba(102, 126, 234, 0.2);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+        }
+
+        .statis-month-title {
+          margin: 0;
+          font-size: 20px;
+          font-weight: 600;
+          color: #333;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .statis-month-summary {
+          display: flex;
+          gap: 16px;
+          font-size: 14px;
+          font-weight: 500;
+
+          .statis-month-income {
+            color: #52c41a;
+            padding: 4px 8px;
+            background: rgba(82, 196, 26, 0.1);
+            border-radius: 6px;
+          }
+
+          .statis-month-expense {
+            color: #ff4d4f;
+            padding: 4px 8px;
+            background: rgba(255, 77, 79, 0.1);
+            border-radius: 6px;
+          }
+
+          .statis-month-net {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+
+            &.statis-positive {
+              color: #52c41a;
+              background: rgba(82, 196, 26, 0.1);
+            }
+
+            &.statis-negative {
+              color: #ff4d4f;
+              background: rgba(255, 77, 79, 0.1);
+            }
+          }
+        }
+
+        .statis-month-toggle {
+          display: flex;
+          align-items: center;
+
+          .statis-toggle-icon {
+            transition: transform 0.3s ease;
+            color: #666;
+
+            &.expanded {
+              transform: rotate(180deg);
+            }
+          }
+        }
+      }
+
+      .statis-month-transactions {
+        max-height: 1000px;
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        opacity: 1;
+
+        &.collapsed {
+          max-height: 0;
+          opacity: 0;
+        }
+
+        .statis-transaction-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 12px 16px;
+          margin-bottom: 8px;
+          border-radius: 8px;
+          background: rgba(255, 255, 255, 0.5);
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          }
+
+          .statis-transaction-info {
+            flex: 1;
+
+            .statis-transaction-title {
+              font-size: 15px;
+              font-weight: 500;
+              color: #333;
+              margin-bottom: 4px;
+            }
+
+            .statis-transaction-date {
+              font-size: 12px;
+              color: #666;
+            }
+          }
+
+          .statis-transaction-amount {
+            font-size: 15px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 6px;
+            min-width: 120px;
+            text-align: right;
+
+            &.statis-income {
+              color: #52c41a;
+              background: rgba(82, 196, 26, 0.1);
+            }
+
+            &.statis-expense {
+              color: #ff4d4f;
+              background: rgba(255, 77, 79, 0.1);
+            }
+          }
+        }
+
+        .statis-more-transactions {
+          text-align: center;
+          padding: 12px;
+          color: #666;
+          font-size: 14px;
+          font-style: italic;
+          background: rgba(0, 0, 0, 0.02);
+          border-radius: 8px;
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+
+  // Divider styling
+  .ant-divider {
+    margin: 24px 0;
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+
+  // Responsive design
+  @media (max-width: 768px) {
+    .ant-card-body {
+      padding: 16px;
+    }
+
+    .statis-transactions-by-month {
+      .statis-month-group {
+        .statis-month-header {
+          flex-direction: column;
+          gap: 12px;
+          text-align: center;
+
+          .statis-month-summary {
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+        }
+
+        .statis-month-transactions {
+          .statis-transaction-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+
+            .statis-transaction-amount {
+              align-self: flex-end;
+              min-width: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  // Animation effects
+  animation: statis-fadeInUp 0.6s ease-out 0.4s both;
+}
+
+@keyframes statis-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 

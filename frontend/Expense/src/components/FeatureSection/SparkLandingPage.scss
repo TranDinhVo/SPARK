@@ -1,0 +1,391 @@
+// Variables
+$primary-orange: #ffece1;
+$secondary-orange: #ea580c;
+$light-orange: #fed7aa;
+$yellow-accent: #fbbf24;
+$gray-dark: #1f2937;
+$gray-medium: #4b5563;
+$gray-light: #f3f4f6;
+$white: #ffffff;
+$red-accent: #ef4444;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin device-shadow {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+@mixin hover-lift {
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Main Container
+.spark-landing {
+  min-height: 100vh;
+  background: linear-gradient(135deg, $primary-orange 0%, $secondary-orange 50%, $yellow-accent 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+// SPARK Background Text
+.spark-background {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+
+  .spark-text-container {
+    position: relative;
+
+    .spark-text-small {
+      position: absolute;
+      top: -2rem;
+      left: -4rem;
+      font-size: 3rem;
+      font-weight: 300;
+      color: rgba($light-orange, 0.3);
+      letter-spacing: 0.5em;
+      user-select: none;
+      transform: rotate(-12deg);
+    }
+
+    .spark-text-large {
+      font-size: clamp(5rem, 8vw, 7rem);
+      font-weight: 300;
+      color: rgba($light-orange, 0.4);
+      letter-spacing: 0.5em;
+      user-select: none;
+      margin: 0;
+    }
+  }
+}
+
+// Main Container
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 100vh;
+  @include flex-center;
+  position: relative;
+  z-index: 10;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  width: 100%;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+// Devices Section
+.devices-section {
+  @include flex-center;
+}
+
+.devices-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.device {
+  position: relative;
+  border-radius: 1rem;
+  @include device-shadow;
+
+  &.tablet {
+    width: 11rem;
+    height: 15rem;
+    background: $gray-dark;
+    border: 8px solid darken($gray-dark, 10%);
+    border-radius: 1.5rem;
+    z-index: 20;
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      background: $gray-light;
+      border-radius: 0.75rem;
+    }
+
+    .home-button {
+      @include absolute-center;
+      bottom: 1rem;
+      top: auto;
+      width: 2rem;
+      height: 2rem;
+      background: darken($gray-dark, 10%);
+      border-radius: 50%;
+    }
+  }
+
+  &.phone {
+    position: absolute;
+    left: 7rem;
+    bottom: 1rem;
+    width: 4rem;
+    height: 8rem;
+    background: $gray-dark;
+    border: 4px solid darken($gray-dark, 10%);
+    border-radius: 1.5rem;
+    z-index: 30;
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      background: $gray-light;
+      border-radius: 1.25rem;
+    }
+
+    .notch {
+      position: absolute;
+      top: 0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1.5rem;
+      height: 0.25rem;
+      background: darken($gray-dark, 10%);
+      border-radius: 9999px;
+    }
+  }
+
+  &.laptop {
+    position: absolute;
+    right: -8rem;
+    bottom: 2rem;
+    z-index: 10;
+
+    .laptop-screen {
+      width: 20rem;
+      height: 12rem;
+      background: $gray-dark;
+      border: 6px solid darken($gray-dark, 10%);
+      border-radius: 1.5rem 1.5rem 0 0;
+      @include device-shadow;
+      position: relative;
+      transform: rotate(-12deg);
+
+      .screen {
+        width: 100%;
+        height: 100%;
+        background: $gray-medium;
+        border-radius: 0.75rem;
+      }
+
+      .keyboard-area {
+        position: absolute;
+        bottom: -0.5rem;
+        left: 0;
+        right: 0;
+        height: 3rem;
+        background: lighten($gray-medium, 10%);
+        border-radius: 0 0 0.75rem 0.75rem;
+      }
+    }
+
+    .laptop-base {
+      width: 22rem;
+      height: 1.5rem;
+      background: darken($gray-dark, 10%);
+      border-radius: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transform: rotate(-12deg);
+      margin-top: -0.5rem;
+    }
+  }
+}
+
+// Content Section
+.content-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.question-box {
+  background: $white;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  .question-title {
+    color: $gray-dark;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .question-text {
+    color: $gray-medium;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .support-button {
+    background: $red-accent;
+    color: $white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.3);
+    @include hover-lift;
+
+    &:hover {
+      background: darken($red-accent, 10%);
+    }
+
+    &:active {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.app-description {
+  .app-title {
+    font-size: clamp(2.5rem, 5vw, 3rem);
+    font-weight: 700;
+    color: $white;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .app-subtitle {
+    font-size: 1.25rem;
+    color: rgba($white, 0.95);
+    line-height: 1.6;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  }
+}
+
+// Floating Elements
+.floating-element {
+  position: absolute;
+  border-radius: 50%;
+  
+  &.element-1 {
+    top: 25%;
+    right: 2.5rem;
+    width: 6rem;
+    height: 6rem;
+    background: rgba($white, 0.1);
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  &.element-2 {
+    bottom: 25%;
+    left: 2.5rem;
+    width: 8rem;
+    height: 8rem;
+    background: rgba($light-orange, 0.2);
+  }
+
+  &.element-3 {
+    top: 75%;
+    right: 33%;
+    width: 4rem;
+    height: 4rem;
+    background: rgba($yellow-accent, 0.15);
+  }
+}
+
+// Animations
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .content-grid {
+    gap: 2rem;
+  }
+  
+  .device.laptop {
+    right: -6rem;
+    
+    .laptop-screen {
+      width: 16rem;
+      height: 10rem;
+    }
+    
+    .laptop-base {
+      width: 18rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    padding: 0 1rem;
+  }
+  
+  .devices-container {
+    max-width: 300px;
+  }
+  
+  .device {
+    &.tablet {
+      width: 8rem;
+      height: 11rem;
+    }
+    
+    &.phone {
+      left: 5rem;
+      width: 3rem;
+      height: 6rem;
+    }
+    
+    &.laptop {
+      right: -4rem;
+      
+      .laptop-screen {
+        width: 12rem;
+        height: 8rem;
+      }
+      
+      .laptop-base {
+        width: 14rem;
+      }
+    }
+  }
+  
+  .app-description .app-title {
+    font-size: 2rem;
+  }
+}

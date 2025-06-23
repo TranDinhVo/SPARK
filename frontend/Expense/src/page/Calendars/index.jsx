@@ -7,31 +7,42 @@ import { Modal } from "antd";
 import CreateTransactionCalendar from "../../components/Calendar/createTransactionCalendar";
 import TransactionCalender from "../../components/Calendar/TransactionCalender";
 
-function Calendars() {
+const Calendars = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [transactions, setTransactions] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const userId = getCookie("id");
   const today = new Date();
+  const fetchTransactions = async () => {
+    setIsLoading(true);
+    try {
+      const result = await getTransactionByUser(userId);
+      const res = result.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
 
+      setTransactions(res);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
+    setIsLoading(false);
+  };
+  
   useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        const result = await getTransactionByUser(userId);
-        const res = result.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
-
-        setTransactions(res);
-      } catch (error) {
-        console.error("Error fetching transactions:", error);
-      }
-    };
+    
     fetchTransactions();
   }, [userId]);
+ const onReload = () => {
 
+  fetchTransactions();
+ }
+ const handleCloseModal = () => {
+  setIsModalOpen(false);
+  setSelectedDate(null);
+ }
   const getDayTransactionTotals = (day) => {
     const date = new Date(currentYear, currentMonth, day);
     const dateString = date.toLocaleDateString("en-CA", {
@@ -170,25 +181,6 @@ function Calendars() {
     setIsModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedDate(null);
-  };
-
-  const handleTransactionCreated = async () => {
-    // Refresh transactions after creating new one
-    try {
-      const result = await getTransactionByUser(userId);
-      const res = result.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
-      setTransactions(res);
-    } catch (error) {
-      console.error("Error fetching transactions:", error);
-    }
-    handleCloseModal();
-  };
-
   return (
     <div className="calendar-container">
       <div className="calendar-header">
@@ -261,9 +253,9 @@ function Calendars() {
         destroyOnClose
       >
         <CreateTransactionCalendar
-          initialDate={selectedDate}
-          onSuccess={handleTransactionCreated}
-          onCancel={handleCloseModal}
+          onReload={onReload}
+          date={selectedDate}
+         handleCloseModal={handleCloseModal}
         />
       </Modal>
     </div>

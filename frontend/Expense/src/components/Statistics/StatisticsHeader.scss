@@ -1,0 +1,142 @@
+.statis-header {
+  // background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 90%, var(--primary-color-light) 100%);
+  // background: var(--primary-color);
+  // color: white;
+  color: var(--primary-color);
+  padding: 2rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  // box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+  .statis-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .statis-header-content {
+    h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, var(--primary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+      opacity: 0.9;
+      font-weight: 300;
+    }
+  }
+
+  .statis-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+
+    .ant-picker {
+      border-radius: 8px;
+    }
+
+    .ant-btn {
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      
+      &.ant-btn-primary {
+        background: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        color: white;
+        
+        &:hover {
+          background: var(--primary-color-dark);
+          border-color: var(--primary-color-dark);
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  .statis-header-summary {
+    .ant-statistic {
+      .ant-statistic-title {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1rem;
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+      }
+
+      .ant-statistic-content {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: white;
+        
+        .ant-statistic-content-prefix {
+          font-size: 1.5rem;
+        }
+
+        .statis-value {
+          font-size: 1.75rem;
+          font-weight: 600;
+          line-height: 1.2;
+        }
+      }
+    }
+  }
+}
+
+// Dark mode is handled by the main styles now
+
+// Responsive design
+@media (max-width: 992px) {
+  .statis-header {
+    .statis-header-top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .statis-header-summary {
+      .ant-col {
+        margin-bottom: 1.5rem;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .statis-header {
+    padding: 1.5rem;
+
+    .statis-header-content {
+      h1 {
+        font-size: 2rem;
+      }
+    }
+    
+    .statis-header-actions {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      
+      .ant-picker {
+        width: 100%;
+      }
+      
+      .ant-btn {
+        width: 100%;
+      }
+    }
+  }
+} 

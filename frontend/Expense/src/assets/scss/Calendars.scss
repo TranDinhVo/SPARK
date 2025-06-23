@@ -43,6 +43,7 @@
     }
   
     .calendar {
+
       border-collapse: collapse;
       width: 100%;
       background-color: #fff;
@@ -72,7 +73,7 @@
   
         &:hover {
           background-color: var(--primary-color-light);
-          transform: scale(1.02);
+          // transform: scale(1.02);
           z-index: 1;
         }
   

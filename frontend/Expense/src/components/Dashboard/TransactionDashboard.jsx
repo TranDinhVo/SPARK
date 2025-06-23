@@ -4,14 +4,12 @@ import { GoChevronRight } from "react-icons/go";
 import { getCookie } from "../../helpers/cookie";
 import { useEffect, useState } from "react";
 import { getTransactionByUser } from "../../services/TransactionService";
-import useInViewAnimation from "../../hooks/useInViewAnimation";
 import TransactionItem from "./TransactionItem";
 
 const TransactionDashboard = () => {
   const [dataTransaction, setDataTransaction] = useState([]);
   const navigate = useNavigate();
   const userId = getCookie("id");
-  const [headerRef, headerClass] = useInViewAnimation("animate__fadeInDown");
 
   useEffect(() => {
     let isMounted = true;
@@ -52,14 +50,7 @@ const TransactionDashboard = () => {
   return (
     <>
       <div className="transaction-dashboard">
-        <div
-          ref={headerRef}
-          className={`transaction-dashboard__header ${headerClass}`}
-          style={{
-            animationDuration: "0.8s",
-            animationDelay: "100ms",
-          }}
-        >
+        <div className="transaction-dashboard__header">
           <h4 className="transaction-dashboard__header--title">Giao dịch</h4>
           <div
             className="transaction-dashboard__header--navigate"

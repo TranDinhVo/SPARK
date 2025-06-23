@@ -58,12 +58,7 @@ function Login() {
       background: "linear-gradient(135deg, #fff1eb, #ace0f9)",
       color: "#2d3436",
       iconColor: "#e17055",
-      // backdrop: `
-      //   rgba(0, 0, 0, 0.6)
-      //   url("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjcybGIwdmE0aG93bzdxMGF6MWt0MWhrM3V2YTVsY3RmbXh0d3U2bCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/YTbZzCkRQCEJa/giphy.gif")
-      //   center center
-      //   no-repeat
-      // `,
+
       customClass: {
         confirmButton: "my-confirm-btn",
         cancelButton: "my-cancel-btn",
@@ -125,12 +120,7 @@ function Login() {
           background: "linear-gradient(135deg, #ffecb3, #ffe0b2)",
           color: "#2e7d32",
           iconColor: "#43a047",
-          backdrop: `
-            rgba(0,0,0,0.6)
-            url("https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif")
-            top left
-            no-repeat
-          `,
+        
           customClass: {
             popup: "animated bounceIn super-shadow",
             title: "custom-title",

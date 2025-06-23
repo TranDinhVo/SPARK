@@ -56,36 +56,7 @@ function LayoutDefault() {
               </div>
             </div>
             <div className="header__nav--right">
-              <Button
-                shape="circle"
-                className="header__nav--button"
-                size="large"
-              >
-                <SearchOutlined style={{ fontSize: "20px" }} />
-              </Button>
-
-              <Button
-                shape="circle"
-                className="header__nav--button"
-                size="large"
-              >
-                <SunOutlined style={{ fontSize: "20px" }} />
-              </Button>
-              <Button
-                shape="circle"
-                className="header__nav--button"
-                size="large"
-              >
-                <BellOutlined style={{ fontSize: "20px" }} />
-              </Button>
-
-              <Button
-                shape="circle"
-                className="header__nav--button"
-                size="large"
-              >
-                <SettingOutlined style={{ fontSize: "20px" }} />
-              </Button>
+              
 
               <Button
                 shape="round"
@@ -97,7 +68,7 @@ function LayoutDefault() {
                   size={28}
                   style={{ fontSize: "20px" }}
                 />
-                {name}
+                <p style={{ fontSize: "16px", color: "var(--primary-color)" }}>{name}</p>
               </Button>
             </div>
           </div>
@@ -121,7 +92,7 @@ function LayoutDefault() {
             <ThemeSettingContainer />
 
             <p className="footer__text">
-              Copyright © Designed by <span className="highlight">SPARK</span>{" "}
+              Copyright © Designed by <span className="highlight">SPARK</span>
               team
             </p>
           </div>

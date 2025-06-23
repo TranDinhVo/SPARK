@@ -186,8 +186,8 @@ function TransactionNew() {
     const matchSearch = name.includes(search);
     let matchStatus = true;
     if (recurringStatus === "active") matchStatus = item.status?.code === 1;
-    if (recurringStatus === "cancelled") matchStatus = item.status?.code === 2;
-    if (recurringStatus === "paused") matchStatus = item.status?.code === 3;
+    if (recurringStatus === "cancelled") matchStatus = item.status?.code === -1;
+    if (recurringStatus === "paused") matchStatus = item.status?.code === 0;
     return matchSearch && matchStatus;
   });
 

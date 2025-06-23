@@ -9,7 +9,7 @@ import { createTransaction } from "../../../services/TransactionService";
 import { createRecurringTransaction } from "../../../services/RecurringTransactionService";
 import dayjs from "dayjs";
 
-function TransactionForm(props) {
+const TransactionForm = (props) => {
   const { onReload } = props;
   const [isExpense, setIsExpense] = useState(true);
   const [isRecurring, setIsRecurring] = useState(false);
@@ -144,7 +144,7 @@ function TransactionForm(props) {
 
           <div className="transaction-form__group">
             <span className="label">{isExpense ? "Tiền chi" : "Tiền thu"}</span>
-            <div className="amount-input-container">
+            <div className="amount-input-container flex-1">
               <Input
                 value={Number(amount).toLocaleString("vi-VN")}
                 onChange={handleAmountChange}
@@ -155,7 +155,7 @@ function TransactionForm(props) {
           </div>
           <div className="transaction-form__group">
             <span className="label">Ghi chú</span>
-            <div>
+            <div className="flex-1">
               <Input
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -163,7 +163,7 @@ function TransactionForm(props) {
               />
             </div>
           </div>
-          <div className="transaction-form__group">
+          <div className="transaction-form__group--category">
             <div className="transaction-form__category">
               <span className="label">Danh mục</span>
               <TransactionCategory

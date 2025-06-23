@@ -1,3 +1,47 @@
+.transaction-form__group-date {
+  
+    display: flex;
+    min-width: 200px;
+    align-items: center;
+    
+    .text-label {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #374151;
+      width: 20%;
+      height: 65px;
+      display: flex;
+      align-items: center;
+      // justify-content: center;
+
+      padding-left: 30px;
+    }
+    .date-navigator {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+      background: var(--primary-color-light);
+      padding: 16px 24px;
+      font-size: 18px;
+      border-radius: 8px;
+      border: 1px solid var(--primary-color-dark);
+      color: var(--primary-color);
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      .selected-date {
+        flex: 1;
+        text-align: center;
+      }
+    }
+    .flex-1 {
+        flex: 1;
+    }
+}
+
 .transaction {
   &-category--list {
     // flex: 1;

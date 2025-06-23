@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
-import "./TransactionCategory.scss";
 import {
   getCategoryByUser,
   createCategory,
   updateCategory,
   deleteCategory,
-} from "../../../services/CategoryService";
-import { getCookie } from "../../../helpers/cookie";
+} from "../../services/CategoryService";
+import { getCookie } from "../../helpers/cookie";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Modal, Button, List, Typography, Form, Input, Select, Row, Col } from "antd";
 import Swal from "sweetalert2"; 
-import iconList from "../../../assets/images/iconList"; 
-
+import iconList from "../../assets/images/iconList"; 
+import "../../assets/scss/CalendarCategory.scss";
 const { Text } = Typography;
 
-const TransactionCategory = (props) => {
+const CalendarCategory = (props) => {
   const { selectedCategory, onSelectCategory, isExpense } = props;
   const [categories, setCategories] = useState([]);
   const [isEditorVisible, setIsEditorVisible] = useState(false);
@@ -221,32 +220,32 @@ const TransactionCategory = (props) => {
 
   return (
     <>
-      <Row gutter={[16, 16]} className="transaction-category--list">
+      <Row gutter={[16, 16]} className="calendar-category--list">
         {categories.map((cat) => (
-          <Col xl={4} lg={6} md={8} sm={12} 
+          <Col xl={6} lg={6} md={8} sm={12} 
           key={cat.id}>
             <div 
 
-          className={`transaction-category--item ${
+          className={`calendar-category--item ${
             selectedCategory === cat.id ? "selected" : ""
           }`}
           onClick={() => onSelectCategory(cat)}
         >
           <div
-            className="transaction-category--icon"
+            className="calendar-category--icon"
             dangerouslySetInnerHTML={{
               __html: cat.iconUrl,
             }}
           ></div>
-          <p className="transaction-category--name">{cat.name}</p>
+          <p className="calendar-category--name">{cat.name}</p>
         </div> </Col>
           
         ))}
-        <Col xl={4} lg={6} md={8} sm={12}> <div   className="transaction-category__add" onClick={handleAdd}>
-          <div className="transaction-category__add--icon">
+        <Col xl={6} lg={6} md={8} sm={12}> <div   className="calendar-category__add" onClick={handleAdd}>
+          <div className="calendar-category__add--icon">
             <PlusOutlined />
           </div>
-          <p className="transaction-category--name">Chỉnh sửa</p>
+          <p className="calendar-category--name">Chỉnh sửa</p>
         </div></Col>
        
       </Row>
@@ -258,7 +257,7 @@ const TransactionCategory = (props) => {
         onCancel={closeEditor}
         footer={[
           <Button
-            className="transaction-category__display--add"
+            className="calendar-category__display--add"
             key="add"
             icon={<PlusOutlined />}
             onClick={showAddModal}
@@ -267,7 +266,7 @@ const TransactionCategory = (props) => {
           </Button>,
         ]}
         width={700}
-        className="transaction-category__display"
+        className="calendar-category__display"
       >
         <List
           loading={loading}
@@ -368,7 +367,7 @@ const TransactionCategory = (props) => {
 
           <Form.Item className="form-actions">
             <Button
-              className="transaction-category__display--add"
+              className="calendar-category__display--add"
               htmlType="submit"
               loading={loading}
             >
@@ -381,4 +380,4 @@ const TransactionCategory = (props) => {
   );
 }
 
-export default TransactionCategory;
+export default CalendarCategory;
